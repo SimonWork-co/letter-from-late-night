@@ -6,15 +6,22 @@
 //
 
 import UIKit
+import Foundation
 
-struct LetterDataSource {
-    let title : String
-    let date : String
+class LetterDataSource {
+    let title: String
+    let content: String
+    var date: Date
+    
+    init(title: String, content: String) {
+        self.title = title
+        self.content = content
+        date = Date()
+    }
 }
 
 extension LetterDataSource {
     static var data = [
-        LetterDataSource(title: "밥은 잘 먹었어?", date: "2023.01.03"),
+        LetterDataSource(title: "밥은 잘 먹었어?", content: "아무말 아무말"),
     ]
 }
-// 변수로 바꿔두기
