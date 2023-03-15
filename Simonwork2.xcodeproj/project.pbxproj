@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4585C6A91E51DC91CD052941 /* Pods_Simonwork2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69789884F55749A0EB9DF3C5 /* Pods_Simonwork2.framework */; };
-		8D402DA729BF6EE20010D80C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D402DA629BF6EE20010D80C /* GoogleService-Info.plist */; };
 		8D402DA929C0406A0010D80C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D402DA829C0406A0010D80C /* NavigationController.swift */; };
 		8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375E829B9A7AD0028427F /* SignupViewController.swift */; };
 		8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375EA29B9A9010028427F /* ArchiveController.swift */; };
@@ -25,12 +24,12 @@
 		8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA1A1DB29BB0A2900A37C0E /* LetterDataSource.swift */; };
 		8DAA05D029BB20A0008D8167 /* CustomizedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */; };
 		8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */; };
+		DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4C13E0CDB61A9BB3CB097062 /* Pods-Simonwork2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2.debug.xcconfig"; path = "Target Support Files/Pods-Simonwork2/Pods-Simonwork2.debug.xcconfig"; sourceTree = "<group>"; };
 		69789884F55749A0EB9DF3C5 /* Pods_Simonwork2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simonwork2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D402DA629BF6EE20010D80C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D402DA829C0406A0010D80C /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8D4375E829B9A7AD0028427F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		8D4375EA29B9A9010028427F /* ArchiveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveController.swift; sourceTree = "<group>"; };
@@ -51,6 +50,7 @@
 		8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomizedCell.xib; path = Simonwork2/Model/CustomizedCell.xib; sourceTree = SOURCE_ROOT; };
 		8DFDE4AD29C0E423005A9574 /* Simonwork2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Simonwork2.entitlements; sourceTree = "<group>"; };
 		CFC6BF28DF021EDA9267FA93 /* Pods-Simonwork2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2.release.xcconfig"; path = "Target Support Files/Pods-Simonwork2/Pods-Simonwork2.release.xcconfig"; sourceTree = "<group>"; };
+		DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +112,7 @@
 				8D9EFF1E29B8504B008D2050 /* Assets.xcassets */,
 				8D9EFF2029B8504B008D2050 /* LaunchScreen.storyboard */,
 				8D9EFF2329B8504B008D2050 /* Info.plist */,
-				8D402DA629BF6EE20010D80C /* GoogleService-Info.plist */,
+				DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */,
 			);
 			path = Simonwork2;
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 			files = (
 				8D9EFF2229B8504B008D2050 /* LaunchScreen.storyboard in Resources */,
 				8D9EFF1F29B8504B008D2050 /* Assets.xcassets in Resources */,
-				8D402DA729BF6EE20010D80C /* GoogleService-Info.plist in Resources */,
+				DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */,
 				8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */,
 				8D9EFF1D29B85049008D2050 /* Main.storyboard in Resources */,
 			);

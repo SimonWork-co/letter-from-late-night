@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>212987107080-07h4rnqts3eavfbng3quiq5g4vmo30n8.apps.googleusercontent.com</string>
+	<string>1028227503982-7b91qe3kfp93q7ku5ta315rfm4u87tui.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.212987107080-07h4rnqts3eavfbng3quiq5g4vmo30n8</string>
+	<string>com.googleusercontent.apps.1028227503982-7b91qe3kfp93q7ku5ta315rfm4u87tui</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDzWNKdqk_1ah0mMEbNDxCd91HZoreKiko</string>
+	<string>AIzaSyC_exZGnSFsRHOIDOhlmoohEOUyxffetdA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>212987107080</string>
+	<string>1028227503982</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>co.Simonwork.Flash-Chat-iOS13</string>
+	<string>com.simonwork.Simonwork2</string>
 	<key>PROJECT_ID</key>
-	<string>flash-chat-ios-13-7423c</string>
+	<string>a-letter-from-late-night</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flash-chat-ios-13-7423c.appspot.com</string>
+	<string>a-letter-from-late-night.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:212987107080:ios:64270f5a74feb6c3d9bebd</string>
+	<string>1:1028227503982:ios:cdef7a96d3c0f6189a137f</string>
 </dict>
 </plist>
