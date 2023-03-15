@@ -237,7 +237,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lqk-Sp-IBa">
-                                <rect key="frame" x="108" y="628" width="177" height="59"/>
+                                <rect key="frame" x="108" y="628.33333333333337" width="177" height="38"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="편지 보내기">
                                     <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
@@ -487,7 +487,7 @@
             </objects>
             <point key="canvasLocation" x="2657.2519083969464" y="-458.45070422535213"/>
         </scene>
-        <!--편지 작성-->
+        <!--밤편지 작성-->
         <scene sceneID="aYr-5H-zTO">
             <objects>
                 <viewController id="5Tl-Pd-vTT" customClass="WritingViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
@@ -496,41 +496,75 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Utg-Mf-WVD">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="201"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="239"/>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.75294117650000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ars-eo-XML">
-                                <rect key="frame" x="0.0" y="269" width="393" height="157"/>
+                                <rect key="frame" x="0.0" y="237" width="393" height="532"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="오늘 잠은 잘 잤어? 나는 알람이 울리기도 전에 깨버렸네. 오늘 날씨 춥다! 옷 두껍게 입고, 아침은 상 위에 차려 놨으니까 꼭 먹구 나가. 이따 만나." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YoM-qe-Fqc">
-                                        <rect key="frame" x="76" y="51" width="240" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YoM-qe-Fqc">
+                                        <rect key="frame" x="62" y="77" width="268" height="178"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSF-eb-ite" userLabel="textViewTextNumLabel">
+                                        <rect key="frame" x="265" y="263" width="65" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="13"/>
+                                        <color key="textColor" systemColor="opaqueSeparatorColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hCp-vm-v4l">
+                                        <rect key="frame" x="20" y="59" width="34" height="84"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="70"/>
+                                        <color key="textColor" red="0.67450982329999998" green="0.60392159219999997" blue="0.78823530669999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="😊" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VG2-DG-hvB" userLabel="emojiLabel">
+                                        <rect key="frame" x="20" y="-35" width="70" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="YoM-qe-Fqc" secondAttribute="trailing" constant="63" id="6UR-Xc-ssT"/>
+                                    <constraint firstItem="YoM-qe-Fqc" firstAttribute="leading" secondItem="Ars-eo-XML" secondAttribute="leading" constant="62" id="HeV-e3-WJt"/>
+                                    <constraint firstItem="YoM-qe-Fqc" firstAttribute="top" secondItem="Ars-eo-XML" secondAttribute="top" constant="77" id="IhP-mf-i0w"/>
+                                    <constraint firstAttribute="bottom" secondItem="YoM-qe-Fqc" secondAttribute="bottom" constant="277" id="JSf-jt-hLa"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="HcG-Y3-yTX"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Utg-Mf-WVD" firstAttribute="trailing" secondItem="HcG-Y3-yTX" secondAttribute="trailing" id="3sF-ay-rp6"/>
-                            <constraint firstItem="HcG-Y3-yTX" firstAttribute="bottom" secondItem="Utg-Mf-WVD" secondAttribute="bottom" constant="519" id="E3U-EG-NZC"/>
-                            <constraint firstItem="Utg-Mf-WVD" firstAttribute="top" secondItem="v9c-5m-eKB" secondAttribute="top" id="Kbs-49-HF8"/>
-                            <constraint firstItem="HcG-Y3-yTX" firstAttribute="bottom" secondItem="Ars-eo-XML" secondAttribute="bottom" constant="294" id="QVg-tL-KLG"/>
-                            <constraint firstItem="Ars-eo-XML" firstAttribute="top" secondItem="HcG-Y3-yTX" secondAttribute="top" constant="166" id="rN3-cV-6fk"/>
-                            <constraint firstItem="Ars-eo-XML" firstAttribute="leading" secondItem="HcG-Y3-yTX" secondAttribute="leading" id="sMw-ij-AzA"/>
-                            <constraint firstItem="Ars-eo-XML" firstAttribute="trailing" secondItem="HcG-Y3-yTX" secondAttribute="trailing" id="sef-Bg-4Gi"/>
-                            <constraint firstItem="Utg-Mf-WVD" firstAttribute="leading" secondItem="HcG-Y3-yTX" secondAttribute="leading" id="vzs-Wz-EIz"/>
+                            <constraint firstItem="Ars-eo-XML" firstAttribute="leading" secondItem="HcG-Y3-yTX" secondAttribute="leading" id="MP3-JK-ZHb"/>
+                            <constraint firstItem="Ars-eo-XML" firstAttribute="trailing" secondItem="HcG-Y3-yTX" secondAttribute="trailing" id="NmH-lQ-g8a"/>
+                            <constraint firstItem="Utg-Mf-WVD" firstAttribute="top" secondItem="v9c-5m-eKB" secondAttribute="top" id="Ucf-v7-K9l"/>
+                            <constraint firstAttribute="bottom" secondItem="Ars-eo-XML" secondAttribute="bottom" id="XAr-f7-zD6"/>
+                            <constraint firstItem="Utg-Mf-WVD" firstAttribute="leading" secondItem="HcG-Y3-yTX" secondAttribute="leading" id="cXK-J5-7uQ"/>
+                            <constraint firstItem="Utg-Mf-WVD" firstAttribute="trailing" secondItem="HcG-Y3-yTX" secondAttribute="trailing" id="k7k-aU-E7K"/>
+                            <constraint firstItem="Ars-eo-XML" firstAttribute="top" secondItem="HcG-Y3-yTX" secondAttribute="top" constant="134" id="lK7-tC-hZs"/>
+                            <constraint firstItem="HcG-Y3-yTX" firstAttribute="bottom" secondItem="Utg-Mf-WVD" secondAttribute="bottom" constant="481" id="mRs-pb-Wkj"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="편지 작성" largeTitleDisplayMode="always" id="ART-WF-vEd"/>
+                    <navigationItem key="navigationItem" title="밤편지 작성" largeTitleDisplayMode="always" style="editor" id="ART-WF-vEd">
+                        <barButtonItem key="rightBarButtonItem" title="보내기" id="MxQ-r2-CTT">
+                            <color key="tintColor" systemColor="labelColor"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="emojiLabel" destination="VG2-DG-hvB" id="fBx-jt-8lG"/>
+                        <outlet property="textView" destination="YoM-qe-Fqc" id="Epx-Pj-CEk"/>
+                        <outlet property="textViewTextNumLabel" destination="MSF-eb-ite" id="4mK-nC-2wA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b38-Aa-ri9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5567.1755725190833" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="5565.6488549618316" y="-11.267605633802818"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hT8-V1-MVJ">
@@ -610,6 +644,12 @@
         <namedColor name="AccentColor">
             <color red="0.99199998378753662" green="0.94900000095367432" blue="0.86299997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
