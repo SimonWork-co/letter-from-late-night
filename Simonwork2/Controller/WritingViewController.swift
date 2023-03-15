@@ -12,25 +12,29 @@ class WritingViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var textViewTextNumLabel: UILabel!
-    @IBOutlet weak var emojiLabel: UILabel!
+    @IBOutlet weak var emojiLabel: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(emojiLabelTapEvent(_:)))
-        view.addGestureRecognizer(tapGesture)
-        view.isUserInteractionEnabled = true
+        let placeholder: String = "작성하신 편지는 밤 사이 보낼게요."
         
+        textViewTextNumLabel.text = "0 / 150자"
         if textView.text.isEmpty {
-            textView.text = "작성하신 편지는 밤 사이 보낼게요."
+            textView.text = placeholder
             textView.alpha = 0.5
         }
         textView.delegate = self
-        textViewTextNumLabel.text = "0 / 150자"
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(emojiLabelTapEvent(_:)))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
     }
     
     @objc func emojiLabelTapEvent(_ gesture: UITapGestureRecognizer) {
            print("이모티콘 클릭")
+        // 1. 키보드 이모티콘 으로 바로 나오게
+        // 2. 한글자 제한
        }
     
 }

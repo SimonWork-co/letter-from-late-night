@@ -15,6 +15,12 @@ class ArchiveViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     let contentList = LetterDataSource.data // DB 연동
     let cellSpacingHeight: CGFloat = 1
+    let formatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateStyle = .long
+        //f.timeStyle = .short
+        return f
+    }()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -37,7 +43,7 @@ class ArchiveViewController: UIViewController, UITableViewDelegate, UITableViewD
         let target = contentList[indexPath.section]
         
         cell.letterTitleLable?.text = target.title
-        cell.letterDateLabel?.text = target.date
+        cell.letterDateLabel?.text = formatter.string(from: target.date)
         
         return cell
     }
