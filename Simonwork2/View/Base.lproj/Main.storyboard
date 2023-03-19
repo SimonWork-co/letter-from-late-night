@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9Dd-a9-fJP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WXA-Q0-NDU">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -7,6 +7,7 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,11 +16,11 @@
             <objects>
                 <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="MainViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="700"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="aH5-eB-uS0">
-                                <rect key="frame" x="30" y="30" width="333" height="435.33333333333331"/>
+                                <rect key="frame" x="30" y="132.99999999999997" width="333" height="435.33333333333326"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owz-aR-nYy">
                                         <rect key="frame" x="9" y="0.0" width="315" height="72"/>
@@ -42,7 +43,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="자정이 지나면 편지를 보낼 수 없어요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3f-3t-khQ">
-                                                <rect key="frame" x="0.0" y="25.666666666666686" width="273" height="21.666666666666671"/>
+                                                <rect key="frame" x="0.0" y="25.666666666666629" width="273" height="21.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="18"/>
                                                 <color key="textColor" red="0.6705882353" green="0.69019607839999997" blue="0.73725490199999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -63,7 +64,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lqk-Sp-IBa">
-                                <rect key="frame" x="108" y="525.33333333333337" width="177" height="38"/>
+                                <rect key="frame" x="108" y="628.33333333333337" width="177" height="38"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="편지 보내기">
                                     <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
@@ -111,18 +112,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4533.5877862595416" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="5460.3053435114498" y="-11.267605633802818"/>
         </scene>
         <!--편지 보관함-->
         <scene sceneID="5a2-8n-fs0">
             <objects>
                 <viewController id="Gye-2z-ukU" customClass="ArchiveViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DnI-KA-kzC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" delaysContentTouches="NO" dataMode="prototypes" style="insetGrouped" sectionIndexMinimumDisplayRowCount="10" rowHeight="120" estimatedRowHeight="-1" sectionHeaderHeight="30" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="m0S-N3-1af">
-                                <rect key="frame" x="0.0" y="32" width="393" height="677"/>
+                                <rect key="frame" x="0.0" y="135" width="393" height="609"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <color key="separatorColor" systemColor="systemYellowColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -193,46 +194,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="wvO-Qx-lbF">
-                                <rect key="frame" x="20" y="622.33333333333337" width="353" height="85.666666666666629"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="7Qx-fx-8Ws">
-                                        <rect key="frame" x="0.0" y="0.0" width="353" height="85.666666666666671"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxj-Fw-88t">
-                                                <rect key="frame" x="0.0" y="0.0" width="353" height="34.666666666666664"/>
-                                                <accessibility key="accessibilityConfiguration">
-                                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
-                                                </accessibility>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" image="google logo" imagePlacement="leading" title=" Google로 로그인">
-                                                    <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="17"/>
-                                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <action selector="googleSignupButtonPressed:" destination="9Dd-a9-fJP" eventType="touchUpInside" id="4BV-Ha-bsk"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pvt-bP-Ege">
-                                                <rect key="frame" x="0.0" y="47.666666666666629" width="353" height="38"/>
-                                                <accessibility key="accessibilityConfiguration">
-                                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
-                                                </accessibility>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" image="Apple Logo" imagePlacement="leading" title=" Apple로 로그인">
-                                                    <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="17"/>
-                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <action selector="appleSignupButtonPressed:" destination="9Dd-a9-fJP" eventType="touchUpInside" id="yoY-EM-QEf"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="N2a-9w-LdB">
                                 <rect key="frame" x="-132" y="61.333333333333314" width="656.33333333333337" height="561"/>
                                 <constraints>
@@ -240,22 +201,70 @@
                                     <constraint firstAttribute="width" constant="656.33000000000004" id="pum-lc-JKB"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uxj-Fw-88t">
+                                <rect key="frame" x="20" y="670.33333333333337" width="353" height="34.666666666666629"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                </accessibility>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" image="google logo" imagePlacement="leading" title=" Google로 로그인">
+                                    <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="googleSignupButtonPressed:" destination="9Dd-a9-fJP" eventType="touchUpInside" id="4BV-Ha-bsk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pvt-bP-Ege">
+                                <rect key="frame" x="20" y="720" width="353" height="38"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                </accessibility>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" image="Apple Logo" imagePlacement="leading" title=" Apple로 로그인">
+                                    <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="appleSignupButtonPressed:" destination="9Dd-a9-fJP" eventType="touchUpInside" id="yoY-EM-QEf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ThU-nh-JY3"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="N2a-9w-LdB" firstAttribute="top" secondItem="ThU-nh-JY3" secondAttribute="top" constant="2.3300000000000001" id="94a-qd-0aW"/>
-                            <constraint firstItem="ThU-nh-JY3" firstAttribute="bottom" secondItem="wvO-Qx-lbF" secondAttribute="bottom" constant="110" id="CrO-LV-gE4"/>
-                            <constraint firstItem="wvO-Qx-lbF" firstAttribute="top" secondItem="N2a-9w-LdB" secondAttribute="bottom" id="HK6-kY-TCg"/>
-                            <constraint firstItem="N2a-9w-LdB" firstAttribute="leading" secondItem="A7X-7H-zMQ" secondAttribute="leading" constant="-132" id="IZQ-t8-rIu"/>
-                            <constraint firstAttribute="trailing" secondItem="wvO-Qx-lbF" secondAttribute="trailing" constant="20" id="QO2-gL-O8e"/>
-                            <constraint firstAttribute="trailing" secondItem="N2a-9w-LdB" secondAttribute="trailing" constant="-131.33000000000001" id="Qlj-dh-zke"/>
-                            <constraint firstItem="wvO-Qx-lbF" firstAttribute="leading" secondItem="ThU-nh-JY3" secondAttribute="leading" constant="20" id="YBT-r7-DSI"/>
-                            <constraint firstItem="ThU-nh-JY3" firstAttribute="trailing" secondItem="wvO-Qx-lbF" secondAttribute="trailing" constant="20" id="jYV-34-qqJ"/>
-                            <constraint firstItem="wvO-Qx-lbF" firstAttribute="leading" secondItem="ThU-nh-JY3" secondAttribute="leading" constant="20" id="ssb-cG-NrB"/>
+                            <constraint firstItem="ThU-nh-JY3" firstAttribute="trailing" secondItem="Pvt-bP-Ege" secondAttribute="trailing" constant="20" id="37I-gv-tbu"/>
+                            <constraint firstItem="Uxj-Fw-88t" firstAttribute="leading" secondItem="ThU-nh-JY3" secondAttribute="leading" constant="20" id="IGr-Fw-jmA"/>
+                            <constraint firstItem="Pvt-bP-Ege" firstAttribute="leading" secondItem="ThU-nh-JY3" secondAttribute="leading" constant="20" id="LAj-0Y-O7g"/>
+                            <constraint firstItem="N2a-9w-LdB" firstAttribute="top" secondItem="A7X-7H-zMQ" secondAttribute="top" constant="61.329999999999998" id="Lvd-fz-X1d"/>
+                            <constraint firstItem="N2a-9w-LdB" firstAttribute="leading" secondItem="A7X-7H-zMQ" secondAttribute="leading" constant="-132" id="Srx-pc-61M"/>
+                            <constraint firstAttribute="trailing" secondItem="N2a-9w-LdB" secondAttribute="trailing" constant="-131.33000000000001" id="TIn-Hk-VFM"/>
+                            <constraint firstItem="ThU-nh-JY3" firstAttribute="bottom" secondItem="Pvt-bP-Ege" secondAttribute="bottom" constant="60" id="Z4p-Jq-J8M"/>
+                            <constraint firstItem="N2a-9w-LdB" firstAttribute="leading" secondItem="A7X-7H-zMQ" secondAttribute="leading" constant="-132" id="ahI-NX-0BQ"/>
+                            <constraint firstAttribute="trailing" secondItem="N2a-9w-LdB" secondAttribute="trailing" constant="-131.33000000000001" id="c94-Fq-YRq"/>
+                            <constraint firstItem="Pvt-bP-Ege" firstAttribute="top" secondItem="Uxj-Fw-88t" secondAttribute="bottom" constant="15" id="jLV-GD-P40"/>
+                            <constraint firstItem="ThU-nh-JY3" firstAttribute="trailing" secondItem="Uxj-Fw-88t" secondAttribute="trailing" constant="20" id="oHK-KQ-znn"/>
+                            <constraint firstItem="N2a-9w-LdB" firstAttribute="top" secondItem="A7X-7H-zMQ" secondAttribute="top" constant="61.329999999999998" id="rah-gf-He8"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="g7B-aS-80z"/>
+                    <navigationItem key="navigationItem" id="g7B-aS-80z">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="4EB-MZ-wL1">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="UU1-ws-ZGK">
+                                <rect key="frame" x="323" y="4.6666666666666679" width="54" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" name="AccentColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="임시">
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="btn:" destination="9Dd-a9-fJP" eventType="touchUpInside" id="iMG-F7-bcp"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="appleSignupButton" destination="Pvt-bP-Ege" id="8AZ-Ji-6rF"/>
                         <outlet property="googleSignupButton" destination="Uxj-Fw-88t" id="Z1Q-wu-Ibn"/>
@@ -264,25 +273,43 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="loA-bF-M6K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2219.0839694656488" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="3145.801526717557" y="-11.267605633802818"/>
         </scene>
         <!--밤편지 작성-->
         <scene sceneID="aYr-5H-zTO">
             <objects>
                 <viewController id="5Tl-Pd-vTT" customClass="WritingViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v9c-5m-eKB">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="700"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Utg-Mf-WVD">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="170"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="239"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nRb-Kx-Nua">
+                                        <rect key="frame" x="276" y="192" width="109" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <menu key="menu" id="Pwx-x0-yqr">
+                                            <children>
+                                                <command title="Item 1" id="3Ky-Rf-zHx"/>
+                                                <command title="Item 2" id="W4V-1s-CcH"/>
+                                            </children>
+                                        </menu>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Button">
+                                            <color key="baseForegroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.75294117650000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ars-eo-XML">
-                                <rect key="frame" x="0.0" y="134" width="393" height="566"/>
+                                <rect key="frame" x="0.0" y="237" width="393" height="532"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YoM-qe-Fqc">
-                                        <rect key="frame" x="62" y="77" width="268" height="212"/>
+                                        <rect key="frame" x="62" y="77" width="268" height="178"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -330,13 +357,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="colorButton" destination="nRb-Kx-Nua" id="eqI-Mu-xen"/>
+                        <outlet property="letterBg" destination="Utg-Mf-WVD" id="FoF-LN-vlP"/>
                         <outlet property="textView" destination="YoM-qe-Fqc" id="Epx-Pj-CEk"/>
                         <outlet property="textViewTextNumLabel" destination="MSF-eb-ite" id="4mK-nC-2wA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b38-Aa-ri9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5565.6488549618316" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="6492.3664122137397" y="-11.267605633802818"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hT8-V1-MVJ">
@@ -358,7 +387,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ob3-1W-rva" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3651.1450381679388" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="4577.8625954198469" y="-11.267605633802818"/>
         </scene>
         <!--Letter View Controller-->
         <scene sceneID="d9T-LA-DS9">
@@ -374,6 +403,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UFT-k7-cKX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4534" y="751"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1kd-p5-QPM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WXA-Q0-NDU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KXm-hO-HeV">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9Dd-a9-fJP" kind="relationship" relationship="rootViewController" id="r7h-Ms-EYX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hta-jG-ION" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2219.0839694656488" y="-11.267605633802818"/>
         </scene>
     </scenes>
     <resources>

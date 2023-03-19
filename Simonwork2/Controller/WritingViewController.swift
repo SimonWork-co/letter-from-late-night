@@ -13,6 +13,9 @@ class WritingViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var textViewTextNumLabel: UILabel!
+    @IBOutlet weak var colorButton: UIButton!
+    @IBOutlet weak var letterBg: UIView!
+    
     private lazy var emojiButton: UIButton = {
             let button = UIButton()
             button.setTitle("😃", for: .normal)
@@ -24,7 +27,6 @@ class WritingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let placeholder: String = "작성하신 편지는 밤 사이 보낼게요."
         
         textViewTextNumLabel.text = "0 / 150자"
@@ -35,6 +37,26 @@ class WritingViewController: UIViewController {
         textView.delegate = self
         
         setupView()
+        
+        colorButton.layer.cornerRadius = 10
+        setupColorButton()
+    }
+    
+    func setupColorButton() {
+        let popUpButtonClosure = { [self] (action: UIAction) in
+            let result = self.colorButton.currentTitle!
+            print(result)
+            // 해결 필요~~~ 색 안바뀜. 배열 하나 만들어서 바꿔줘야할듯
+            letterBg.backgroundColor = UIColor(named: result)
+        }
+        
+        colorButton.menu = UIMenu(children: [
+            UIAction(title: "Pupple", handler: popUpButtonClosure),
+            UIAction(title: "Yellow", handler: popUpButtonClosure),
+            UIAction(title: "Olive", handler: popUpButtonClosure),
+            UIAction(title: "Skyblue", handler: popUpButtonClosure)
+        ])
+        colorButton.showsMenuAsPrimaryAction = true
     }
     
     private func setupView() {

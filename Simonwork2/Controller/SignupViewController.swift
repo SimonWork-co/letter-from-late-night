@@ -144,6 +144,10 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         appleSignupButton.layer.cornerRadius = 10
 
     }
+        
+    @IBAction func btn(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "signupToMain", sender: self)
+    }
     
     @IBAction func googleSignupButtonPressed(_ sender: Any) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
