@@ -522,12 +522,6 @@
                                         <color key="textColor" red="0.67450982329999998" green="0.60392159219999997" blue="0.78823530669999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="😊" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VG2-DG-hvB" userLabel="emojiLabel">
-                                        <rect key="frame" x="20" y="-35" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -557,7 +551,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="emojiLabel" destination="VG2-DG-hvB" id="fBx-jt-8lG"/>
                         <outlet property="textView" destination="YoM-qe-Fqc" id="Epx-Pj-CEk"/>
                         <outlet property="textViewTextNumLabel" destination="MSF-eb-ite" id="4mK-nC-2wA"/>
                     </connections>

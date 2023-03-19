@@ -13,5 +13,6 @@ target 'Simonwork2' do
   pod 'Firebase/Core'
   pod 'FirebaseUI/Google'
   pod 'GoogleSignIn'
+  pod 'EmojiPicker', :git => 'https://github.com/htmlprogrammist/EmojiPicker'
 
 end

@@ -608,6 +608,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
+  - EmojiPicker (3.0.9)
   - FBAEMKit (14.1.0):
     - FBSDKCoreKit_Basics (= 14.1.0)
   - FBSDKCoreKit (14.1.0):
@@ -870,6 +871,7 @@ PODS:
   - SDWebImage/Core (5.15.5)
 
 DEPENDENCIES:
+  - EmojiPicker (from `https://github.com/htmlprogrammist/EmojiPicker`)
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
@@ -923,10 +925,20 @@ SPEC REPOS:
     - PromisesObjC
     - SDWebImage
 
+EXTERNAL SOURCES:
+  EmojiPicker:
+    :git: https://github.com/htmlprogrammist/EmojiPicker
+
+CHECKOUT OPTIONS:
+  EmojiPicker:
+    :commit: 1cba68ef26e9d23d04239e79927f612b032e3d14
+    :git: https://github.com/htmlprogrammist/EmojiPicker
+
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
+  EmojiPicker: 67fa5a3cf1b32885248388087cc5ebeebc7de647
   FBAEMKit: a899515e45476027f73aef377b5cffadcd56ca3a
   FBSDKCoreKit: 24f8bc8d3b5b2a8c5c656a1329492a12e8efa792
   FBSDKCoreKit_Basics: 6e578c9bdc7aa1365dbbbde633c9ebb536bcaa98
@@ -967,6 +979,6 @@ SPEC CHECKSUMS:
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
 
-PODFILE CHECKSUM: 01b04bc90c86fc81cdcaacff89ffd5a28cfe9575
+PODFILE CHECKSUM: 9f2ff0a4a7f026ebe67d52eea827ad4f91ee2872
 
 COCOAPODS: 1.12.0

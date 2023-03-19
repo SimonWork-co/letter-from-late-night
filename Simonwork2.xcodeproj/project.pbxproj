@@ -25,6 +25,7 @@
 		8DAA05D029BB20A0008D8167 /* CustomizedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */; };
 		8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */; };
 		DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */; };
+		DEF46A1929C2F97700D153B1 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DEF46A1829C2F97700D153B1 /* EmojiPicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4585C6A91E51DC91CD052941 /* Pods_Simonwork2.framework in Frameworks */,
+				DEF46A1929C2F97700D153B1 /* EmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +170,9 @@
 			dependencies = (
 			);
 			name = Simonwork2;
+			packageProductDependencies = (
+				DEF46A1829C2F97700D153B1 /* EmojiPicker */,
+			);
 			productName = Simonwork2;
 			productReference = 8D9EFF1229B85049008D2050 /* Simonwork2.app */;
 			productType = "com.apple.product-type.application";
@@ -196,6 +201,9 @@
 				Base,
 			);
 			mainGroup = 8D9EFF0929B85049008D2050;
+			packageReferences = (
+				DEF46A1729C2F97700D153B1 /* XCRemoteSwiftPackageReference "EmojiPicker" */,
+			);
 			productRefGroup = 8D9EFF1329B85049008D2050 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -506,6 +514,26 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DEF46A1729C2F97700D153B1 /* XCRemoteSwiftPackageReference "EmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/htmlprogrammist/EmojiPicker";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 4.0.0;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DEF46A1829C2F97700D153B1 /* EmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEF46A1729C2F97700D153B1 /* XCRemoteSwiftPackageReference "EmojiPicker" */;
+			productName = EmojiPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8D9EFF0A29B85049008D2050 /* Project object */;
 }

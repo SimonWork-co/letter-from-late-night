@@ -7,12 +7,20 @@
 
 import UIKit
 import Foundation
+import EmojiPicker
 
 class WritingViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var textViewTextNumLabel: UILabel!
-    @IBOutlet weak var emojiLabel: UITextField!
+    private lazy var emojiButton: UIButton = {
+            let button = UIButton()
+            button.setTitle("😃", for: .normal)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 70)
+            button.addTarget(self, action: #selector(openEmojiPickerModule), for: .touchUpInside)
+            button.translatesAutoresizingMaskIntoConstraints = false // constraint와 충돌 방지
+            return button
+        }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,17 +34,45 @@ class WritingViewController: UIViewController {
         }
         textView.delegate = self
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(emojiLabelTapEvent(_:)))
-        view.addGestureRecognizer(tapGesture)
-        view.isUserInteractionEnabled = true
+        setupView()
     }
     
-    @objc func emojiLabelTapEvent(_ gesture: UITapGestureRecognizer) {
-           print("이모티콘 클릭")
-        // 1. 키보드 이모티콘 으로 바로 나오게
-        // 2. 한글자 제한
-       }
-    
+    private func setupView() {
+            view.backgroundColor = .white
+            view.addSubview(emojiButton) // 필수: label을 view에 끌어다놓는 작업
+            
+            NSLayoutConstraint.activate([
+                emojiButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                emojiButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90), // 높이
+                emojiButton.heightAnchor.constraint(equalToConstant: 80),
+                emojiButton.widthAnchor.constraint(equalToConstant: 80),
+                
+                emojiButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10), // 좌
+                emojiButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -240), // 우
+            ])
+        }
+
+    @objc private func openEmojiPickerModule(sender: UIButton) {
+        let viewController = EmojiPickerViewController()
+        viewController.sourceView = sender
+        viewController.delegate = self
+        
+        // Optional parameters
+        viewController.selectedEmojiCategoryTintColor = .systemRed
+        viewController.arrowDirection = .up
+        viewController.horizontalInset = 16
+        viewController.isDismissedAfterChoosing = true
+        viewController.customHeight = 300
+        viewController.feedbackGeneratorStyle = .soft
+        
+        present(viewController, animated: true)
+    }
+}
+
+extension WritingViewController: EmojiPickerDelegate {
+    func didGetEmoji(emoji: String) {
+        emojiButton.setTitle(emoji, for: .normal)
+    }
 }
 
 extension WritingViewController: UITextViewDelegate{
