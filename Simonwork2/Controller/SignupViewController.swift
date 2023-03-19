@@ -132,28 +132,17 @@ extension SignupViewController : ASAuthorizationControllerPresentationContextPro
 
 class SignupViewController: UIViewController, FUIAuthDelegate {
     
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var signupButton: UIButton!
+    //emailTextField passwordTextField signupButton
     @IBOutlet weak var googleSignupButton: GIDSignInButton!
     @IBOutlet weak var appleSignupButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        googleSignupButton.layer.cornerRadius = 10
+        googleSignupButton.layer.borderWidth = 0.75
+        appleSignupButton.layer.cornerRadius = 10
 
-    }
-    
-    @IBAction func signupButtonPressed(_ sender: UIButton) {
-        if let email = emailTextField.text, let password = passwordTextField.text {
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if let e = error {
-                    print(e.localizedDescription)
-                } else {
-                    // navigate to the ChatViewController
-                    self.performSegue(withIdentifier: "signupToMain", sender: self)
-                }
-            }
-        }
     }
     
     @IBAction func googleSignupButtonPressed(_ sender: Any) {
