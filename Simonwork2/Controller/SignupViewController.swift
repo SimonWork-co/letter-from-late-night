@@ -17,6 +17,10 @@ import AuthenticationServices
 import CryptoKit
 
 fileprivate var currentNonce: String?
+var userData = UserData()
+
+let db = Firestore.firestore()
+var data: [UserData] = []
 
 extension SignupViewController {
     
@@ -68,14 +72,12 @@ extension SignupViewController {
                 if remainingLength == 0 {
                     return
                 }
-                
                 if random < charset.count {
                     result.append(charset[Int(random)])
                     remainingLength -= 1
                 }
             }
         }
-        
         return result
     }
 }
@@ -90,20 +92,26 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             // 동일한 요청을 짧은 시간에 여러번 보내는 릴레이 공격 방지
             // 정보 탈취 없이 안전하게 인증 정보 전달을 위한 안전장치
             
+            // 이름
+            userData.userName = appleIDCredential.fullName?.description ?? ""
+            userData.userEmail = appleIDCredential.email?.description ?? ""
+            // accessToken (Data -> 아스키 인코딩 -> 스트링)
+            //let accessToken = String(data: appleIDCredential.identityToken!, encoding: .ascii) ?? ""
+            
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
                 // 안전하게 인증 정보를 전달하기 위해 nonce 사용
-            
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
                 print("Unable to fetch identity token")
                 return
             }
+                      
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
                 print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                 return
             }
-            
+ 
             // token들로 credential을 구성해서 auth signin 구성 (google과 동일)
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
             
@@ -119,6 +127,7 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                 mainViewController.modalPresentationStyle = .fullScreen
                 self.navigationController?.show(mainViewController, sender: nil)
             }
+
         }
     }
 }
@@ -128,7 +137,6 @@ extension SignupViewController : ASAuthorizationControllerPresentationContextPro
         return self.view.window!
     }
 }
-
 
 class SignupViewController: UIViewController, FUIAuthDelegate {
     
@@ -140,7 +148,44 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        loadMessages()
+    }
+    
+    func loadMessages() {
+        
+        db.collection("UserData")
+            .order(by: "date")
+            .addSnapshotListener { (querySnapshot, error) in
+            
+            self.data = []
+            
+            if let e = error {
+                print("There was an issue retrieving data from Firestore. \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        if let sender = data["sender"] as? String, let messageBody = data["body"] as? String {
+                            let newUserData = UserData(userEmail: <#T##String#>, userName: <#T##String#>)
+                            self.data.append(newUserData)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func userNameFunc(userName: String) -> String! {
+        let userName = userData.userName
+        print(userName)
+        return userName
+    }
+    
+    func userEmailFunc(userEmail: String) -> String! {
+        let userEmail = userEmail
+        print(userEmail)
+        return userEmail
     }
     
     @IBAction func signupButtonPressed(_ sender: UIButton) {
@@ -166,7 +211,14 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                 return
             }
             
-            guard let authentication = user?.authentication, let idToken = authentication.idToken else { return }
+            guard let authentication = user?.authentication, let idToken = authentication.idToken else {
+                return }
+            guard let userName = user?.profile?.name, let userEmail = user?.profile?.email else {
+                return
+            }
+            
+            userData.userName = userName // 유저 이름을 UserData에 저장
+            userData.userEmail = userEmail // 유저 이름을 UserData에 저장
             
             //GIDSignIn을 통해 받은 idToken, accessToken으로 Firebase에 로그인
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
@@ -187,20 +239,21 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     
     @IBAction func appleSignupButtonPressed(_ sender: UIButton) {
         startSignInWithAppleFlow()
+        // 애플 accessToken -> 구글 토큰 유효성 확인 및 프로필 정보 얻기
     }
     
-//    func reAuthentication() {
-//        // Initialize a fresh Apple credential with Firebase.
-//        let credential = OAuthProvider.credential(
-//          withProviderID: "apple.com",
-//          IDToken: appleIdToken,
-//          rawNonce: rawNonce
-//        )
-//        // Reauthenticate current Apple user with fresh Apple credential.
-//        Auth.auth().currentUser.reauthenticate(with: credential) { (authResult, error) in
-//          guard error != nil else { return }
-//          // Apple user successfully re-authenticated.
-//          // ...
-//        }
-//    }
+    //    func reAuthentication() {
+    //        // Initialize a fresh Apple credential with Firebase.
+    //        let credential = OAuthProvider.credential(
+    //          withProviderID: "apple.com",
+    //          IDToken: appleIdToken,
+    //          rawNonce: rawNonce
+    //        )
+    //        // Reauthenticate current Apple user with fresh Apple credential.
+    //        Auth.auth().currentUser.reauthenticate(with: credential) { (authResult, error) in
+    //          guard error != nil else { return }
+    //          // Apple user successfully re-authenticated.
+    //          // ...
+    //        }
+    //    }
 }
