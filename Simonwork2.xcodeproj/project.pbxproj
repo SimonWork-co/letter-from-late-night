@@ -12,8 +12,6 @@
 		8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375E829B9A7AD0028427F /* SignupViewController.swift */; };
 		8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375EA29B9A9010028427F /* ArchiveController.swift */; };
 		8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */; };
-		8D64C32C29B9B0E400B347B5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32B29B9B0E400B347B5 /* LoginViewController.swift */; };
-		8D64C32E29B9B15300B347B5 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32D29B9B15300B347B5 /* EntryViewController.swift */; };
 		8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1529B85049008D2050 /* AppDelegate.swift */; };
 		8D9EFF1829B85049008D2050 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1729B85049008D2050 /* SceneDelegate.swift */; };
 		8D9EFF1A29B85049008D2050 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1929B85049008D2050 /* MainViewController.swift */; };
@@ -24,7 +22,11 @@
 		8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA1A1DB29BB0A2900A37C0E /* LetterDataSource.swift */; };
 		8DAA05D029BB20A0008D8167 /* CustomizedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */; };
 		8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */; };
+		DE863BCA29C6E40C00208AE8 /* NanumMyeongjoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */; };
+		DE863BCB29C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */; };
+		DE863BCC29C6E40C00208AE8 /* NanumMyeongjo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC929C6E40C00208AE8 /* NanumMyeongjo.ttf */; };
 		DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */; };
+		DEF46A1929C2F97700D153B1 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DEF46A1829C2F97700D153B1 /* EmojiPicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +36,6 @@
 		8D4375E829B9A7AD0028427F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		8D4375EA29B9A9010028427F /* ArchiveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveController.swift; sourceTree = "<group>"; };
 		8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
-		8D64C32B29B9B0E400B347B5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		8D64C32D29B9B15300B347B5 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		8D9EFF1229B85049008D2050 /* Simonwork2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simonwork2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D9EFF1529B85049008D2050 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D9EFF1729B85049008D2050 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +50,9 @@
 		8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomizedCell.xib; path = Simonwork2/Model/CustomizedCell.xib; sourceTree = SOURCE_ROOT; };
 		8DFDE4AD29C0E423005A9574 /* Simonwork2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Simonwork2.entitlements; sourceTree = "<group>"; };
 		CFC6BF28DF021EDA9267FA93 /* Pods-Simonwork2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2.release.xcconfig"; path = "Target Support Files/Pods-Simonwork2/Pods-Simonwork2.release.xcconfig"; sourceTree = "<group>"; };
+		DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoBold.ttf; sourceTree = "<group>"; };
+		DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoExtraBold.ttf; sourceTree = "<group>"; };
+		DE863BC929C6E40C00208AE8 /* NanumMyeongjo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjo.ttf; sourceTree = "<group>"; };
 		DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +62,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4585C6A91E51DC91CD052941 /* Pods_Simonwork2.framework in Frameworks */,
+				DEF46A1929C2F97700D153B1 /* EmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +107,7 @@
 		8D9EFF1429B85049008D2050 /* Simonwork2 */ = {
 			isa = PBXGroup;
 			children = (
+				DE863BC629C6E39200208AE8 /* Fonts */,
 				8DFDE4AD29C0E423005A9574 /* Simonwork2.entitlements */,
 				8D9EFF2929B85067008D2050 /* Model */,
 				8D9EFF2C29B85087008D2050 /* View */,
@@ -130,9 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				8D402DA829C0406A0010D80C /* NavigationController.swift */,
-				8D64C32D29B9B15300B347B5 /* EntryViewController.swift */,
 				8D4375E829B9A7AD0028427F /* SignupViewController.swift */,
-				8D64C32B29B9B0E400B347B5 /* LoginViewController.swift */,
 				8D9EFF1929B85049008D2050 /* MainViewController.swift */,
 				8D9EFF2F29B9A74A008D2050 /* WritingViewController.swift */,
 				8D4375EA29B9A9010028427F /* ArchiveController.swift */,
@@ -148,6 +151,16 @@
 				8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		DE863BC629C6E39200208AE8 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DE863BC929C6E40C00208AE8 /* NanumMyeongjo.ttf */,
+				DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */,
+				DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +181,9 @@
 			dependencies = (
 			);
 			name = Simonwork2;
+			packageProductDependencies = (
+				DEF46A1829C2F97700D153B1 /* EmojiPicker */,
+			);
 			productName = Simonwork2;
 			productReference = 8D9EFF1229B85049008D2050 /* Simonwork2.app */;
 			productType = "com.apple.product-type.application";
@@ -196,6 +212,9 @@
 				Base,
 			);
 			mainGroup = 8D9EFF0929B85049008D2050;
+			packageReferences = (
+				DEF46A1729C2F97700D153B1 /* XCRemoteSwiftPackageReference "EmojiPicker" */,
+			);
 			productRefGroup = 8D9EFF1329B85049008D2050 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -211,7 +230,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D9EFF2229B8504B008D2050 /* LaunchScreen.storyboard in Resources */,
+				DE863BCB29C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf in Resources */,
+				DE863BCA29C6E40C00208AE8 /* NanumMyeongjoBold.ttf in Resources */,
 				8D9EFF1F29B8504B008D2050 /* Assets.xcassets in Resources */,
+				DE863BCC29C6E40C00208AE8 /* NanumMyeongjo.ttf in Resources */,
 				DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */,
 				8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */,
 				8D9EFF1D29B85049008D2050 /* Main.storyboard in Resources */,
@@ -273,8 +295,6 @@
 				8DAA05D029BB20A0008D8167 /* CustomizedCell.swift in Sources */,
 				8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */,
 				8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */,
-				8D64C32C29B9B0E400B347B5 /* LoginViewController.swift in Sources */,
-				8D64C32E29B9B15300B347B5 /* EntryViewController.swift in Sources */,
 				8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */,
 				8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */,
 				8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */,
@@ -506,6 +526,26 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DEF46A1729C2F97700D153B1 /* XCRemoteSwiftPackageReference "EmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/htmlprogrammist/EmojiPicker";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 4.0.0;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DEF46A1829C2F97700D153B1 /* EmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEF46A1729C2F97700D153B1 /* XCRemoteSwiftPackageReference "EmojiPicker" */;
+			productName = EmojiPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8D9EFF0A29B85049008D2050 /* Project object */;
 }
