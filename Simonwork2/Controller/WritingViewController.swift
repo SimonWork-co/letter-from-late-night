@@ -39,22 +39,23 @@ class WritingViewController: UIViewController {
         setupView()
         
         colorButton.layer.cornerRadius = 10
-        setupColorButton()
+        setupColorButton(colorButton)
     }
     
-    func setupColorButton() {
+    @IBAction func setupColorButton(_ sender: UIButton) {
+        let colorDics: Dictionary<String, UIColor> = ["Pupple": #colorLiteral(red: 0.6891200542, green: 0.6007183194, blue: 0.8024315238, alpha: 1), "Yellow": #colorLiteral(red: 0.9509314895, green: 0.9013540745, blue: 0, alpha: 1), "Tree": #colorLiteral(red: 0, green: 0.5727785826, blue: 0.324849844, alpha: 1), "Sky": #colorLiteral(red: 0.3175336123, green: 0.6844244003, blue: 0.9497999549, alpha: 1)]
+        
         let popUpButtonClosure = { [self] (action: UIAction) in
-            let result = self.colorButton.currentTitle!
-            print(result)
-            // 해결 필요~~~ 색 안바뀜. 배열 하나 만들어서 바꿔줘야할듯
-            letterBg.backgroundColor = UIColor(named: result)
+            var userSelectedColor = self.colorButton.currentTitle!
+            letterBg.backgroundColor = colorDics[userSelectedColor]
+            print(userSelectedColor)
         }
         
         colorButton.menu = UIMenu(children: [
             UIAction(title: "Pupple", handler: popUpButtonClosure),
             UIAction(title: "Yellow", handler: popUpButtonClosure),
-            UIAction(title: "Olive", handler: popUpButtonClosure),
-            UIAction(title: "Skyblue", handler: popUpButtonClosure)
+            UIAction(title: "Tree", handler: popUpButtonClosure),
+            UIAction(title: "Sky", handler: popUpButtonClosure)
         ])
         colorButton.showsMenuAsPrimaryAction = true
     }
