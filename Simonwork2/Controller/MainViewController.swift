@@ -19,13 +19,27 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
-        
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+            print("로그아웃 성공")
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
+        }
     }
     
     @IBAction func profileButton(_ sender: UIBarButtonItem) {
         //GIDSignIn.sharedInstance.signOut()
         print("worked!")
         navigationController?.popToRootViewController(animated: true)
+        
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+            print("로그아웃 성공")
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
+        }
     }
 }
 

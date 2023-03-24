@@ -6,3 +6,15 @@
 //
 
 import Foundation
+<<<<<<< HEAD
+
+struct UserData {
+    var userName : String
+    var userEmail : String
+    let friendCode : String
+    let pairFriendCode : String
+    let signupTime : Date
+    let letterCount : Int
+}
+=======
+>>>>>>> main
