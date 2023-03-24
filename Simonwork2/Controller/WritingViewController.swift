@@ -7,16 +7,12 @@
 
 import UIKit
 import Foundation
-<<<<<<< HEAD
 import EmojiPicker
-=======
->>>>>>> ecb0760 (feat: WritingViewController)
 
 class WritingViewController: UIViewController {
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var textViewTextNumLabel: UILabel!
-<<<<<<< HEAD
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var letterBg: UIView!
     
@@ -43,25 +39,26 @@ class WritingViewController: UIViewController {
         setupView()
         
         colorButton.layer.cornerRadius = 10
-        setupColorButton()
+        setupColorButton(colorButton)
     }
     
-    func setupColorButton() {
-        let popUpButtonClosure = { [self] (action: UIAction) in
-            let result = self.colorButton.currentTitle!
-            print(result)
-            // 해결 필요~~~ 색 안바뀜. 배열 하나 만들어서 바꿔줘야할듯
-            letterBg.backgroundColor = UIColor(named: result)
-        }
-        
-        colorButton.menu = UIMenu(children: [
-            UIAction(title: "Pupple", handler: popUpButtonClosure),
-            UIAction(title: "Yellow", handler: popUpButtonClosure),
-            UIAction(title: "Olive", handler: popUpButtonClosure),
-            UIAction(title: "Skyblue", handler: popUpButtonClosure)
-        ])
-        colorButton.showsMenuAsPrimaryAction = true
-    }
+    @IBAction func setupColorButton(_ sender: UIButton) {
+        let colorDics: Dictionary<String, UIColor> = ["Pupple": #colorLiteral(red: 0.6891200542, green: 0.6007183194, blue: 0.8024315238, alpha: 1), "Yellow": #colorLiteral(red: 0.9509314895, green: 0.9013540745, blue: 0, alpha: 1), "Tree": #colorLiteral(red: 0, green: 0.5727785826, blue: 0.324849844, alpha: 1), "Sky": #colorLiteral(red: 0.3175336123, green: 0.6844244003, blue: 0.9497999549, alpha: 1)]
+                
+                let popUpButtonClosure = { [self] (action: UIAction) in
+                    var userSelectedColor = self.colorButton.currentTitle!
+                    letterBg.backgroundColor = colorDics[userSelectedColor]
+                    print(userSelectedColor)
+                }
+                
+                colorButton.menu = UIMenu(children: [
+                    UIAction(title: "Pupple", handler: popUpButtonClosure),
+                    UIAction(title: "Yellow", handler: popUpButtonClosure),
+                    UIAction(title: "Tree", handler: popUpButtonClosure),
+                    UIAction(title: "Sky", handler: popUpButtonClosure)
+                ])
+                colorButton.showsMenuAsPrimaryAction = true
+            }
     
     private func setupView() {
             view.backgroundColor = .white
@@ -127,55 +124,4 @@ extension WritingViewController: UITextViewDelegate{
         textViewTextNumLabel.text = "\(changedText.count) / 150자"
         return changedText.count <= 5 // 150자
     }
-=======
-    @IBOutlet weak var emojiLabel: UILabel!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(emojiLabelTapEvent(_:)))
-        view.addGestureRecognizer(tapGesture)
-        view.isUserInteractionEnabled = true
-        
-        if textView.text.isEmpty {
-            textView.text = "작성하신 편지는 밤 사이 보낼게요."
-            textView.alpha = 0.5
-        }
-        textView.delegate = self
-        textViewTextNumLabel.text = "0 / 150자"
-    }
-    
-    @objc func emojiLabelTapEvent(_ gesture: UITapGestureRecognizer) {
-           print("이모티콘 클릭")
-       }
-    
-}
-
-extension WritingViewController: UITextViewDelegate{
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        textView.text = nil
-        textView.alpha = 1
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "작성하신 편지는 밤 사이 보낼게요."
-            textView.alpha = 0.5
-            
-            textViewTextNumLabel.text = "0 / 150자"
-        }
-    }
-    
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = textView.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else {return false}
-        
-        let changedText = currentText.replacingCharacters(in: stringRange, with: text)
-        
-        textViewTextNumLabel.text = "\(changedText.count) / 150자"
-        return changedText.count <= 5 // 150자
-    }
->>>>>>> ecb0760 (feat: WritingViewController)
 }
