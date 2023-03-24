@@ -46,7 +46,7 @@ class WritingViewController: UIViewController {
         let colorDics: Dictionary<String, UIColor> = ["Pupple": #colorLiteral(red: 0.6891200542, green: 0.6007183194, blue: 0.8024315238, alpha: 1), "Yellow": #colorLiteral(red: 0.9509314895, green: 0.9013540745, blue: 0, alpha: 1), "Tree": #colorLiteral(red: 0, green: 0.5727785826, blue: 0.324849844, alpha: 1), "Sky": #colorLiteral(red: 0.3175336123, green: 0.6844244003, blue: 0.9497999549, alpha: 1)]
         
         let popUpButtonClosure = { [self] (action: UIAction) in
-            var userSelectedColor = self.colorButton.currentTitle!
+            let userSelectedColor = self.colorButton.currentTitle!
             letterBg.backgroundColor = colorDics[userSelectedColor]
             print(userSelectedColor)
         }
