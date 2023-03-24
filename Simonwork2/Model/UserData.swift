@@ -6,7 +6,6 @@
 //
 
 import Foundation
-<<<<<<< HEAD
 
 struct UserData {
     var userName : String
@@ -16,5 +15,3 @@ struct UserData {
     let signupTime : Date
     let letterCount : Int
 }
-=======
->>>>>>> main
