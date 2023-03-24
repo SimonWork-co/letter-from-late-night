@@ -11,7 +11,7 @@ import GoogleSignIn
 
 class MainViewController: UIViewController {
     
-    @IBOutlet weak var settingButton: UIBarButtonItem!
+    @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var dayCountingLabel: UILabel!
     @IBOutlet weak var todayDateLabel: UILabel!
     @IBOutlet weak var letterSendButton: UIButton!
@@ -41,5 +41,10 @@ class MainViewController: UIViewController {
           print("Error signing out: %@", signOutError)
         }
     }
+    
+    @IBAction func settingButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "mainToSetting", sender: self)
+    }
+
 }
 
