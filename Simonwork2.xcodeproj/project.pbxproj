@@ -15,11 +15,13 @@
 		8D6182FC29C88F1500A85BFB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182FB29C88F1500A85BFB /* Constants.swift */; };
 		8D6182FE29C88FCA00A85BFB /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182FD29C88FCA00A85BFB /* ServerData.swift */; };
 		8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */; };
+		8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */; };
 		8D675F0429C7410A0078042A /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D675F0329C7410A0078042A /* UserData.swift */; };
 		8D985CED29CC2D3600C04AA8 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */; };
 		8D985CEF29CC2E2D00C04AA8 /* ConnectTypingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */; };
 		8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */; };
 		8D985CF329CC2E5C00C04AA8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CF229CC2E5C00C04AA8 /* StartViewController.swift */; };
+		8D985CF529CD722700C04AA8 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CF429CD722700C04AA8 /* SettingViewController.swift */; };
 		8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1529B85049008D2050 /* AppDelegate.swift */; };
 		8D9EFF1829B85049008D2050 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1729B85049008D2050 /* SceneDelegate.swift */; };
 		8D9EFF1A29B85049008D2050 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1929B85049008D2050 /* MainViewController.swift */; };
@@ -47,11 +49,13 @@
 		8D6182FB29C88F1500A85BFB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8D6182FD29C88FCA00A85BFB /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
 		8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
+		8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentLetterViewController.swift; sourceTree = "<group>"; };
 		8D675F0329C7410A0078042A /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTypingViewController.swift; sourceTree = "<group>"; };
 		8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingViewController.swift; sourceTree = "<group>"; };
 		8D985CF229CC2E5C00C04AA8 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		8D985CF429CD722700C04AA8 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		8D9EFF1229B85049008D2050 /* Simonwork2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simonwork2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D9EFF1529B85049008D2050 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D9EFF1729B85049008D2050 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 				8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */,
 				8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */,
 				8D985CF229CC2E5C00C04AA8 /* StartViewController.swift */,
+				8D985CF429CD722700C04AA8 /* SettingViewController.swift */,
+				8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -324,11 +330,13 @@
 				8DAA05D029BB20A0008D8167 /* CustomizedCell.swift in Sources */,
 				8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */,
 				8D675F0429C7410A0078042A /* UserData.swift in Sources */,
+				8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */,
 				8D6182FC29C88F1500A85BFB /* Constants.swift in Sources */,
 				8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */,
 				8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */,
 				8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */,
 				8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */,
+				8D985CF529CD722700C04AA8 /* SettingViewController.swift in Sources */,
 				8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */,
 				8D9EFF1829B85049008D2050 /* SceneDelegate.swift in Sources */,
 			);

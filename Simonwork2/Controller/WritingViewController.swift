@@ -15,6 +15,7 @@ class WritingViewController: UIViewController {
     @IBOutlet weak var textViewTextNumLabel: UILabel!
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var letterBg: UIView!
+    @IBOutlet weak var widgetSizeButton: UIButton!
     
     private lazy var emojiButton: UIButton = {
             let button = UIButton()
@@ -40,6 +41,7 @@ class WritingViewController: UIViewController {
         
         colorButton.layer.cornerRadius = 10
         setupColorButton(colorButton)
+        widgetSizeButtonPressed(widgetSizeButton)
     }
     
     @IBAction func setupColorButton(_ sender: UIButton) {
@@ -69,7 +71,6 @@ class WritingViewController: UIViewController {
                 emojiButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90), // 높이
                 emojiButton.heightAnchor.constraint(equalToConstant: 80),
                 emojiButton.widthAnchor.constraint(equalToConstant: 80),
-                
                 emojiButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10), // 좌
                 emojiButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -240), // 우
             ])
@@ -90,6 +91,25 @@ class WritingViewController: UIViewController {
         
         present(viewController, animated: true)
     }
+    
+    @IBAction func widgetSizeButtonPressed(_ sender: UIButton) {
+        
+        let sizeDics = ["Large": 200, "Middle": 150, "Small": 100] // 예시로 200자, 150자, 100자로 넣음
+        
+        let popUpButtonClosure = { [self] (action: UIAction) in
+            var userSelectedSize = self.widgetSizeButton.currentTitle!
+            print(sizeDics[userSelectedSize])
+            // 위젯 크기 별 글자수 설정하고자 만든 버튼. 아직 미완성.
+        }
+        
+        widgetSizeButton.menu = UIMenu(children: [
+            UIAction(title: "Large", handler: popUpButtonClosure),
+            UIAction(title: "Middle", handler: popUpButtonClosure),
+            UIAction(title: "Small", handler: popUpButtonClosure)
+        ])
+        colorButton.showsMenuAsPrimaryAction = true
+    }
+    
 }
 
 extension WritingViewController: EmojiPickerDelegate {

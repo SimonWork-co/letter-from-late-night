@@ -1,13 +1,13 @@
 //
-//  WritingViewController.swift
+//  ReceivedLetterViewController.swift
 //  Simonwork2
 //
-//  Created by Sangmok Choi on 2023/03/09.
+//  Created by Sangmok Choi on 2023/03/24.
 //
 
 import UIKit
 
-class ArchiveViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SentLetterViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // https://velog.io/@wook4506/iOS-Swift-TableView-Cell-%EC%BB%A4%EC%8A%A4%ED%84%B0%EB%A7%88%EC%9D%B4%EC%A7%95
     // https://velog.io/@jyw3927/Swift-Custom-Cell%EB%A1%9C-UICollectionView-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0
