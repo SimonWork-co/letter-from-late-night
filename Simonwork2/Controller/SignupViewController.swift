@@ -101,7 +101,6 @@ extension SignupViewController {
                     print("Successfully saved data.")
                 }
             }
-            
         } else {
             print(UserName)
             print(UserEmail)

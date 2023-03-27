@@ -23,5 +23,6 @@ class LetterDataSource {
 extension LetterDataSource {
     static var data = [
         LetterDataSource(title: "밥은 잘 먹었어?", content: "아무말 아무말"),
+        LetterDataSource(title: "밥은 잘 먹었어?", content: "아무말 아무말")
     ]
 }
