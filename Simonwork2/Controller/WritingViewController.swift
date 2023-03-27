@@ -55,6 +55,7 @@ class WritingViewController: UIViewController {
 
         UserDefaults.standard.set("none", forKey: "userName")
         UserDefaults.standard.set("none", forKey: "userEmail")
+        
         if let title =
             titleTextView.text, let content = contentTextView.text {        db.collection("LetterData").addDocument(data: [
                 "friendCode": "none", // 나의 친구코드
@@ -62,8 +63,8 @@ class WritingViewController: UIViewController {
                 "id": "none", // 편지 아이디
                 "title": title, // 편지 제목
                 "content": content, // 편지 내용
-                "updateTime": Date().timeIntervalSince1970,
-                "receiveTime": Date().timeIntervalSince1970,
+                "updateTime": Date(),
+                "receiveTime": Date(),
                 "letterColor": "\(colorButton.titleLabel)",
                 "emoji" : "none" // (이모지)
             ]) { (error) in
@@ -153,7 +154,6 @@ extension WritingViewController: UITextViewDelegate{
             textViewTextNumLabel.text = "0 / 150자"
         }
     }
-    
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text ?? ""
