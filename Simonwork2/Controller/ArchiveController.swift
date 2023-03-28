@@ -18,7 +18,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     let formatter: DateFormatter = {
         let f = DateFormatter()
         f.dateStyle = .long
-        //f.timeStyle = .short
+        f.timeStyle = .short
         return f
     }()
     
@@ -55,8 +55,9 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                         for doc in snapshotDocuments {
                             let data = doc.data()
                             if let messageTitle = data["title"] as? String,
-                               let messageContent = data["content"] as? String {
-                                let messageList = LetterData(title: messageTitle, content: messageContent)
+                               let message_UpdateTime = data["updateTime"] as? Timestamp {
+                                let messageUpdateTime = message_UpdateTime.dateValue()
+                                let messageList = LetterData(title: messageTitle, updateTime: messageUpdateTime)
                                 self.messages.append(messageList)
                                 
                                 DispatchQueue.main.async {
