@@ -52,20 +52,29 @@ class WritingViewController: UIViewController {
     }
     
     @IBAction func sendButtonPressed(_ sender: UIBarButtonItem) {
-
-        UserDefaults.standard.set("none", forKey: "userName")
-        UserDefaults.standard.set("none", forKey: "userEmail")
+        
+        let userFriendCode : String = UserDefaults.standard.object(forKey: "friendCode") as! String
+        let userPairFriendCode : String = UserDefaults.standard.object(forKey: "pairFriendCode") as! String
+        print("userFriendCode : \(userFriendCode)")
+        print("userPairFriendCode : \(userPairFriendCode)")
+        
+//        let uid = Auth.auth().currentUser?.uid ?? ""
+//        print(uid)
+//        let cryptedUid = sha256(uid)
+//        print(cryptedUid)
+//        let id = String(cryptedUid.prefix(12))
+//        print(id)
         
         if let title =
             titleTextView.text, let content = contentTextView.text {        db.collection("LetterData").addDocument(data: [
-                "friendCode": "none", // 나의 친구코드
-                "pairFriendCode": "none", // 상대방의 친구코드
+                "sender": userFriendCode, // 나의 친구코드
+                "receiver": userPairFriendCode, // 상대방의 친구코드
                 "id": "none", // 편지 아이디
                 "title": title, // 편지 제목
                 "content": content, // 편지 내용
                 "updateTime": Date(),
                 "receiveTime": Date(),
-                "letterColor": "\(colorButton.titleLabel)",
+                "letterColor": "\(colorButton.titleLabel!.text!)",
                 "emoji" : "none" // (이모지)
             ]) { (error) in
                 if let e = error {
@@ -75,9 +84,9 @@ class WritingViewController: UIViewController {
                     print("작성하신 편지는 새벽 5시에 배달해드릴게요")
                     print("Successfully saved data.")
 
-                    DispatchQueue.main.async {
-                        self.contentTextView.text = ""
-                    }
+//                    DispatchQueue.main.async {
+//                        self.contentTextView.text = ""
+//                    }
                 }
             }
         }

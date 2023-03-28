@@ -625,13 +625,22 @@
                                                 <color key="textColor" red="0.67450982329999998" green="0.60392159219999997" blue="0.78823530669999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PIn-rs-77C">
+                                                <rect key="frame" x="0.0" y="30" width="393" height="20.666666666666671"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="PIn-rs-77C" firstAttribute="leading" secondItem="GgF-nc-GUk" secondAttribute="leading" id="0vW-vU-30M"/>
                                             <constraint firstAttribute="trailing" secondItem="ZVM-av-un0" secondAttribute="trailing" constant="60" id="I4P-Pa-1xW"/>
                                             <constraint firstItem="ZVM-av-un0" firstAttribute="top" secondItem="GgF-nc-GUk" secondAttribute="top" constant="80" id="Ji7-ja-jsw"/>
                                             <constraint firstAttribute="bottom" secondItem="ZVM-av-un0" secondAttribute="bottom" constant="350" id="LDL-6n-ghR"/>
                                             <constraint firstItem="ZVM-av-un0" firstAttribute="leading" secondItem="GgF-nc-GUk" secondAttribute="leading" constant="60" id="MTO-Eo-Mds"/>
+                                            <constraint firstItem="PIn-rs-77C" firstAttribute="top" secondItem="GgF-nc-GUk" secondAttribute="top" constant="30" id="Uvr-XN-Mdc"/>
+                                            <constraint firstAttribute="trailing" secondItem="PIn-rs-77C" secondAttribute="trailing" id="kXL-cy-y5A"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -650,6 +659,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="m2y-9s-lVq"/>
+                    <connections>
+                        <outlet property="contentTextView" destination="ZVM-av-un0" id="eRE-5m-j0P"/>
+                        <outlet property="dateLabel" destination="PIn-rs-77C" id="Gpf-Js-HDf"/>
+                        <outlet property="titleTextView" destination="59y-Od-p20" id="7nI-nn-DaL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UFT-k7-cKX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
