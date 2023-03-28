@@ -162,12 +162,12 @@
 				8D4375E829B9A7AD0028427F /* SignupViewController.swift */,
 				8D9EFF1929B85049008D2050 /* MainViewController.swift */,
 				8D9EFF2F29B9A74A008D2050 /* WritingViewController.swift */,
-				8D4375EA29B9A9010028427F /* ArchiveController.swift */,
 				8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */,
 				8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */,
 				8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */,
 				8D985CF229CC2E5C00C04AA8 /* StartViewController.swift */,
 				8D985CF429CD722700C04AA8 /* SettingViewController.swift */,
+				8D4375EA29B9A9010028427F /* ArchiveController.swift */,
 				8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */,
 				8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */,
 			);
