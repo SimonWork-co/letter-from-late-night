@@ -8,8 +8,8 @@
 import Foundation
 
 struct UserData {
-    var userName : String
-    var userEmail : String
+    let userName : String
+    let userEmail : String
     let friendCode : String
     let pairFriendCode : String
     let signupTime : Date

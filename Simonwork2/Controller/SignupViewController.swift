@@ -39,7 +39,7 @@ extension SignupViewController {
         authorizationController.performRequests()
     }
     
-    private func sha256(_ input: String) -> String {
+    func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap {
@@ -83,16 +83,20 @@ extension SignupViewController {
     func sendUserdata(UserName: String?, UserEmail: String?) {
         
         if let UserName, let UserEmail {
-            
-            UserDefaults.standard.set(UserName, forKey: "userName")
-            UserDefaults.standard.set(UserEmail, forKey: "userEmail")
-            
+            let uid = Auth.auth().currentUser?.uid ?? ""
+            print(uid)
+            let cryptedUid = sha256(uid)
+            print(cryptedUid)
+            let friendCode = String(cryptedUid.prefix(6))
+            print(friendCode)
+            let pairFriendCode = "none"
+          
             db.collection("UserData").addDocument(data: [
                 "userName": UserName,
                 "userEmail": UserEmail,
-                "friendCode": "none",
-                "pairFriendCode": "none",
-                "signupTime": Date().timeIntervalSince1970,
+                "friendCode": friendCode,
+                "pairFriendCode": pairFriendCode,
+                "signupTime": Date(),
                 "letterCount": 0
             ]) { (error) in
                 if let e = error {
@@ -101,6 +105,11 @@ extension SignupViewController {
                     print("Successfully saved data.")
                 }
             }
+            // UserDefaults.standard.set("저장할 데이터", forKey: "Key값")
+            UserDefaults.standard.set(UserName, forKey: "userName")
+            UserDefaults.standard.set(UserEmail, forKey: "userEmail")
+            UserDefaults.standard.set(friendCode, forKey: "friendCode")
+            UserDefaults.standard.set(pairFriendCode, forKey: "pairFriendCode")
             
         } else {
             print(UserName)
@@ -203,11 +212,11 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         googleSignupButton.layer.borderWidth = 0.75
         appleSignupButton.layer.cornerRadius = 10
         
-        if GIDSignIn.sharedInstance.hasPreviousSignIn() == true {
-            GIDSignIn.sharedInstance.restorePreviousSignIn()
-            performSegue(withIdentifier: "signupToMain", sender: nil)
-            print("구글 자동 로그인")
-        } else {}
+//        if GIDSignIn.sharedInstance.hasPreviousSignIn() == true {
+//            GIDSignIn.sharedInstance.restorePreviousSignIn()
+//            performSegue(withIdentifier: "signupToMain", sender: nil)
+//            print("구글 자동 로그인")
+//        } else {}
         
         // it triggers apple reauthentication after google reauthentication.
         //startSignInWithAppleFlow()

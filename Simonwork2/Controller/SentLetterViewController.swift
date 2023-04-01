@@ -8,10 +8,9 @@
 import UIKit
 import Firebase
 
-class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SentLetterViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let db = Firestore.firestore()
-    // let letterData = LetterData(friendCode: "", title: "", content: "", updateTime: Date())
     var messages: [LetterData] = []
     
     let contentList = LetterDataSource.data // DB 연동
@@ -30,7 +29,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         
         tableView.delegate = self
         tableView.dataSource = self
-        title = "받은 편지함"
+        title = "보낸 편지함"
         
         registerXib()
         loadMessages()
@@ -42,13 +41,12 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     }
     
     func loadMessages(){
-        // db에서 편지를 가져올 떄, 유저의 친구코드 내지는 uid 등을 확인하여 해당 값을 포함한 문서만 가져와야함
         let userFriendCode : String = UserDefaults.standard.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.standard.object(forKey: "pairFriendCode") as! String
         
         db.collection("LetterData")
-            .whereField("sender", isEqualTo: userPairFriendCode)
-            .whereField("receiver", isEqualTo: userFriendCode)
+            .whereField("sender", isEqualTo: userFriendCode)
+            .whereField("receiver", isEqualTo: userPairFriendCode)
             .order(by: "updateTime")
             .addSnapshotListener { (querySnapshot, error) in
                 
@@ -114,7 +112,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "archiveToMessageContent" {
+        if segue.identifier == "sentLetterToMessageContent" {
             let nextVC = segue.destination as? LetterViewController
             
             if let index = sender as? Int {
@@ -129,6 +127,6 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // cell 클릭 시, cell 내용을 보여주는 view controller로 이동
-        performSegue(withIdentifier: "archiveToMessageContent", sender: indexPath.section)
+        performSegue(withIdentifier: "sentLetterToMessageContent", sender: indexPath.section)
     }
 }
