@@ -42,6 +42,9 @@
 		DEA2F28829D85F840021AEC3 /* LetterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA2F28729D85F840021AEC3 /* LetterWidget.swift */; };
 		DEA2F28A29D85F860021AEC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEA2F28929D85F860021AEC3 /* Assets.xcassets */; };
 		DEA2F28E29D85F860021AEC3 /* LetterWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DEA2F27D29D85F840021AEC3 /* LetterWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DEA2F29329D867980021AEC3 /* LetterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA2F28729D85F840021AEC3 /* LetterWidget.swift */; };
+		DEA2F29429D869DA0021AEC3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1B29B85049008D2050 /* Main.storyboard */; };
+		DEA2F29529D869E50021AEC3 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */; };
 		DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */; };
 		DEF46A1929C2F97700D153B1 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DEF46A1829C2F97700D153B1 /* EmojiPicker */; };
 /* End PBXBuildFile section */
@@ -112,6 +115,7 @@
 		DEA2F28729D85F840021AEC3 /* LetterWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterWidget.swift; sourceTree = "<group>"; };
 		DEA2F28929D85F860021AEC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEA2F28B29D85F860021AEC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DEA2F29629D872F00021AEC3 /* LetterWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LetterWidgetExtension.entitlements; sourceTree = "<group>"; };
 		DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,6 +163,7 @@
 		8D9EFF0929B85049008D2050 = {
 			isa = PBXGroup;
 			children = (
+				DEA2F29629D872F00021AEC3 /* LetterWidgetExtension.entitlements */,
 				8D9EFF1429B85049008D2050 /* Simonwork2 */,
 				DEA2F28229D85F840021AEC3 /* LetterWidget */,
 				8D9EFF1329B85049008D2050 /* Products */,
@@ -362,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEA2F28A29D85F860021AEC3 /* Assets.xcassets in Resources */,
+				DEA2F29429D869DA0021AEC3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +438,7 @@
 				8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */,
 				8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */,
 				8D985CF529CD722700C04AA8 /* SettingViewController.swift in Sources */,
+				DEA2F29329D867980021AEC3 /* LetterWidget.swift in Sources */,
 				8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */,
 				8D9EFF1829B85049008D2050 /* SceneDelegate.swift in Sources */,
 			);
@@ -441,6 +448,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEA2F29529D869E50021AEC3 /* LetterViewController.swift in Sources */,
 				DEA2F28829D85F840021AEC3 /* LetterWidget.swift in Sources */,
 				DEA2F28629D85F840021AEC3 /* LetterWidgetLiveActivity.swift in Sources */,
 				DEA2F28429D85F840021AEC3 /* LetterWidgetBundle.swift in Sources */,
@@ -601,7 +609,7 @@
 				CODE_SIGN_ENTITLEMENTS = Simonwork2/Simonwork2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S63WU84P32;
+				DEVELOPMENT_TEAM = RR4V44S8V9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -635,7 +643,7 @@
 				CODE_SIGN_ENTITLEMENTS = Simonwork2/Simonwork2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S63WU84P32;
+				DEVELOPMENT_TEAM = RR4V44S8V9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -664,9 +672,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LetterWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S63WU84P32;
+				DEVELOPMENT_TEAM = RR4V44S8V9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LetterWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LetterWidget;
@@ -691,9 +700,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LetterWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S63WU84P32;
+				DEVELOPMENT_TEAM = RR4V44S8V9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LetterWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LetterWidget;

@@ -14,7 +14,7 @@
         <!--홈-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="MainViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" id="BYZ-38-t0r" customClass="MainViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -122,7 +122,7 @@
         <!--받은 편지함-->
         <scene sceneID="5a2-8n-fs0">
             <objects>
-                <viewController id="Gye-2z-ukU" customClass="ArchiveViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Gye-2z-ukU" customClass="ArchiveViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DnI-KA-kzC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,10 +136,10 @@
                                 <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.69803921570000005" green="0.46274509800000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="20" reuseIdentifier="CustomizedCell" editingAccessoryType="detailDisclosureButton" rowHeight="110" id="O83-L2-sLm" customClass="CustomizedCell" customModule="Simonwork2" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="20" reuseIdentifier="CustomizedCell" editingAccessoryType="detailDisclosureButton" rowHeight="110" id="O83-L2-sLm" customClass="CustomizedCell" customModule="LetterWidgetExtension" customModuleProvider="target">
                                         <rect key="frame" x="20" y="55.333332061767578" width="353" height="110"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O83-L2-sLm" id="5ud-kS-58s" customClass="CustomCell" customModule="Simonwork2" customModuleProvider="target">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O83-L2-sLm" id="5ud-kS-58s" customClass="CustomCell" customModule="LetterWidgetExtension" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="290.66666666666669" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -199,7 +199,7 @@
         <!--Signup View Controller-->
         <scene sceneID="smL-eY-RGa">
             <objects>
-                <viewController id="9Dd-a9-fJP" customClass="SignupViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9Dd-a9-fJP" customClass="SignupViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="A7X-7H-zMQ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -288,7 +288,7 @@
         <!--밤편지 작성-->
         <scene sceneID="aYr-5H-zTO">
             <objects>
-                <viewController id="5Tl-Pd-vTT" customClass="WritingViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5Tl-Pd-vTT" customClass="WritingViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v9c-5m-eKB">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -415,7 +415,7 @@
         <!--Setting View Controller-->
         <scene sceneID="Sdx-x4-Cql">
             <objects>
-                <viewController id="roE-Qr-Kvw" customClass="SettingViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="roE-Qr-Kvw" customClass="SettingViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tkh-AL-IzG">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="769"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -524,7 +524,7 @@
         <!--Connect Typing View Controller-->
         <scene sceneID="XHn-PU-S7V">
             <objects>
-                <viewController id="7ap-cL-Iqo" customClass="ConnectTypingViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="7ap-cL-Iqo" customClass="ConnectTypingViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9J-EF-blN">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -595,7 +595,7 @@
         <!--Letter View Controller-->
         <scene sceneID="d9T-LA-DS9">
             <objects>
-                <viewController id="Z5z-EI-JbI" customClass="LetterViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Z5z-EI-JbI" customClass="LetterViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="X86-M1-Vw2">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -704,7 +704,7 @@
         <!--Connect View Controller-->
         <scene sceneID="162-OA-vZx">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="F8F-PL-uwk" customClass="ConnectViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="F8F-PL-uwk" customClass="ConnectViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h1T-Me-Yea">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -782,7 +782,7 @@
         <!--Waiting View Controller-->
         <scene sceneID="3OS-8R-23v">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="WUb-hh-SgB" customClass="WaitingViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="WUb-hh-SgB" customClass="WaitingViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kXU-Jq-VOX">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -836,7 +836,7 @@
         <!--Start View Controller-->
         <scene sceneID="AYX-q3-BgW">
             <objects>
-                <viewController id="Uhw-JE-K9L" customClass="StartViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Uhw-JE-K9L" customClass="StartViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Azm-Sz-VdW">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -906,7 +906,7 @@
         <!--보낸 편지함-->
         <scene sceneID="mXD-Lw-iuw">
             <objects>
-                <viewController id="c5Q-X1-cGJ" customClass="SentLetterViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c5Q-X1-cGJ" customClass="SentLetterViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="z4U-FB-czF">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -920,10 +920,10 @@
                                 <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.69803921570000005" green="0.46274509800000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="20" reuseIdentifier="CustomizedCell" editingAccessoryType="detailDisclosureButton" rowHeight="110" id="JsZ-rf-h0a" customClass="CustomizedCell" customModule="Simonwork2" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="20" reuseIdentifier="CustomizedCell" editingAccessoryType="detailDisclosureButton" rowHeight="110" id="JsZ-rf-h0a" customClass="CustomizedCell" customModule="LetterWidgetExtension" customModuleProvider="target">
                                         <rect key="frame" x="20" y="55.333332061767578" width="353" height="110"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JsZ-rf-h0a" id="LKZ-ff-ZOU" customClass="CustomCell" customModule="Simonwork2" customModuleProvider="target">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JsZ-rf-h0a" id="LKZ-ff-ZOU" customClass="CustomCell" customModule="LetterWidgetExtension" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="290.66666666666669" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -982,7 +982,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jPY-o2-FOr"/>
+        <segue reference="69n-lE-wKh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple Logo" width="24" height="24"/>

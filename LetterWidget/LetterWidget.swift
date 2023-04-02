@@ -11,12 +11,12 @@ import SwiftUI
 // 위젯을 업데이트 할 시기를 WidgetKit에 알리는 역할
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+        SimpleEntry(date: Date(), title: "Placeholder Title", content: "Placeholder Content")
     }
 
     // 데이터를 가져와서 표출해주는 함수
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
+        let entry = SimpleEntry(date: Date(), title: "Snapshot Title", content: "Snapshot Content")
         completion(entry)
     }
 
@@ -29,7 +29,7 @@ struct Provider: TimelineProvider {
         for hourOffset in 0 ..< 5 {
             // 1, 2, ... 4 시간 뒤 enrty값으로 업데이트
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
+            let entry = SimpleEntry(date: Date(), title: "Timeline Title", content: "Timeline Content")
             entries.append(entry)
         }
 
@@ -39,9 +39,14 @@ struct Provider: TimelineProvider {
     }
 }
 
+let sharedUserDefaults = UserDefaults(suiteName: "group.simon.work2")
+let sharedData = sharedUserDefaults?.string(forKey: "mySharedData")
+
 // TimelineEntry: 위젯을 표시할 date, data에 표시할 데이터를 나타냄
 struct SimpleEntry: TimelineEntry {
     let date: Date
+    let title: String
+    let content: String
 }
 
 struct LetterWidgetEntryView : View {
@@ -51,15 +56,16 @@ struct LetterWidgetEntryView : View {
     @ViewBuilder
     var body: some View {
     switch self.family {
-        case .systemSmall:
-          Text(".systemSmall")
-        case .systemMedium:
-          Text(".systemMedium")
-        case .systemLarge:
-          Text(".systemLarge")
-        case .systemExtraLarge: // ExtraLarge는 iPad의 위젯에만 표출
-          Text(".systemExtraLarge")
-        @unknown default:
+        // ExtraLarge는 iPad의 위젯에만 표출
+        case .systemSmall, .systemMedium, .systemLarge, .systemExtraLarge:
+            VStack {
+                Text(entry.title)
+                    .font(.headline)
+                Text(entry.content)
+                    .font(.subheadline)
+            }
+            .padding()
+        default:
           Text("default")
         }
       }
@@ -83,7 +89,7 @@ struct LetterWidget: Widget {
 
 struct LetterWidget_Previews: PreviewProvider {
     static var previews: some View {
-        LetterWidgetEntryView(entry: SimpleEntry(date: Date()))
+        LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "Preview Title", content: "Preview Content"))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
