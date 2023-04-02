@@ -22,6 +22,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         return f
     }()
     
+    @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -29,10 +30,18 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         
         tableView.delegate = self
         tableView.dataSource = self
-        title = "보낸 편지함"
+        self.navigationItem.title = "보낸 편지함"
         
         registerXib()
         loadMessages()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("ViewController의 view가 load됨")
+        self.navigationBar.title = "받은 편지함"
+        navigationController?.isNavigationBarHidden = false
+        self.navigationBar.hidesBackButton = true
     }
     
     private func registerXib() { // 커스텀한 테이블 뷰 셀을 등록하는 함수
@@ -41,6 +50,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     }
     
     func loadMessages(){
+        
         let userFriendCode : String = UserDefaults.standard.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.standard.object(forKey: "pairFriendCode") as! String
         
@@ -65,13 +75,17 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let messageContent = data["content"] as! String
                                 let messageFriendCode = data["sender"] as! String
                                 let messagePairFriendCode = data["receiver"] as! String
+                                let messageLetterColor = data["letterColor"] as! String
+                                let messageEmoji = data["emoji"] as? String
                                 
                                 let messageList = LetterData(
                                     sender: messageFriendCode,
                                     receiver: messagePairFriendCode,
                                     title: messageTitle,
                                     content: messageContent,
-                                    updateTime: messageUpdateTime
+                                    updateTime: messageUpdateTime,
+                                    letterColor: messageLetterColor,
+                                    emoji: messageEmoji ?? "no emoji"
                                 )
                                 self.messages.append(messageList)
                                 
@@ -105,8 +119,12 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         let message = messages[indexPath.section]
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomizedCell", for: indexPath) as! CustomizedCell
         
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.letterTitleLable?.text = message.title
         cell.letterDateLabel?.text = formatter.string(from: message.updateTime)
+        cell.backgroundColor = UIColor(hex: message.letterColor)
+        cell.emojiLabel.text = message.emoji
+        print("cell.backgroundColor: \(cell.backgroundColor)")
         
         return cell
     }
@@ -121,6 +139,8 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                 nextVC?.receivedTitleText = messages[index].title
                 nextVC?.receivedContentText = messages[index].content
                 nextVC?.receivedUpdateDate = messages[index].updateTime
+                nextVC?.receivedLetterColor = messages[index].letterColor
+                nextVC?.receivedEmoji = messages[index].emoji
             }
         }
     }

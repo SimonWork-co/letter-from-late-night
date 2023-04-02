@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct LetterData {
     let sender : String // (친구 코드)
@@ -15,8 +16,8 @@ struct LetterData {
     let content : String// (편지 내용)
     let updateTime : Date // (작성 시간)
     let receiveTime : Date = Date() // (수신 시간)
-    let letterColor : String = "" // (편지지 컬러)
+    let letterColor : String // (편지지 컬러)
     // let font : String // (편지지 폰트(미정)
-    let emoji : String = ""// (이모티콘)
+    let emoji : String// (이모티콘)
 
 }
