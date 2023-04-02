@@ -14,5 +14,6 @@ target 'Simonwork2' do
   pod 'FirebaseUI/Google'
   pod 'GoogleSignIn'
   pod 'EmojiPicker', :git => 'https://github.com/htmlprogrammist/EmojiPicker'
-
+  target 'LetterWidgetExtension' do
+  end
 end

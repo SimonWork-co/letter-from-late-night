@@ -212,11 +212,11 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         googleSignupButton.layer.borderWidth = 0.75
         appleSignupButton.layer.cornerRadius = 10
         
-        if GIDSignIn.sharedInstance.hasPreviousSignIn() == true {
-            GIDSignIn.sharedInstance.restorePreviousSignIn()
-            performSegue(withIdentifier: "signupToMain", sender: nil)
-            print("구글 자동 로그인")
-        } else {}
+//        if GIDSignIn.sharedInstance.hasPreviousSignIn() == true {
+//            GIDSignIn.sharedInstance.restorePreviousSignIn()
+//            performSegue(withIdentifier: "signupToMain", sender: nil)
+//            print("구글 자동 로그인")
+//        } else {}
         
         // it triggers apple reauthentication after google reauthentication.
         //startSignInWithAppleFlow()

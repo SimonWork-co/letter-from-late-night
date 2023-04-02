@@ -18,7 +18,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     let formatter: DateFormatter = {
         let f = DateFormatter()
         f.dateStyle = .long
-        f.timeStyle = .short
+        //f.timeStyle = .short
         return f
     }()
     
