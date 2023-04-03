@@ -31,7 +31,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         
         tableView.delegate = self
         tableView.dataSource = self
-        
+        // messages.count = 0
         registerXib()
         loadMessages()
     }
