@@ -10,16 +10,54 @@ import Firebase
 //import FirebaseCore
 //import FirebaseAuth
 import GoogleSignIn
+import FirebaseFirestore
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
+    // 1. didFinishLaunchingWithOptions: 앱이 종료되어 있는 경우 알림이 왔을 때
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         let db = Firestore.firestore()
         
+        UNUserNotificationCenter.current().delegate = self
+        
         return true
+    }
+    
+    // 2. didReceive: 백그라운드인 경우 & 사용자가 푸시를 클릭한 경우
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                    didReceive response: UNNotificationResponse,
+                                    withCompletionHandler completionHandler: @escaping () -> Void) {
+        let application = UIApplication.shared
+                
+            //앱이 켜져있는 상태에서 푸쉬 알림을 눌렀을 때
+            if application.applicationState == .active {
+                print("푸쉬알림 탭(앱 켜져있음)")
+                
+            
+            }
+            
+            //앱이 꺼져있는 상태에서 푸쉬 알림을 눌렀을 때
+            if application.applicationState == .inactive {
+//                if response.notification.request.content.title == "밤편지" {
+//                }
+                print("푸쉬알림 탭(앱 꺼져있음)")
+            }
+        
+        completionHandler()
+    }
+    
+    // 3. willPresent: 앱이 실행 중인 경우 (foreground)
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                    willPresent notification: UNNotification,
+                                    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if #available(iOS 14.0, *) { // ios14에서 .alert가 사라졌기 때문에 list, banner를 함께 넣어줘야함
+            completionHandler([.alert, .list,.sound,.banner])
+        } else {
+            completionHandler([.alert, .sound])
+        }
     }
     
     func application(_ app: UIApplication,

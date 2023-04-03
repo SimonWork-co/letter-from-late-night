@@ -246,6 +246,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         super.viewWillDisappear(animated)
         // print("ViewController의 view가 Load됨")
         
+
     }
     
     func googleAutoLogin() {
