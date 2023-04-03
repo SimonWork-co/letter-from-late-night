@@ -18,6 +18,12 @@
 		8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */; };
 		8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */; };
 		8D675F0429C7410A0078042A /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D675F0329C7410A0078042A /* UserData.swift */; };
+		8D6BD68129D99C3300D218C4 /* FirstView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D6BD68029D99C3300D218C4 /* FirstView.xib */; };
+		8D6BD68329D9A06300D218C4 /* SecondView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D6BD68229D9A06300D218C4 /* SecondView.xib */; };
+		8D6BD68529D9A09800D218C4 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6BD68429D9A09800D218C4 /* FirstView.swift */; };
+		8D6BD68729D9A0F000D218C4 /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6BD68629D9A0F000D218C4 /* SecondView.swift */; };
+		8D6BD68929D9A31700D218C4 /* ThirdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D6BD68829D9A31700D218C4 /* ThirdView.xib */; };
+		8D6BD68B29D9A33900D218C4 /* ThirdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6BD68A29D9A33900D218C4 /* ThirdView.swift */; };
 		8D985CED29CC2D3600C04AA8 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */; };
 		8D985CEF29CC2E2D00C04AA8 /* ConnectTypingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */; };
 		8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */; };
@@ -33,6 +39,8 @@
 		8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DA1A1DB29BB0A2900A37C0E /* LetterDataSource.swift */; };
 		8DAA05D029BB20A0008D8167 /* CustomizedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */; };
 		8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */; };
+		8DBD9A3C29D9561D005AF94A /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */; };
+		8DBD9A3E29D956D4005AF94A /* GuideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3D29D956D4005AF94A /* GuideModel.swift */; };
 		DE863BCA29C6E40C00208AE8 /* NanumMyeongjoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */; };
 		DE863BCB29C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */; };
 		DE863BCC29C6E40C00208AE8 /* NanumMyeongjo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC929C6E40C00208AE8 /* NanumMyeongjo.ttf */; };
@@ -53,6 +61,12 @@
 		8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
 		8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentLetterViewController.swift; sourceTree = "<group>"; };
 		8D675F0329C7410A0078042A /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		8D6BD68029D99C3300D218C4 /* FirstView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FirstView.xib; sourceTree = "<group>"; };
+		8D6BD68229D9A06300D218C4 /* SecondView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SecondView.xib; sourceTree = "<group>"; };
+		8D6BD68429D9A09800D218C4 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
+		8D6BD68629D9A0F000D218C4 /* SecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
+		8D6BD68829D9A31700D218C4 /* ThirdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThirdView.xib; sourceTree = "<group>"; };
+		8D6BD68A29D9A33900D218C4 /* ThirdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdView.swift; sourceTree = "<group>"; };
 		8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTypingViewController.swift; sourceTree = "<group>"; };
 		8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +84,8 @@
 		8DA1A1DB29BB0A2900A37C0E /* LetterDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterDataSource.swift; sourceTree = "<group>"; };
 		8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomizedCell.swift; path = Simonwork2/Model/CustomizedCell.swift; sourceTree = SOURCE_ROOT; };
 		8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomizedCell.xib; path = Simonwork2/Model/CustomizedCell.xib; sourceTree = SOURCE_ROOT; };
+		8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
+		8DBD9A3D29D956D4005AF94A /* GuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideModel.swift; sourceTree = "<group>"; };
 		8DFDE4AD29C0E423005A9574 /* Simonwork2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Simonwork2.entitlements; sourceTree = "<group>"; };
 		CFC6BF28DF021EDA9267FA93 /* Pods-Simonwork2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2.release.xcconfig"; path = "Target Support Files/Pods-Simonwork2/Pods-Simonwork2.release.xcconfig"; sourceTree = "<group>"; };
 		DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoBold.ttf; sourceTree = "<group>"; };
@@ -154,6 +170,10 @@
 				8D6182F929C85D4A00A85BFB /* LetterData.swift */,
 				8D6182FD29C88FCA00A85BFB /* PairDocumentID.swift */,
 				8D272A8129D5756A00DDD636 /* UserDefaultsData.swift */,
+				8DBD9A3D29D956D4005AF94A /* GuideModel.swift */,
+				8D6BD68429D9A09800D218C4 /* FirstView.swift */,
+				8D6BD68629D9A0F000D218C4 /* SecondView.swift */,
+				8D6BD68A29D9A33900D218C4 /* ThirdView.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -161,6 +181,7 @@
 		8D9EFF2B29B85080008D2050 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */,
 				8D402DA829C0406A0010D80C /* NavigationController.swift */,
 				8D4375E829B9A7AD0028427F /* SignupViewController.swift */,
 				8D9EFF1929B85049008D2050 /* MainViewController.swift */,
@@ -182,6 +203,9 @@
 			children = (
 				8D9EFF1B29B85049008D2050 /* Main.storyboard */,
 				8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */,
+				8D6BD68029D99C3300D218C4 /* FirstView.xib */,
+				8D6BD68229D9A06300D218C4 /* SecondView.xib */,
+				8D6BD68829D9A31700D218C4 /* ThirdView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -266,9 +290,12 @@
 				DE863BCB29C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf in Resources */,
 				DE863BCA29C6E40C00208AE8 /* NanumMyeongjoBold.ttf in Resources */,
 				8D9EFF1F29B8504B008D2050 /* Assets.xcassets in Resources */,
+				8D6BD68129D99C3300D218C4 /* FirstView.xib in Resources */,
 				DE863BCC29C6E40C00208AE8 /* NanumMyeongjo.ttf in Resources */,
+				8D6BD68329D9A06300D218C4 /* SecondView.xib in Resources */,
 				DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */,
 				8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */,
+				8D6BD68929D9A31700D218C4 /* ThirdView.xib in Resources */,
 				8D9EFF1D29B85049008D2050 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,12 +361,17 @@
 				8D272A8229D5756A00DDD636 /* UserDefaultsData.swift in Sources */,
 				8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */,
 				8D675F0429C7410A0078042A /* UserData.swift in Sources */,
+				8DBD9A3E29D956D4005AF94A /* GuideModel.swift in Sources */,
+				8D6BD68529D9A09800D218C4 /* FirstView.swift in Sources */,
+				8D6BD68B29D9A33900D218C4 /* ThirdView.swift in Sources */,
 				8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */,
 				8D6182FC29C88F1500A85BFB /* Constants.swift in Sources */,
 				8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */,
 				8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */,
 				8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */,
+				8DBD9A3C29D9561D005AF94A /* GuideViewController.swift in Sources */,
 				8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */,
+				8D6BD68729D9A0F000D218C4 /* SecondView.swift in Sources */,
 				8D985CF529CD722700C04AA8 /* SettingViewController.swift in Sources */,
 				8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */,
 				8D9EFF1829B85049008D2050 /* SceneDelegate.swift in Sources */,
