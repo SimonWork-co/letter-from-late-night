@@ -10,8 +10,11 @@ import Foundation
 struct UserData {
     let userName : String
     let userEmail : String
+    let uid : String
     let friendCode : String
     let pairFriendCode : String
     let signupTime : Date
     let letterCount : Int
 }
+
+

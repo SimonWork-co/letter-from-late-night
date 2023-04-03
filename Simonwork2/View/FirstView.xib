@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="NanumMyeongjo.ttf">
+            <string>NanumMyeongjo</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FirstView" customModule="Simonwork2" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="하루 한 번의 진심, 밤편지" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NH3-pP-xcm">
+                    <rect key="frame" x="62" y="78" width="269" height="130"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="NanumMyeongjo" family="NanumMyeongjo" pointSize="32"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="H6Y-FO-Zh1">
+                    <rect key="frame" x="-149" y="129" width="691" height="561"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="하루에 한 번, 자정까지 편지를 쓰시면 다음날 새벽에 조용히 배달할게요." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FGg-XM-Keb" userLabel="하루에 한 번, 자정까지 편지를 쓰시면 다음날 새벽에 조용히 배달할게요">
+                    <rect key="frame" x="54" y="649" width="290" height="100"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <fontDescription key="fontDescription" name="NanumMyeongjo" family="NanumMyeongjo" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Xhg-Ga-zgV"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="H6Y-FO-Zh1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="129" id="iY2-MP-EQ6"/>
+                <constraint firstAttribute="bottom" secondItem="H6Y-FO-Zh1" secondAttribute="bottom" constant="162" id="lPt-wx-zPR"/>
+                <constraint firstItem="H6Y-FO-Zh1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-149" id="w9J-Ds-B33"/>
+                <constraint firstAttribute="trailing" secondItem="H6Y-FO-Zh1" secondAttribute="trailing" constant="-149" id="xpX-va-KJW"/>
+            </constraints>
+            <connections>
+                <outlet property="image" destination="H6Y-FO-Zh1" id="t6t-un-xTx"/>
+                <outlet property="subTitleLabel" destination="FGg-XM-Keb" id="5pr-vg-Azj"/>
+                <outlet property="titleLabel" destination="NH3-pP-xcm" id="QRk-bT-cMa"/>
+            </connections>
+            <point key="canvasLocation" x="-16.030534351145036" y="19.718309859154932"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="launchScreen" width="657" height="561"/>
+    </resources>
+</document>

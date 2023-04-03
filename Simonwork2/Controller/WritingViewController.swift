@@ -9,8 +9,53 @@ import UIKit
 import Foundation
 import EmojiPicker
 
+extension UIColor {
+    
+    func hexColorExtract(BackgroundColor: UIView) -> String {
+        
+        let backgroundColor = BackgroundColor.backgroundColor
+        // Convert the UIColor object to its RGB components
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        backgroundColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        // Format the RGB components as a hexadecimal string
+        let hexColor = String(
+            format: "%02X%02X%02X",
+            Int(red * 255),
+            Int(green * 255),
+            Int(blue * 255)
+        )
+        print("The hexadecimal color value of the view's background color is #\(hexColor).")
+        return hexColor
+    }
+    
+    convenience init?(hex: String) {
+        //let hexString = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var rgbValue: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&rgbValue)
+        let red, green, blue: CGFloat
+        switch hex.count {
+        case 6:
+            red = CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0
+            green = CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0
+            blue = CGFloat(rgbValue & 0x0000FF) / 255.0
+        case 8:
+            red = CGFloat((rgbValue & 0xFF000000) >> 24) / 255.0
+            green = CGFloat((rgbValue & 0x00FF0000) >> 16) / 255.0
+            blue = CGFloat((rgbValue & 0x0000FF00) >> 8) / 255.0
+        default:
+            return nil
+        }
+        self.init(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+}
+
 class WritingViewController: UIViewController {
     
+    @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var titleTextView: UITextView!
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var textViewTextNumLabel: UILabel!
@@ -27,6 +72,7 @@ class WritingViewController: UIViewController {
         return button
     }()
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,12 +97,22 @@ class WritingViewController: UIViewController {
         setupColorButton(colorButton)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("ViewController의 view가 load됨")
+        //navigationItem.hidesBackButton = true
+        navigationController?.isNavigationBarHidden = false
+    }
+    
     @IBAction func sendButtonPressed(_ sender: UIBarButtonItem) {
         
+        let userUid = UserDefaults.standard.string(forKey: "ALetterFromLateNightUid")!
         let userFriendCode : String = UserDefaults.standard.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.standard.object(forKey: "pairFriendCode") as! String
+        print(userUid)
         print("userFriendCode : \(userFriendCode)")
         print("userPairFriendCode : \(userPairFriendCode)")
+        // 이거 대신에 db에서 가져오는 것이 나을 듯...
         
 //        let uid = Auth.auth().currentUser?.uid ?? ""
 //        print(uid)
@@ -65,17 +121,20 @@ class WritingViewController: UIViewController {
 //        let id = String(cryptedUid.prefix(12))
 //        print(id)
         
-        if let title =
-            titleTextView.text, let content = contentTextView.text {        db.collection("LetterData").addDocument(data: [
+        if let title = titleTextView.text, let content = contentTextView.text {
+            guard let hexColor = letterBg.backgroundColor?.hexColorExtract(BackgroundColor: letterBg) else {return}
+            print(hexColor)
+            db.collection("LetterData").addDocument(data: [
                 "sender": userFriendCode, // 나의 친구코드
+                "senderuid": userUid,
                 "receiver": userPairFriendCode, // 상대방의 친구코드
                 "id": "none", // 편지 아이디
                 "title": title, // 편지 제목
                 "content": content, // 편지 내용
                 "updateTime": Date(),
                 "receiveTime": Date(),
-                "letterColor": "\(colorButton.titleLabel!.text!)",
-                "emoji" : "none" // (이모지)
+                "letterColor": hexColor,
+                "emoji" : emojiButton.titleLabel?.text // (이모지)
             ]) { (error) in
                 if let e = error {
                     print("There was an issue saving data to firestore, \(e)")
@@ -83,17 +142,18 @@ class WritingViewController: UIViewController {
                 } else {
                     print("작성하신 편지는 새벽 5시에 배달해드릴게요")
                     print("Successfully saved data.")
-
-//                    DispatchQueue.main.async {
-//                        self.contentTextView.text = ""
-//                    }
+                    
+                    DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
+                        self.contentTextView.text = ""
+                        self.titleTextView.text = ""
+                    }
                 }
             }
         }
     }
     
     @IBAction func setupColorButton(_ sender: UIButton) {
-        let colorDics: Dictionary<String, UIColor> = ["Pupple": #colorLiteral(red: 0.6891200542, green: 0.6007183194, blue: 0.8024315238, alpha: 1), "Yellow": #colorLiteral(red: 0.9509314895, green: 0.9013540745, blue: 0, alpha: 1), "Tree": #colorLiteral(red: 0, green: 0.5727785826, blue: 0.324849844, alpha: 1), "Sky": #colorLiteral(red: 0.3175336123, green: 0.6844244003, blue: 0.9497999549, alpha: 1)]
+        let colorDics: Dictionary<String, UIColor> = ["Pupple": #colorLiteral(red: 0.6891200542, green: 0.6007183194, blue: 0.8024315238, alpha: 1), "Yellow": #colorLiteral(red: 0.9509314895, green: 0.9013540745, blue: 0, alpha: 1), "Tree": #colorLiteral(red: 0, green: 0.5727785826, blue: 0.324849844, alpha: 1), "Sky": #colorLiteral(red: 0.2408812046, green: 0.6738553047, blue: 1, alpha: 1)]
         
         let popUpButtonClosure = { [self] (action: UIAction) in
             var userSelectedColor = self.colorButton.currentTitle!

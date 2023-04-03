@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WXA-Q0-NDU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5az-gf-yZX">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -22,10 +22,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="aH5-eB-uS0">
                                 <rect key="frame" x="30" y="132.99999999999997" width="333" height="435.33333333333326"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owz-aR-nYy">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="줄루루님과 편지를 주고 받은지 11일째" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owz-aR-nYy">
                                         <rect key="frame" x="9" y="0.0" width="315" height="72"/>
-                                        <string key="text">줄룰루 님과 
-편지를 주고 받은지 11일 째</string>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="30"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -81,7 +79,8 @@
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="roE-Qr-Kvw" kind="show" identifier="mainToSetting" id="hoz-dN-3h7"/>
+                                    <action selector="settingButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SLu-0u-aV2"/>
+                                    <segue destination="roE-Qr-Kvw" kind="show" identifier="mainToSetting" id="MBY-0A-Igg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -111,13 +110,14 @@
                     <connections>
                         <outlet property="dayCountingLabel" destination="Owz-aR-nYy" id="C3y-06-Hxl"/>
                         <outlet property="letterSendButton" destination="Lqk-Sp-IBa" id="EI9-bF-9VM"/>
+                        <outlet property="navigationBar" destination="ZQP-AQ-kYf" id="BzT-xm-7dR"/>
                         <outlet property="settingButton" destination="Sbx-WF-U8R" id="OpF-Rc-dE9"/>
                         <outlet property="todayDateLabel" destination="D99-NS-U3v" id="suw-H2-nWx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5303.0534351145034" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="6229.7709923664115" y="-11.267605633802818"/>
         </scene>
         <!--받은 편지함-->
         <scene sceneID="5a2-8n-fs0">
@@ -189,6 +189,7 @@
                     <navigationItem key="navigationItem" title="받은 편지함" id="Pge-j7-Xrx"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="navigationBar" destination="Pge-j7-Xrx" id="CUS-72-Jcg"/>
                         <outlet property="tableView" destination="m0S-N3-1af" id="vFd-Bm-YPR"/>
                     </connections>
                 </viewController>
@@ -261,8 +262,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="g7B-aS-80z">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="4EB-MZ-wL1">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="UU1-ws-ZGK">
-                                <rect key="frame" x="323" y="4.6666666666666679" width="54" height="35"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="UU1-ws-ZGK">
+                                <rect key="frame" x="323" y="5" width="54" height="34.333333333333336"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
@@ -279,11 +280,12 @@
                         <outlet property="appleSignupButton" destination="Pvt-bP-Ege" id="8AZ-Ji-6rF"/>
                         <outlet property="googleSignupButton" destination="Uxj-Fw-88t" id="Z1Q-wu-Ibn"/>
                         <segue destination="37L-ja-FbM" kind="show" identifier="signupToMain" id="tcJ-IN-ELx"/>
+                        <segue destination="F8F-PL-uwk" kind="show" identifier="signupToConnect" id="b51-22-zUx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="loA-bF-M6K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3145.801526717557" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="4072.5190839694656" y="-11.267605633802818"/>
         </scene>
         <!--밤편지 작성-->
         <scene sceneID="aYr-5H-zTO">
@@ -298,37 +300,10 @@
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RoU-XW-hQT">
                                         <rect key="frame" x="60" y="110" width="273" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="MAz-kP-Egm"/>
-                                        </constraints>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nRb-Kx-Nua">
-                                        <rect key="frame" x="276" y="143" width="109" height="34.333333333333343"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="109" id="K32-0B-eun"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34.329999999999998" id="V6f-iq-8yq"/>
-                                            <constraint firstAttribute="height" constant="34.329999999999998" id="V7u-gD-knE"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="109" id="hA2-6a-opu"/>
-                                        </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <menu key="menu" id="Pwx-x0-yqr">
-                                            <children>
-                                                <command title="Item 1" id="3Ky-Rf-zHx"/>
-                                                <command title="Item 2" id="W4V-1s-CcH"/>
-                                            </children>
-                                        </menu>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Button">
-                                            <color key="baseForegroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="setupColorButton:" destination="5Tl-Pd-vTT" eventType="touchUpInside" id="S7G-G8-8Tz"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.86274509799999999" green="0.75294117650000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -376,6 +351,24 @@
                                     <constraint firstAttribute="bottom" secondItem="YoM-qe-Fqc" secondAttribute="bottom" constant="277" id="JSf-jt-hLa"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nRb-Kx-Nua">
+                                <rect key="frame" x="298" y="193" width="87" height="34.333333333333343"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <menu key="menu" id="Pwx-x0-yqr">
+                                    <children>
+                                        <command title="Item 1" id="3Ky-Rf-zHx"/>
+                                        <command title="Item 2" id="W4V-1s-CcH"/>
+                                    </children>
+                                </menu>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Button">
+                                    <color key="baseForegroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="setupColorButton:" destination="5Tl-Pd-vTT" eventType="touchUpInside" id="S7G-G8-8Tz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="HcG-Y3-yTX"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -383,15 +376,17 @@
                             <constraint firstItem="Ars-eo-XML" firstAttribute="leading" secondItem="HcG-Y3-yTX" secondAttribute="leading" id="MP3-JK-ZHb"/>
                             <constraint firstItem="Ars-eo-XML" firstAttribute="trailing" secondItem="HcG-Y3-yTX" secondAttribute="trailing" id="NmH-lQ-g8a"/>
                             <constraint firstItem="Utg-Mf-WVD" firstAttribute="top" secondItem="v9c-5m-eKB" secondAttribute="top" id="Ucf-v7-K9l"/>
+                            <constraint firstItem="nRb-Kx-Nua" firstAttribute="top" secondItem="HcG-Y3-yTX" secondAttribute="top" constant="90" id="V87-yR-WPZ"/>
                             <constraint firstAttribute="bottom" secondItem="Ars-eo-XML" secondAttribute="bottom" id="XAr-f7-zD6"/>
                             <constraint firstItem="Utg-Mf-WVD" firstAttribute="leading" secondItem="HcG-Y3-yTX" secondAttribute="leading" id="cXK-J5-7uQ"/>
                             <constraint firstItem="Utg-Mf-WVD" firstAttribute="trailing" secondItem="HcG-Y3-yTX" secondAttribute="trailing" id="k7k-aU-E7K"/>
                             <constraint firstItem="Ars-eo-XML" firstAttribute="top" secondItem="HcG-Y3-yTX" secondAttribute="top" constant="134" id="lK7-tC-hZs"/>
                             <constraint firstItem="HcG-Y3-yTX" firstAttribute="bottom" secondItem="Utg-Mf-WVD" secondAttribute="bottom" constant="481" id="mRs-pb-Wkj"/>
+                            <constraint firstItem="HcG-Y3-yTX" firstAttribute="trailing" secondItem="nRb-Kx-Nua" secondAttribute="trailing" constant="8" id="pnn-YK-cTJ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="ppu-u0-wtT"/>
-                    <navigationItem key="navigationItem" title="밤편지 작성" largeTitleDisplayMode="always" style="editor" id="ART-WF-vEd">
+                    <navigationItem key="navigationItem" title="밤편지 작성" id="ART-WF-vEd">
                         <barButtonItem key="rightBarButtonItem" title="보내기" id="MxQ-r2-CTT">
                             <color key="tintColor" systemColor="labelColor"/>
                             <connections>
@@ -403,6 +398,7 @@
                         <outlet property="colorButton" destination="nRb-Kx-Nua" id="eqI-Mu-xen"/>
                         <outlet property="contentTextView" destination="YoM-qe-Fqc" id="HmA-zr-dkJ"/>
                         <outlet property="letterBg" destination="Utg-Mf-WVD" id="FoF-LN-vlP"/>
+                        <outlet property="navigationBar" destination="ART-WF-vEd" id="9ge-93-ud1"/>
                         <outlet property="sendButton" destination="MxQ-r2-CTT" id="UEw-Py-1fh"/>
                         <outlet property="textViewTextNumLabel" destination="MSF-eb-ite" id="4mK-nC-2wA"/>
                         <outlet property="titleTextView" destination="RoU-XW-hQT" id="RgZ-xl-DVb"/>
@@ -410,7 +406,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b38-Aa-ri9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6028.2442748091598" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="6954.961832061068" y="-11.267605633802818"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="Sdx-x4-Cql">
@@ -502,6 +498,9 @@
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="logoutButtonPressed:" destination="roE-Qr-Kvw" eventType="touchUpInside" id="dAm-nr-0W5"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="L3A-wi-Zws"/>
@@ -526,48 +525,98 @@
             <objects>
                 <viewController id="7ap-cL-Iqo" customClass="ConnectTypingViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9J-EF-blN">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="친구코드를 입력해 연결을 신청해주세요" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYD-1I-6yQ">
-                                <rect key="frame" x="40" y="70" width="313" height="72"/>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="30"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="상대방 친구코드" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wl4-tQ-Ceu">
-                                <rect key="frame" x="40" y="177" width="108" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FKx-Sp-fKO">
-                                <rect key="frame" x="40" y="206" width="313" height="34"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="WdE-vz-Vur">
+                                <rect key="frame" x="40" y="132.99999999999997" width="313" height="365.33333333333326"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="y2N-P0-uLu">
+                                        <rect key="frame" x="0.0" y="0.0" width="313" height="125.33333333333333"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="친구코드를 입력해 연결을 신청해주세요" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYD-1I-6yQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="313" height="72"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="30"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="친구코드를 서로 입력하면  밤편지를 이용할 수 있어요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WyF-Ka-Ugr" userLabel="친구코드를 서로 입력하면  밤편지를 이용할 수 있어요">
+                                                <rect key="frame" x="0.0" y="82" width="313" height="43.333333333333343"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="18"/>
+                                                <color key="textColor" red="0.6705882353" green="0.69019607839999997" blue="0.73725490199999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="yAE-BA-6PY">
+                                        <rect key="frame" x="0.0" y="155.33333333333331" width="313" height="106.33333333333331"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상대방 친구코드" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wl4-tQ-Ceu">
+                                                <rect key="frame" x="0.0" y="0.0" width="313" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="친구코드 6자리를 입력해주세요" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FKx-Sp-fKO">
+                                                <rect key="frame" x="0.0" y="27.333333333333371" width="313" height="34"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="39G-C6-j1Q">
+                                                <rect key="frame" x="0.0" y="68.333333333333371" width="313" height="38"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="요청 보내기">
+                                                    <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
+                                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="baseBackgroundColor" name="AccentColor"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="startButtonPressed:" destination="7ap-cL-Iqo" eventType="touchUpInside" id="TXH-6c-acE"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="IT7-eO-7NB">
+                                        <rect key="frame" x="0.0" y="291.66666666666669" width="313" height="73.666666666666686"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내 친구코드" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQ8-qg-LkJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="313" height="20.666666666666668"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내 친구코드" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldV-jg-tME">
+                                                <rect key="frame" x="0.0" y="25.666666666666629" width="313" height="48"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="40"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wwP-Nh-14O"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="wl4-tQ-Ceu" firstAttribute="leading" secondItem="wwP-Nh-14O" secondAttribute="leading" constant="40" id="5Nh-KI-37J"/>
-                            <constraint firstItem="wl4-tQ-Ceu" firstAttribute="top" secondItem="aYD-1I-6yQ" secondAttribute="bottom" constant="35" id="89v-yj-ynk"/>
-                            <constraint firstItem="wwP-Nh-14O" firstAttribute="trailing" secondItem="wl4-tQ-Ceu" secondAttribute="trailing" constant="245" id="LTR-LD-fib"/>
-                            <constraint firstItem="FKx-Sp-fKO" firstAttribute="leading" secondItem="wwP-Nh-14O" secondAttribute="leading" constant="40" id="aOD-nS-An2"/>
-                            <constraint firstItem="wwP-Nh-14O" firstAttribute="trailing" secondItem="FKx-Sp-fKO" secondAttribute="trailing" constant="40" id="foU-P0-cHB"/>
-                            <constraint firstItem="FKx-Sp-fKO" firstAttribute="top" secondItem="wl4-tQ-Ceu" secondAttribute="bottom" constant="8" symbolic="YES" id="tZw-jB-ZNZ"/>
+                            <constraint firstItem="WdE-vz-Vur" firstAttribute="top" secondItem="wwP-Nh-14O" secondAttribute="top" constant="30" id="9zt-hj-1Be"/>
+                            <constraint firstAttribute="trailing" secondItem="WdE-vz-Vur" secondAttribute="trailing" constant="40" id="hrQ-6t-0tb"/>
+                            <constraint firstItem="WdE-vz-Vur" firstAttribute="leading" secondItem="wwP-Nh-14O" secondAttribute="leading" constant="40" id="soz-Ph-3dS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="gct-Si-5LE"/>
                     <connections>
-                        <segue destination="WUb-hh-SgB" kind="show" id="3RF-X8-PAW"/>
+                        <outlet property="myFriendCode" destination="ldV-jg-tME" id="wnK-n2-T2Y"/>
+                        <outlet property="pairFriendCodeTextField" destination="FKx-Sp-fKO" id="tfN-vx-tWr"/>
+                        <outlet property="startButton" destination="39G-C6-j1Q" id="Jh9-ZP-UMs"/>
+                        <segue destination="WUb-hh-SgB" kind="show" id="esi-MA-sDA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uH0-2T-oFk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4577.8625954198469" y="-725.35211267605632"/>
+            <point key="canvasLocation" x="3893.8931297709923" y="-725.35211267605632"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="hT8-V1-MVJ">
@@ -590,7 +639,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ob3-1W-rva" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4577.8625954198469" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="5504.5801526717551" y="-11.267605633802818"/>
         </scene>
         <!--Letter View Controller-->
         <scene sceneID="d9T-LA-DS9">
@@ -638,7 +687,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PIn-rs-77C">
-                                                <rect key="frame" x="0.0" y="30" width="393" height="20.666666666666671"/>
+                                                <rect key="frame" x="0.0" y="175" width="393" height="20.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -651,7 +700,7 @@
                                             <constraint firstItem="ZVM-av-un0" firstAttribute="top" secondItem="GgF-nc-GUk" secondAttribute="top" constant="80" id="Ji7-ja-jsw"/>
                                             <constraint firstAttribute="bottom" secondItem="ZVM-av-un0" secondAttribute="bottom" constant="350" id="LDL-6n-ghR"/>
                                             <constraint firstItem="ZVM-av-un0" firstAttribute="leading" secondItem="GgF-nc-GUk" secondAttribute="leading" constant="60" id="MTO-Eo-Mds"/>
-                                            <constraint firstItem="PIn-rs-77C" firstAttribute="top" secondItem="GgF-nc-GUk" secondAttribute="top" constant="30" id="Uvr-XN-Mdc"/>
+                                            <constraint firstItem="PIn-rs-77C" firstAttribute="top" secondItem="GgF-nc-GUk" secondAttribute="top" constant="175" id="Uvr-XN-Mdc"/>
                                             <constraint firstAttribute="trailing" secondItem="PIn-rs-77C" secondAttribute="trailing" id="kXL-cy-y5A"/>
                                         </constraints>
                                     </view>
@@ -660,12 +709,22 @@
                                     <constraint firstItem="GgF-nc-GUk" firstAttribute="top" secondItem="yjv-LA-9ia" secondAttribute="top" constant="239" id="yFv-rm-Sy7"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="emoji" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEt-x5-ZC6">
+                                <rect key="frame" x="40" y="194" width="164" height="84"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="70"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jej-OQ-eRk"/>
                         <color key="backgroundColor" name="AccentColor"/>
                         <constraints>
+                            <constraint firstItem="kEt-x5-ZC6" firstAttribute="top" secondItem="jej-OQ-eRk" secondAttribute="top" constant="91" id="8Pc-vk-p9d"/>
                             <constraint firstItem="jej-OQ-eRk" firstAttribute="trailing" secondItem="yjv-LA-9ia" secondAttribute="trailing" id="Feu-9H-8LB"/>
                             <constraint firstItem="yjv-LA-9ia" firstAttribute="top" secondItem="X86-M1-Vw2" secondAttribute="top" id="Pdu-k1-ur4"/>
+                            <constraint firstItem="kEt-x5-ZC6" firstAttribute="leading" secondItem="jej-OQ-eRk" secondAttribute="leading" constant="40" id="bNc-LD-fDn"/>
+                            <constraint firstItem="jej-OQ-eRk" firstAttribute="trailing" secondItem="kEt-x5-ZC6" secondAttribute="trailing" constant="189" id="cZO-PL-dK6"/>
+                            <constraint firstItem="jej-OQ-eRk" firstAttribute="bottom" secondItem="kEt-x5-ZC6" secondAttribute="bottom" constant="491" id="mD8-ms-FZi"/>
                             <constraint firstAttribute="bottom" secondItem="yjv-LA-9ia" secondAttribute="bottom" id="u1j-wf-L9f"/>
                             <constraint firstItem="yjv-LA-9ia" firstAttribute="leading" secondItem="X86-M1-Vw2" secondAttribute="leading" id="xo9-Lz-nQj"/>
                         </constraints>
@@ -674,6 +733,9 @@
                     <connections>
                         <outlet property="contentTextView" destination="ZVM-av-un0" id="eRE-5m-j0P"/>
                         <outlet property="dateLabel" destination="PIn-rs-77C" id="Gpf-Js-HDf"/>
+                        <outlet property="emojiLabel" destination="kEt-x5-ZC6" id="i80-L8-Wul"/>
+                        <outlet property="letterBg" destination="DIG-77-up3" id="fzu-Tn-04E"/>
+                        <outlet property="navigationBar" destination="m2y-9s-lVq" id="Mo8-J3-o8O"/>
                         <outlet property="titleTextView" destination="59y-Od-p20" id="7nI-nn-DaL"/>
                     </connections>
                 </viewController>
@@ -693,13 +755,73 @@
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="9Dd-a9-fJP" kind="relationship" relationship="rootViewController" id="r7h-Ms-EYX"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hta-jG-ION" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2219.0839694656488" y="-11.267605633802818"/>
+            <point key="canvasLocation" x="1028" y="-11"/>
+        </scene>
+        <!--Guide View Controller-->
+        <scene sceneID="bID-Uk-VEP">
+            <objects>
+                <viewController id="NfI-M0-Orc" customClass="GuideViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="njV-No-rG3">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZh-4M-L0n">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="oMm-nS-9Mi"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="AcY-EW-ewp"/>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="H6V-2j-Hmg">
+                                <rect key="frame" x="138" y="742" width="117" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.82745098039999998" blue="0.73725490199999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="pageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="currentPageIndicatorTintColor" red="0.69803921570000005" green="0.46274509800000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </pageControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2O-V5-muM">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVI-t3-4fJ">
+                                        <rect key="frame" x="159" y="409" width="75" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                        <connections>
+                                            <action selector="startButtonPressed:" destination="NfI-M0-Orc" eventType="touchUpInside" id="iKn-0N-r4d"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="1bb-La-05r"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="IZh-4M-L0n" secondAttribute="bottom" id="6ng-ir-bve"/>
+                            <constraint firstItem="c2O-V5-muM" firstAttribute="top" secondItem="njV-No-rG3" secondAttribute="top" id="hEO-Ex-y83"/>
+                            <constraint firstItem="IZh-4M-L0n" firstAttribute="leading" secondItem="1bb-La-05r" secondAttribute="leading" id="lrr-bB-mkP"/>
+                            <constraint firstItem="c2O-V5-muM" firstAttribute="trailing" secondItem="1bb-La-05r" secondAttribute="trailing" id="oct-a5-8Jq"/>
+                            <constraint firstAttribute="bottom" secondItem="c2O-V5-muM" secondAttribute="bottom" id="oee-Ff-moz"/>
+                            <constraint firstItem="c2O-V5-muM" firstAttribute="leading" secondItem="1bb-La-05r" secondAttribute="leading" id="tyK-WZ-6RC"/>
+                            <constraint firstItem="IZh-4M-L0n" firstAttribute="trailing" secondItem="1bb-La-05r" secondAttribute="trailing" id="vR6-vR-LXX"/>
+                            <constraint firstItem="IZh-4M-L0n" firstAttribute="top" secondItem="njV-No-rG3" secondAttribute="top" id="ws6-rb-lKB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="nmA-ie-tVQ"/>
+                    <connections>
+                        <outlet property="lastView" destination="c2O-V5-muM" id="DaQ-M1-qIP"/>
+                        <outlet property="pageControl" destination="H6V-2j-Hmg" id="XMO-DR-lN1"/>
+                        <outlet property="scrollView" destination="IZh-4M-L0n" id="6gc-0v-A0r"/>
+                        <outlet property="startButton" destination="wVI-t3-4fJ" id="9pR-nz-lpf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G86-Af-gk7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2085" y="-411"/>
         </scene>
         <!--Connect View Controller-->
         <scene sceneID="162-OA-vZx">
@@ -744,9 +866,7 @@
                                     <color key="baseBackgroundColor" name="AccentColor"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="btn:" destination="F8F-PL-uwk" eventType="touchUpInside" id="Zkf-ry-F3U"/>
-                                    <action selector="startButtonPressed:" destination="Uhw-JE-K9L" eventType="touchUpInside" id="RPu-YJ-fwl"/>
-                                    <segue destination="7ap-cL-Iqo" kind="show" id="GNp-7Z-DrL"/>
+                                    <action selector="startButtonPressed:" destination="F8F-PL-uwk" eventType="touchUpInside" id="V5n-aM-y05"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="연결을 신청하고 밤편지를 시작해보세요." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYA-Rx-DRd">
@@ -765,24 +885,25 @@
                             <constraint firstItem="NuB-qL-z4D" firstAttribute="trailing" secondItem="DYA-Rx-DRd" secondAttribute="trailing" constant="40" id="Gli-5I-FOG"/>
                             <constraint firstAttribute="trailing" secondItem="gY7-ZH-sKV" secondAttribute="trailing" constant="30" id="P2t-eX-iLB"/>
                             <constraint firstItem="NuB-qL-z4D" firstAttribute="trailing" secondItem="bt6-Pn-2hu" secondAttribute="trailing" constant="60" id="if0-E8-qzB"/>
-                            <constraint firstItem="gY7-ZH-sKV" firstAttribute="top" secondItem="NuB-qL-z4D" secondAttribute="top" constant="74" id="jOL-Pb-PbI"/>
                             <constraint firstItem="bt6-Pn-2hu" firstAttribute="top" secondItem="gY7-ZH-sKV" secondAttribute="bottom" constant="425" id="k8d-1F-yQN"/>
                             <constraint firstItem="bt6-Pn-2hu" firstAttribute="leading" secondItem="NuB-qL-z4D" secondAttribute="leading" constant="60" id="lGa-lP-bCf"/>
                             <constraint firstItem="gY7-ZH-sKV" firstAttribute="leading" secondItem="NuB-qL-z4D" secondAttribute="leading" constant="30" id="tXA-8r-pSK"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="mOL-xD-8pG"/>
                     <connections>
-                        <outlet property="startButton" destination="bt6-Pn-2hu" id="qJ6-gr-zV0"/>
+                        <outlet property="helloLabel" destination="fiL-T6-wFD" id="lw0-dx-ZtF"/>
+                        <segue destination="7ap-cL-Iqo" kind="show" identifier="connectToConnectTyping" id="So1-GF-tpn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GyT-Kd-paI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3830" y="-725"/>
+            <point key="canvasLocation" x="3146" y="-725"/>
         </scene>
         <!--Waiting View Controller-->
         <scene sceneID="3OS-8R-23v">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="WUb-hh-SgB" customClass="WaitingViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WaitingViewController" modalPresentationStyle="fullScreen" id="WUb-hh-SgB" customClass="WaitingViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kXU-Jq-VOX">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -796,7 +917,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="상대방이 연결을 수락할 때까지 조금만 기다려주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tHj-eE-c8k">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="상대방과 연결 중입니다. 조금만 기다려주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tHj-eE-c8k">
                                         <rect key="frame" x="10" y="69" width="313" height="43.333333333333343"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="18"/>
                                         <color key="textColor" red="0.6705882353" green="0.69019607839999997" blue="0.73725490199999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -823,20 +944,23 @@
                         <constraints>
                             <constraint firstItem="jvl-ox-iSW" firstAttribute="bottom" secondItem="PFu-NT-5bF" secondAttribute="bottom" constant="289.67000000000002" id="LPa-5Z-as5"/>
                             <constraint firstAttribute="trailing" secondItem="PFu-NT-5bF" secondAttribute="trailing" constant="30" id="VUQ-0O-eZp"/>
-                            <constraint firstItem="PFu-NT-5bF" firstAttribute="top" secondItem="jvl-ox-iSW" secondAttribute="top" constant="73.999999999999972" id="ZJE-KW-qIJ"/>
                             <constraint firstItem="PFu-NT-5bF" firstAttribute="leading" secondItem="jvl-ox-iSW" secondAttribute="leading" constant="30" id="d6k-sn-DJi"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ipF-gx-UO7"/>
+                    <connections>
+                        <outlet property="helloLabel" destination="uRk-QW-dgh" id="qFP-vb-bkm"/>
+                        <segue destination="Uhw-JE-K9L" kind="show" id="r1U-ob-2M0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ict-Qm-vyP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5305" y="-725"/>
+            <point key="canvasLocation" x="4621" y="-725"/>
         </scene>
         <!--Start View Controller-->
         <scene sceneID="AYX-q3-BgW">
             <objects>
-                <viewController id="Uhw-JE-K9L" customClass="StartViewController" customModule="LetterWidgetExtension" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StartViewController" id="Uhw-JE-K9L" customClass="StartViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Azm-Sz-VdW">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -844,7 +968,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="7fj-dH-IfH">
                                 <rect key="frame" x="30" y="132.99999999999997" width="333" height="395.33333333333326"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="안녕하세요! 줄룰루님" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pV4-DI-aYg">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="환영합니다!" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pV4-DI-aYg">
                                         <rect key="frame" x="10" y="0.0" width="313" height="36"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="30"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -852,7 +976,7 @@
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSX-IY-6Ux">
                                         <rect key="frame" x="10" y="69" width="313" height="43.333333333333343"/>
-                                        <string key="text">줄룰루 님께서 연결을 신청하셨어요.
+                                        <string key="text">연결이 완료되었습니다.
 이제 두 분의 밤편지를 전해드릴게요.</string>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="18"/>
                                         <color key="textColor" red="0.6705882353" green="0.69019607839999997" blue="0.73725490199999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -874,34 +998,38 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="puA-wA-GId">
-                                <rect key="frame" x="60" y="648.33333333333337" width="273" height="38"/>
+                                <rect key="frame" x="60" y="568.33333333333337" width="273" height="38"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="수락 후 시작하기">
+                                <buttonConfiguration key="configuration" style="filled" title="시작하기">
                                     <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="startButtonPressed:" destination="Uhw-JE-K9L" eventType="touchUpInside" id="rm3-X4-t7M"/>
+                                    <action selector="startButtonPressed:" destination="Uhw-JE-K9L" eventType="touchUpInside" id="Odw-cV-U9w"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1MI-TL-ZYD"/>
                         <color key="backgroundColor" name="AccentColor"/>
                         <constraints>
-                            <constraint firstItem="7fj-dH-IfH" firstAttribute="top" secondItem="1MI-TL-ZYD" secondAttribute="top" constant="74.000000000000028" id="PPR-Kf-OA0"/>
+                            <constraint firstItem="puA-wA-GId" firstAttribute="top" secondItem="7fj-dH-IfH" secondAttribute="bottom" constant="40" id="NNK-LU-EVU"/>
+                            <constraint firstItem="7fj-dH-IfH" firstAttribute="top" secondItem="1MI-TL-ZYD" secondAttribute="top" constant="30" id="PPR-Kf-OA0"/>
                             <constraint firstItem="puA-wA-GId" firstAttribute="leading" secondItem="1MI-TL-ZYD" secondAttribute="leading" constant="60" id="QUV-DF-dox"/>
-                            <constraint firstItem="1MI-TL-ZYD" firstAttribute="bottom" secondItem="puA-wA-GId" secondAttribute="bottom" constant="131.66999999999999" id="c8p-b3-Ka7"/>
                             <constraint firstItem="1MI-TL-ZYD" firstAttribute="trailing" secondItem="puA-wA-GId" secondAttribute="trailing" constant="60" id="cOJ-it-HDd"/>
                             <constraint firstItem="7fj-dH-IfH" firstAttribute="leading" secondItem="1MI-TL-ZYD" secondAttribute="leading" constant="30" id="ezE-3g-QIF"/>
-                            <constraint firstItem="puA-wA-GId" firstAttribute="top" secondItem="7fj-dH-IfH" secondAttribute="bottom" constant="120" id="lTV-EC-LS7"/>
                             <constraint firstAttribute="trailing" secondItem="7fj-dH-IfH" secondAttribute="trailing" constant="30" id="tgl-NP-NHK"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="TcC-hP-N0f"/>
+                    <connections>
+                        <outlet property="helloLabel" destination="pV4-DI-aYg" id="LK5-yI-hMQ"/>
+                        <segue destination="37L-ja-FbM" kind="show" identifier="startToMain" id="gfY-CP-6bS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NjD-zb-Gnp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5305" y="-1423"/>
+            <point key="canvasLocation" x="5332" y="-725"/>
         </scene>
         <!--보낸 편지함-->
         <scene sceneID="mXD-Lw-iuw">
@@ -973,6 +1101,7 @@
                     <navigationItem key="navigationItem" title="보낸 편지함" id="GMo-y0-nBD"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="navigationBar" destination="GMo-y0-nBD" id="d67-gk-ldh"/>
                         <outlet property="tableView" destination="L8M-K6-Izy" id="93S-MY-2F6"/>
                     </connections>
                 </viewController>
@@ -980,9 +1109,28 @@
             </objects>
             <point key="canvasLocation" x="4578" y="734"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Yn7-FZ-i7K">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5az-gf-yZX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gwK-GZ-3P1">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9Dd-a9-fJP" kind="relationship" relationship="rootViewController" id="gwA-3c-CA3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4IJ-Mv-pyg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3145.801526717557" y="-11.267605633802818"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="69n-lE-wKh"/>
+        <segue reference="jPY-o2-FOr"/>
+        <segue reference="tcJ-IN-ELx"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple Logo" width="24" height="24"/>
