@@ -33,10 +33,32 @@ class LetterViewController: UIViewController {
         return f
     }()
     
+    struct UserDefaultsManager {
+        static let shared: UserDefaults = {
+            let suiteName = "group.simon.work2"
+            guard let userDefaults = UserDefaults(suiteName: suiteName) else {
+                fatalError("Could not initialize UserDefaults with suite name: \(suiteName)")
+            }
+            return userDefaults
+        }()
+        
+        static let sharedDataKey = "mySharedData"
+        
+        static func setSharedData(_ value: String) {
+            shared.set(value, forKey: sharedDataKey)
+        }
+        
+        static func sharedData() -> String? {
+            return shared.string(forKey: sharedDataKey)
+        }
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         //loadMessages()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
