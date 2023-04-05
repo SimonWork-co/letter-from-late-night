@@ -35,19 +35,19 @@ class LetterViewController: UIViewController {
     
     struct UserDefaultsManager {
         static let shared: UserDefaults = {
-            let suiteName = "group.simon.work2"
+            let suiteName = "group.Simonwork2"
             guard let userDefaults = UserDefaults(suiteName: suiteName) else {
                 fatalError("Could not initialize UserDefaults with suite name: \(suiteName)")
             }
             return userDefaults
         }()
-        
+
         static let sharedDataKey = "mySharedData"
-        
+
         static func setSharedData(_ value: String) {
             shared.set(value, forKey: sharedDataKey)
         }
-        
+
         static func sharedData() -> String? {
             return shared.string(forKey: sharedDataKey)
         }

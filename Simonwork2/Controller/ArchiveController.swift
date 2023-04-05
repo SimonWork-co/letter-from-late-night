@@ -53,13 +53,13 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     
     func loadMessages(){
         
-        let userFriendCode : String = UserDefaults.standard.object(forKey: "friendCode") as! String
-        let userPairFriendCode : String = UserDefaults.standard.object(forKey: "pairFriendCode") as! String
+        let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
+        let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
         
         db.collection("LetterData")
             .whereField("sender", isEqualTo: userPairFriendCode)
             .whereField("receiver", isEqualTo: userFriendCode)
-            .order(by: "updateTime")
+            .order(by: "updateTime", descending: true)
             .addSnapshotListener { (querySnapshot, error) in
                 
                 self.messages = []
@@ -90,6 +90,14 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                     emoji: messageEmoji
                                 )
                                 self.messages.append(messageList)
+                                
+                                let setTitle = self.messages[0].title
+                                let setContent = self.messages[0].content
+                                let setUpdateTime = self.messages[0].updateTime
+                                
+                                UserDefaults.shared.set(setTitle, forKey: "latestTitle")
+                                UserDefaults.shared.set(setContent, forKey: "latestContent")
+                                UserDefaults.shared.set(setUpdateTime, forKey: "latesetUpdateDate")
                                 
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()

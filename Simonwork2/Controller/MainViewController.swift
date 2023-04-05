@@ -63,7 +63,7 @@ class MainViewController: UIViewController {
         //todayDateLabel.text = formatter.string(from: Date()) // 현재 시간을 표현
         
         let userUid = Auth.auth().currentUser?.uid
-        let userName : String = UserDefaults.standard.object(forKey: "userName") as! String
+        let userName : String = UserDefaults.shared.object(forKey: "userName") as! String
         
         db.collection("UserData").whereField("uid", isEqualTo: userUid).getDocuments() { (querySnapshot, error) in
             if let error = error {

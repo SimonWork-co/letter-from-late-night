@@ -8,31 +8,38 @@
 import Foundation
 import Firebase
 
+extension UserDefaults {
+    static var shared: UserDefaults {
+        let appGroupId = "group.Simonwork2"
+        return UserDefaults(suiteName: appGroupId)!
+    }
+}
+
 struct UserDefaultsData {
     
     var receivedData : User?
     
     struct Save {
         func userName(UserName: String) {
-            UserDefaults.standard.set("\(UserName)", forKey: "userName")
+            UserDefaults.shared.set(UserName, forKey: "userName")
         }
         func userEmail(UserEmail: String) {
-            UserDefaults.standard.set("\(UserEmail)", forKey: "userEmail")
+            UserDefaults.shared.set(UserEmail, forKey: "userEmail")
         }
         func friendCode(friendCode: String){
-            UserDefaults.standard.set("\(friendCode)", forKey: "friendCode")
+            UserDefaults.shared.set(friendCode, forKey: "friendCode")
         }
         func friendName(friendName: String){
-            UserDefaults.standard.set("\(friendName)", forKey: "friendName")
+            UserDefaults.shared.set(friendName, forKey: "friendName")
         }
         func uid(uid: String){
-            UserDefaults.standard.set("\(uid)", forKey: "ALetterFromLateNightUid")
+            UserDefaults.shared.set(uid, forKey: "ALetterFromLateNightUid")
         }
         func pairFriendCode(pairFriendCode: String){
-            UserDefaults.standard.set("\(pairFriendCode)", forKey: "pairFriendCode")
+            UserDefaults.shared.set(pairFriendCode, forKey: "pairFriendCode")
         }
         func signupTime(signupTime: Date){
-            UserDefaults.standard.set("\(signupTime)", forKey: "pairFriendCode")
+            UserDefaults.shared.set(signupTime, forKey: "signupTime")
         }
     }
     
