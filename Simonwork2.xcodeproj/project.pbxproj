@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4585C6A91E51DC91CD052941 /* Pods_Simonwork2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69789884F55749A0EB9DF3C5 /* Pods_Simonwork2.framework */; };
+		1BA11AD875D6D1DF8DF99C75 /* Pods_Simonwork2_LetterWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C3EACD8E6DEB474DF608859 /* Pods_Simonwork2_LetterWidgetExtension.framework */; };
 		8D272A8229D5756A00DDD636 /* UserDefaultsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D272A8129D5756A00DDD636 /* UserDefaultsData.swift */; };
+		8D3FF30F29DBABAF00508FB8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D3FF30E29DBABAF00508FB8 /* GoogleService-Info.plist */; };
 		8D402DA929C0406A0010D80C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D402DA829C0406A0010D80C /* NavigationController.swift */; };
 		8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375E829B9A7AD0028427F /* SignupViewController.swift */; };
 		8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375EA29B9A9010028427F /* ArchiveController.swift */; };
 		8D6182FA29C85D4A00A85BFB /* LetterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182F929C85D4A00A85BFB /* LetterData.swift */; };
-		8D6182FC29C88F1500A85BFB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182FB29C88F1500A85BFB /* Constants.swift */; };
 		8D6182FE29C88FCA00A85BFB /* PairDocumentID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182FD29C88FCA00A85BFB /* PairDocumentID.swift */; };
 		8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */; };
 		8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */; };
@@ -41,6 +41,8 @@
 		8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */; };
 		8DBD9A3C29D9561D005AF94A /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */; };
 		8DBD9A3E29D956D4005AF94A /* GuideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3D29D956D4005AF94A /* GuideModel.swift */; };
+		8DCA774029DD49A200F4DD52 /* DateFormatterFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA773F29DD49A200F4DD52 /* DateFormatterFile.swift */; };
+		B055BA7E1E5408E3CFB8F879 /* Pods_Simonwork2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC0B482E11379098F719015 /* Pods_Simonwork2.framework */; };
 		DE863BCA29C6E40C00208AE8 /* NanumMyeongjoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */; };
 		DE863BCB29C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */; };
 		DE863BCC29C6E40C00208AE8 /* NanumMyeongjo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC929C6E40C00208AE8 /* NanumMyeongjo.ttf */; };
@@ -51,9 +53,7 @@
 		DEA2F28829D85F840021AEC3 /* LetterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA2F28729D85F840021AEC3 /* LetterWidget.swift */; };
 		DEA2F28A29D85F860021AEC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEA2F28929D85F860021AEC3 /* Assets.xcassets */; };
 		DEA2F28E29D85F860021AEC3 /* LetterWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DEA2F27D29D85F840021AEC3 /* LetterWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		DEA2F29329D867980021AEC3 /* LetterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA2F28729D85F840021AEC3 /* LetterWidget.swift */; };
 		DEA2F29429D869DA0021AEC3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1B29B85049008D2050 /* Main.storyboard */; };
-		DEA2F29529D869E50021AEC3 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */; };
 		DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */; };
 		DEF46A1929C2F97700D153B1 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DEF46A1829C2F97700D153B1 /* EmojiPicker */; };
 /* End PBXBuildFile section */
@@ -71,7 +71,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		DEA2F28F29D85F860021AEC3 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
@@ -83,14 +83,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4C13E0CDB61A9BB3CB097062 /* Pods-Simonwork2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2.debug.xcconfig"; path = "Target Support Files/Pods-Simonwork2/Pods-Simonwork2.debug.xcconfig"; sourceTree = "<group>"; };
-		69789884F55749A0EB9DF3C5 /* Pods_Simonwork2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simonwork2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		02F73253AAD25C8B484260ED /* Pods-Simonwork2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2.release.xcconfig"; path = "Target Support Files/Pods-Simonwork2/Pods-Simonwork2.release.xcconfig"; sourceTree = "<group>"; };
+		0BC0B482E11379098F719015 /* Pods_Simonwork2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simonwork2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1477D0481E557F9D80362F60 /* Pods-LetterWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetterWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-LetterWidgetExtension/Pods-LetterWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		2BD8C0BACD20B741F68F9AB0 /* Pods-Simonwork2-LetterWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2-LetterWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-Simonwork2-LetterWidgetExtension/Pods-Simonwork2-LetterWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		43E430EA3738027F3B89049A /* Pods-Simonwork2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2.debug.xcconfig"; path = "Target Support Files/Pods-Simonwork2/Pods-Simonwork2.debug.xcconfig"; sourceTree = "<group>"; };
+		7BB7015219181F856273D26D /* Pods-LetterWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetterWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-LetterWidgetExtension/Pods-LetterWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		7C3EACD8E6DEB474DF608859 /* Pods_Simonwork2_LetterWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simonwork2_LetterWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D272A8129D5756A00DDD636 /* UserDefaultsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsData.swift; sourceTree = "<group>"; };
+		8D3FF30E29DBABAF00508FB8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D402DA829C0406A0010D80C /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8D4375E829B9A7AD0028427F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		8D4375EA29B9A9010028427F /* ArchiveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveController.swift; sourceTree = "<group>"; };
 		8D6182F929C85D4A00A85BFB /* LetterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterData.swift; sourceTree = "<group>"; };
-		8D6182FB29C88F1500A85BFB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8D6182FD29C88FCA00A85BFB /* PairDocumentID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairDocumentID.swift; sourceTree = "<group>"; };
 		8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
 		8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentLetterViewController.swift; sourceTree = "<group>"; };
@@ -120,8 +125,8 @@
 		8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomizedCell.xib; path = Simonwork2/Model/CustomizedCell.xib; sourceTree = SOURCE_ROOT; };
 		8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
 		8DBD9A3D29D956D4005AF94A /* GuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideModel.swift; sourceTree = "<group>"; };
+		8DCA773F29DD49A200F4DD52 /* DateFormatterFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterFile.swift; sourceTree = "<group>"; };
 		8DFDE4AD29C0E423005A9574 /* Simonwork2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Simonwork2.entitlements; sourceTree = "<group>"; };
-		CFC6BF28DF021EDA9267FA93 /* Pods-Simonwork2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2.release.xcconfig"; path = "Target Support Files/Pods-Simonwork2/Pods-Simonwork2.release.xcconfig"; sourceTree = "<group>"; };
 		DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoBold.ttf; sourceTree = "<group>"; };
 		DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoExtraBold.ttf; sourceTree = "<group>"; };
 		DE863BC929C6E40C00208AE8 /* NanumMyeongjo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjo.ttf; sourceTree = "<group>"; };
@@ -135,6 +140,7 @@
 		DEA2F28B29D85F860021AEC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DEA2F29629D872F00021AEC3 /* LetterWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LetterWidgetExtension.entitlements; sourceTree = "<group>"; };
 		DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E08CC8AA0C47B9A607408B7D /* Pods-Simonwork2-LetterWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simonwork2-LetterWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-Simonwork2-LetterWidgetExtension/Pods-Simonwork2-LetterWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,8 +148,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4585C6A91E51DC91CD052941 /* Pods_Simonwork2.framework in Frameworks */,
 				DEF46A1929C2F97700D153B1 /* EmojiPicker in Frameworks */,
+				B055BA7E1E5408E3CFB8F879 /* Pods_Simonwork2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +159,7 @@
 			files = (
 				DEA2F28129D85F840021AEC3 /* SwiftUI.framework in Frameworks */,
 				DEA2F27F29D85F840021AEC3 /* WidgetKit.framework in Frameworks */,
+				1BA11AD875D6D1DF8DF99C75 /* Pods_Simonwork2_LetterWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,8 +169,12 @@
 		645C4E7CF7BCC2EE8B6CE986 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4C13E0CDB61A9BB3CB097062 /* Pods-Simonwork2.debug.xcconfig */,
-				CFC6BF28DF021EDA9267FA93 /* Pods-Simonwork2.release.xcconfig */,
+				7BB7015219181F856273D26D /* Pods-LetterWidgetExtension.debug.xcconfig */,
+				1477D0481E557F9D80362F60 /* Pods-LetterWidgetExtension.release.xcconfig */,
+				43E430EA3738027F3B89049A /* Pods-Simonwork2.debug.xcconfig */,
+				02F73253AAD25C8B484260ED /* Pods-Simonwork2.release.xcconfig */,
+				2BD8C0BACD20B741F68F9AB0 /* Pods-Simonwork2-LetterWidgetExtension.debug.xcconfig */,
+				E08CC8AA0C47B9A607408B7D /* Pods-Simonwork2-LetterWidgetExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -171,9 +182,10 @@
 		83C8CA8BA791E253F61D1D76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				69789884F55749A0EB9DF3C5 /* Pods_Simonwork2.framework */,
 				DEA2F27E29D85F840021AEC3 /* WidgetKit.framework */,
 				DEA2F28029D85F840021AEC3 /* SwiftUI.framework */,
+				0BC0B482E11379098F719015 /* Pods_Simonwork2.framework */,
+				7C3EACD8E6DEB474DF608859 /* Pods_Simonwork2_LetterWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -213,7 +225,6 @@
 				8D9EFF2029B8504B008D2050 /* LaunchScreen.storyboard */,
 				8D9EFF2329B8504B008D2050 /* Info.plist */,
 				DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */,
-				8D6182FB29C88F1500A85BFB /* Constants.swift */,
 			);
 			path = Simonwork2;
 			sourceTree = "<group>";
@@ -283,8 +294,10 @@
 				DEA2F28329D85F840021AEC3 /* LetterWidgetBundle.swift */,
 				DEA2F28529D85F840021AEC3 /* LetterWidgetLiveActivity.swift */,
 				DEA2F28729D85F840021AEC3 /* LetterWidget.swift */,
+				8DCA773F29DD49A200F4DD52 /* DateFormatterFile.swift */,
 				DEA2F28929D85F860021AEC3 /* Assets.xcassets */,
 				DEA2F28B29D85F860021AEC3 /* Info.plist */,
+				8D3FF30E29DBABAF00508FB8 /* GoogleService-Info.plist */,
 			);
 			path = LetterWidget;
 			sourceTree = "<group>";
@@ -296,12 +309,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8D9EFF2629B8504B008D2050 /* Build configuration list for PBXNativeTarget "Simonwork2" */;
 			buildPhases = (
-				FD8DC3F57319004ADC6895A5 /* [CP] Check Pods Manifest.lock */,
+				C69A9CE456E7523314B2250D /* [CP] Check Pods Manifest.lock */,
 				8D9EFF0E29B85049008D2050 /* Sources */,
 				8D9EFF0F29B85049008D2050 /* Frameworks */,
 				8D9EFF1029B85049008D2050 /* Resources */,
-				7896C7291F78B796D788C0A7 /* [CP] Embed Pods Frameworks */,
 				DEA2F28F29D85F860021AEC3 /* Embed Foundation Extensions */,
+				0AAF5BF02EB2E2E6EB9B288F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -320,6 +333,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DEA2F29229D85F860021AEC3 /* Build configuration list for PBXNativeTarget "LetterWidgetExtension" */;
 			buildPhases = (
+				1F54A5CD9DF838CF9AF7A9FA /* [CP] Check Pods Manifest.lock */,
 				DEA2F27929D85F840021AEC3 /* Sources */,
 				DEA2F27A29D85F840021AEC3 /* Frameworks */,
 				DEA2F27B29D85F840021AEC3 /* Resources */,
@@ -398,13 +412,14 @@
 			files = (
 				DEA2F28A29D85F860021AEC3 /* Assets.xcassets in Resources */,
 				DEA2F29429D869DA0021AEC3 /* Main.storyboard in Resources */,
+				8D3FF30F29DBABAF00508FB8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7896C7291F78B796D788C0A7 /* [CP] Embed Pods Frameworks */ = {
+		0AAF5BF02EB2E2E6EB9B288F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -421,7 +436,29 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Simonwork2/Pods-Simonwork2-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FD8DC3F57319004ADC6895A5 /* [CP] Check Pods Manifest.lock */ = {
+		1F54A5CD9DF838CF9AF7A9FA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Simonwork2-LetterWidgetExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C69A9CE456E7523314B2250D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -466,7 +503,6 @@
 				8D6BD68529D9A09800D218C4 /* FirstView.swift in Sources */,
 				8D6BD68B29D9A33900D218C4 /* ThirdView.swift in Sources */,
 				8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */,
-				8D6182FC29C88F1500A85BFB /* Constants.swift in Sources */,
 				8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */,
 				8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */,
 				8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */,
@@ -474,7 +510,6 @@
 				8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */,
 				8D6BD68729D9A0F000D218C4 /* SecondView.swift in Sources */,
 				8D985CF529CD722700C04AA8 /* SettingViewController.swift in Sources */,
-				DEA2F29329D867980021AEC3 /* LetterWidget.swift in Sources */,
 				8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */,
 				8D9EFF1829B85049008D2050 /* SceneDelegate.swift in Sources */,
 			);
@@ -484,7 +519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEA2F29529D869E50021AEC3 /* LetterViewController.swift in Sources */,
+				8DCA774029DD49A200F4DD52 /* DateFormatterFile.swift in Sources */,
 				DEA2F28829D85F840021AEC3 /* LetterWidget.swift in Sources */,
 				DEA2F28629D85F840021AEC3 /* LetterWidgetLiveActivity.swift in Sources */,
 				DEA2F28429D85F840021AEC3 /* LetterWidgetBundle.swift in Sources */,
@@ -637,7 +672,7 @@
 		};
 		8D9EFF2729B8504B008D2050 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C13E0CDB61A9BB3CB097062 /* Pods-Simonwork2.debug.xcconfig */;
+			baseConfigurationReference = 43E430EA3738027F3B89049A /* Pods-Simonwork2.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -645,7 +680,7 @@
 				CODE_SIGN_ENTITLEMENTS = Simonwork2/Simonwork2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RR4V44S8V9;
+				DEVELOPMENT_TEAM = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -671,7 +706,7 @@
 		};
 		8D9EFF2829B8504B008D2050 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CFC6BF28DF021EDA9267FA93 /* Pods-Simonwork2.release.xcconfig */;
+			baseConfigurationReference = 02F73253AAD25C8B484260ED /* Pods-Simonwork2.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -679,7 +714,7 @@
 				CODE_SIGN_ENTITLEMENTS = Simonwork2/Simonwork2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RR4V44S8V9;
+				DEVELOPMENT_TEAM = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -705,13 +740,15 @@
 		};
 		DEA2F29029D85F860021AEC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BD8C0BACD20B741F68F9AB0 /* Pods-Simonwork2-LetterWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = LetterWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RR4V44S8V9;
+				DEVELOPMENT_TEAM = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LetterWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LetterWidget;
@@ -722,7 +759,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2.LetterWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2.LetterWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -733,13 +770,15 @@
 		};
 		DEA2F29129D85F860021AEC3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E08CC8AA0C47B9A607408B7D /* Pods-Simonwork2-LetterWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = LetterWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = RR4V44S8V9;
+				DEVELOPMENT_TEAM = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LetterWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LetterWidget;
@@ -750,7 +789,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2.LetterWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

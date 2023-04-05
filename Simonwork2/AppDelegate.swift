@@ -7,8 +7,8 @@
 
 import UIKit
 import Firebase
-//import FirebaseCore
-//import FirebaseAuth
+import FirebaseCore
+import FirebaseAuth
 import GoogleSignIn
 import FirebaseFirestore
 
@@ -19,11 +19,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        let db = Firestore.firestore()
+//        let db = Firestore.firestore()
         
         UNUserNotificationCenter.current().delegate = self
         
         return true
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        do {
+            try Auth.auth().useUserAccessGroup("sangmok Choi.group.Simonwork2")
+        } catch let error as NSError {
+            print("Error changing user access group: %@", error)
+        }
+        setupAndMigrateFirebaseAuth()
     }
     
     // 2. didReceive: 백그라운드인 경우 & 사용자가 푸시를 클릭한 경우
@@ -87,6 +96,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+    
+    func setupAndMigrateFirebaseAuth() {
+        let BuildEnvironmentAppGroup = "group.Simonwork2"
+        guard Auth.auth().userAccessGroup != BuildEnvironmentAppGroup else { return }
+        //for extension (widget) we want to share our auth status
+        do {
+            //get current user (so we can migrate later)
+            let user = Auth.auth().currentUser
+            //switch to using app group
+            try Auth.auth().useUserAccessGroup(BuildEnvironmentAppGroup)
+            //migrate current user
+            if let user = user {
+                Auth.auth().updateCurrentUser(user) { error in
+                    if error == nil {
+                        print ("Firebase Auth user migrated")
+                    }
+                }
+            }
+
+        } catch let error as NSError {
+            print("error: \(error)")
+        }
+        
     }
 
 }

@@ -51,13 +51,13 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     
     func loadMessages(){
         
-        let userFriendCode : String = UserDefaults.standard.object(forKey: "friendCode") as! String
-        let userPairFriendCode : String = UserDefaults.standard.object(forKey: "pairFriendCode") as! String
+        let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
+        let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
         
         db.collection("LetterData")
             .whereField("sender", isEqualTo: userFriendCode)
             .whereField("receiver", isEqualTo: userPairFriendCode)
-            .order(by: "updateTime")
+            .order(by: "updateTime", descending: true)
             .addSnapshotListener { (querySnapshot, error) in
                 
                 self.messages = []
@@ -89,10 +89,21 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 )
                                 self.messages.append(messageList)
                                 
+                                let setTitle = self.messages[0].title
+                                let setContent = self.messages[0].content
+                                let setUpdateTime = self.messages[0].updateTime
+                                let setLetterColor = self.messages[0].letterColor
+                                
+                                UserDefaults.shared.set(setTitle, forKey: "latestTitle")
+                                UserDefaults.shared.set(setContent, forKey: "latestContent")
+                                UserDefaults.shared.set(setUpdateTime, forKey: "latesetUpdateDate")
+                                UserDefaults.shared.set(setLetterColor, forKey: "latestLetterColor")
+                                
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
                                     let indexPath = IndexPath(row: 0, section: self.messages.count - 1)
                                     self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+                                    
                                 }
                             }
                         }
@@ -149,4 +160,8 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         // cell 클릭 시, cell 내용을 보여주는 view controller로 이동
         performSegue(withIdentifier: "sentLetterToMessageContent", sender: indexPath.section)
     }
+    
 }
+
+// 최신의 (맨 위의) 편지를 위젯으로 불러야 함
+ 

@@ -18,10 +18,10 @@ class WaitingViewController: UIViewController {
     
     @IBOutlet weak var helloLabel: UILabel!
     
-    let userName = UserDefaults.standard.string(forKey: "userName")!
-    let myFriendCode = UserDefaults.standard.string(forKey: "friendCode")!
-    let uid = UserDefaults.standard.string(forKey: "ALetterFromLateNightUid")!
-    let documentId = UserDefaults.standard.string(forKey: "documentID")!
+    let userName = UserDefaults.shared.string(forKey: "userName")!
+    let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
+    let uid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
+    let documentId = UserDefaults.shared.string(forKey: "documentID")!
     
     override func viewDidLoad() {
         super.viewDidLoad()

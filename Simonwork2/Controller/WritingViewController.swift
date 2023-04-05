@@ -76,6 +76,10 @@ class WritingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserDefaults.shared.set("latestTitle", forKey: "latestTitle")
+        UserDefaults.shared.set("latestContent", forKey: "latestContent")
+        UserDefaults.shared.set("updateDate", forKey: "updateDate")
+        
         let placeHolder: String = "제목을 입력해주세요"
         if titleTextView.text.isEmpty {
             titleTextView.text = placeHolder
@@ -106,9 +110,9 @@ class WritingViewController: UIViewController {
     
     @IBAction func sendButtonPressed(_ sender: UIBarButtonItem) {
         
-        let userUid = UserDefaults.standard.string(forKey: "ALetterFromLateNightUid")!
-        let userFriendCode : String = UserDefaults.standard.object(forKey: "friendCode") as! String
-        let userPairFriendCode : String = UserDefaults.standard.object(forKey: "pairFriendCode") as! String
+        let userUid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
+        let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
+        let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
         print(userUid)
         print("userFriendCode : \(userFriendCode)")
         print("userPairFriendCode : \(userPairFriendCode)")
@@ -124,6 +128,8 @@ class WritingViewController: UIViewController {
         if let title = titleTextView.text, let content = contentTextView.text {
             guard let hexColor = letterBg.backgroundColor?.hexColorExtract(BackgroundColor: letterBg) else {return}
             print(hexColor)
+            
+            let updateTime = Date()
             db.collection("LetterData").addDocument(data: [
                 "sender": userFriendCode, // 나의 친구코드
                 "senderuid": userUid,
@@ -131,7 +137,7 @@ class WritingViewController: UIViewController {
                 "id": "none", // 편지 아이디
                 "title": title, // 편지 제목
                 "content": content, // 편지 내용
-                "updateTime": Date(),
+                "updateTime": updateTime,
                 "receiveTime": Date(),
                 "letterColor": hexColor,
                 "emoji" : emojiButton.titleLabel?.text // (이모지)
@@ -140,6 +146,9 @@ class WritingViewController: UIViewController {
                     print("There was an issue saving data to firestore, \(e)")
                     print("제목 또는 내용을 입력해주세요")
                 } else {
+                    UserDefaults.shared.setValue(title, forKey: "latestTitle")
+                    UserDefaults.shared.setValue(content, forKey: "latestContent")
+                    UserDefaults.shared.setValue(updateTime, forKey: "updateDate")
                     print("작성하신 편지는 새벽 5시에 배달해드릴게요")
                     print("Successfully saved data.")
                     

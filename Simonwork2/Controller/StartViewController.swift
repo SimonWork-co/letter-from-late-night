@@ -13,7 +13,7 @@ class StartViewController: UIViewController {
     
     @IBOutlet weak var helloLabel: UILabel!
     
-    let userName : String = UserDefaults.standard.object(forKey: "userName") as! String
+    let userName : String = UserDefaults.shared.object(forKey: "userName") as! String
     
     override func viewDidLoad() {
         super.viewDidLoad()

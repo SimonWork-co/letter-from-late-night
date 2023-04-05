@@ -124,13 +124,13 @@ extension SignupViewController {
                 }
             }
             // UserDefaults.standard.set("저장할 데이터", forKey: "Key값")
-//            UserDefaults.standard.set(UserName, forKey: "userName")
-//            UserDefaults.standard.set(UserEmail, forKey: "userEmail")
-//            UserDefaults.standard.set(friendCode, forKey: "friendCode")
-//            UserDefaults.standard.set(friendName, forKey: "friendName")
-//            UserDefaults.standard.set(uid, forKey: "ALetterFromLateNightUid")
-//            UserDefaults.standard.set(pairFriendCode, forKey: "pairFriendCode")
-//            UserDefaults.standard.set(signupTime, forKey: "signupTime")
+            //            UserDefaults.standard.set(UserName, forKey: "userName")
+            //            UserDefaults.standard.set(UserEmail, forKey: "userEmail")
+            //            UserDefaults.standard.set(friendCode, forKey: "friendCode")
+            //            UserDefaults.standard.set(friendName, forKey: "friendName")
+            //            UserDefaults.standard.set(uid, forKey: "ALetterFromLateNightUid")
+            //            UserDefaults.standard.set(pairFriendCode, forKey: "pairFriendCode")
+            //            UserDefaults.standard.set(signupTime, forKey: "signupTime")
             userDefaultsDataSave.userName(UserName: UserName)
             userDefaultsDataSave.userEmail(UserEmail: UserEmail)
             userDefaultsDataSave.uid(uid: uid)
@@ -138,8 +138,8 @@ extension SignupViewController {
             userDefaultsDataSave.friendName(friendName: friendName)
             userDefaultsDataSave.pairFriendCode(pairFriendCode: pairFriendCode)
             userDefaultsDataSave.signupTime(signupTime: signupTime)
-            UserDefaults.standard.set("", forKey: "documentID")
-            UserDefaults.standard.synchronize()
+            UserDefaults.shared.set("", forKey: "documentID")
+            UserDefaults.shared.synchronize()
         }
     }
 }
@@ -172,8 +172,13 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
         let fullName = appleIDCredential.fullName
         let familyName = fullName?.familyName
         let givenName = fullName?.givenName
+        print("Apple FullName: \(fullName)")
+        print("Apple familyName: \(familyName)")
+        print("Apple givenName: \(givenName)")
         inputUserName = (fullName?.familyName)!+" "+(fullName?.givenName)!
         inputUserEmail = appleIDCredential.email!
+        print("Apple inputUserName: \(inputUserName)")
+        print("Apple inputUserEmail: \(inputUserEmail)")
         
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error = error {
@@ -188,13 +193,13 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                 }
             }
         }
-//        UserDefaults.standard.removeObject(forKey: "userName")
-//        UserDefaults.standard.removeObject(forKey: "userEmail")
-//        UserDefaults.standard.removeObject(forKey: "friendCode")
-//        UserDefaults.standard.removeObject(forKey: "friendName")
-//        UserDefaults.standard.removeObject(forKey: "ALetterFromLateNightUid")
-//        UserDefaults.standard.removeObject(forKey: "pairFriendCode")
-//        UserDefaults.standard.removeObject(forKey: "pairFriendCode")
+        //        UserDefaults.standard.removeObject(forKey: "userName")
+        //        UserDefaults.standard.removeObject(forKey: "userEmail")
+        //        UserDefaults.standard.removeObject(forKey: "friendCode")
+        //        UserDefaults.standard.removeObject(forKey: "friendName")
+        //        UserDefaults.standard.removeObject(forKey: "ALetterFromLateNightUid")
+        //        UserDefaults.standard.removeObject(forKey: "pairFriendCode")
+        //        UserDefaults.standard.removeObject(forKey: "pairFriendCode")
         // 위의 removeObject 함수는 유저가 최초로 로그인하는 상황을 가정하기 위해 작성됨. 실제 배포 시에는 해당 함수들의 위치를 옮길 필요가 있음
         print("애플 로그인")
     }
@@ -226,17 +231,20 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         //googleSignupButton.layer.borderWidth = 0.75
         //appleSignupButton.layer.cornerRadius = 10
         // googleAutoLogin()
-        //UserDefaults.standard.removeObject(forKey: "ALetterFromLateNightUid") // 초기 사용자를 가정하기 위해 작성. 나중에는 삭제 필요
+        //UserDefaults.shared.removeObject(forKey: "ALetterFromLateNightUid") // 초기 사용자를 가정하기 위해 작성. 나중에는 삭제 필요
         
-        if UserDefaults.standard.object(forKey: "ALetterFromLateNightUid") != nil { // uid가 있는 경우, 즉, UserData가 있는 경우
+        if UserDefaults.shared.object(forKey: "ALetterFromLateNightUid") != nil { // uid가 있는 경우, 즉, UserData가 있는 경우
             withIdentifier = "signupToMain"
             print("withIdentifier: \(withIdentifier)")
         } else { // uid가 없는 경우, 즉, UserData가 없는 경우
             withIdentifier = "signupToConnect"
             print("withIdentifier: \(withIdentifier)")
         }
+        
+        UserDefaults.shared.set("새벽편지", forKey: "setTitle")
+        UserDefaults.shared.set("불러오는중", forKey: "setContent")
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // print("ViewController의 view가 Load됨")

@@ -6,14 +6,28 @@ target 'Simonwork2' do
   use_frameworks!
 
   # Pods for Simonwork2
-  pod 'Firebase/Auth'
-  pod 'Firebase/Firestore'
+  pod 'FirebaseAuth'
+  pod 'FirebaseFirestore'
+  pod 'FirebaseAnalytics'
   pod 'FirebaseUI'
   pod 'FirebaseUI/Auth'
   pod 'Firebase/Core'
   pod 'FirebaseUI/Google'
   pod 'GoogleSignIn'
-  pod 'EmojiPicker', :git => 'https://github.com/htmlprogrammist/EmojiPicker'
-  target 'LetterWidgetExtension' do
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'No'
+      end
+    end
   end
+  pod 'EmojiPicker', :git => 'https://github.com/htmlprogrammist/EmojiPicker'
+  
+  target 'LetterWidgetExtension' do
+    pod 'FirebaseAuth'
+    pod 'FirebaseFirestore'
+    pod 'FirebaseUI'
+    pod 'FirebaseUI/Auth'
+    pod 'Firebase/Core'
+    end
 end

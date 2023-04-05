@@ -13,8 +13,8 @@ var inputDocumentID = ""
 extension ConnectTypingViewController {
     func inputDocumentIDcheck() {
         print("inputDocumentID: \(inputDocumentID)")
-        UserDefaults.standard.set("\(inputDocumentID)", forKey: "documentID")
-        UserDefaults.standard.synchronize()
+        UserDefaults.shared.set("\(inputDocumentID)", forKey: "documentID")
+        UserDefaults.shared.synchronize()
     }
 }
 
@@ -23,7 +23,7 @@ class ConnectTypingViewController: UIViewController {
     let db = Firestore.firestore()
     
     let waitingVC = WaitingViewController()
-    let inputFriendCode : String = UserDefaults.standard.object(forKey: "friendCode") as! String
+    let inputFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
     
     @IBOutlet weak var pairFriendCodeTextField: UITextField!
     @IBOutlet weak var startButton: UIButton!
@@ -66,7 +66,7 @@ class ConnectTypingViewController: UIViewController {
                             print("\(documentID) => \(document.data())")
                             inputDocumentID = documentID
                             
-                            let uid : String = UserDefaults.standard.object(forKey: "ALetterFromLateNightUid") as! String
+                            let uid : String = UserDefaults.shared.object(forKey: "ALetterFromLateNightUid") as! String
                             let dcRef = self.db.collection("UserData").document("\(uid)")
                             
                             dcRef.updateData([
@@ -82,7 +82,7 @@ class ConnectTypingViewController: UIViewController {
                             return
                         }
                     } else {
-                        print("친구가 가입하지 않은 것 같아요.\n친구에게 앱 다운로드 링크를 보낼까요?")
+                        print("친구가 아직 가입하지 않은 것 같아요.\n친구에게 앱 다운로드 링크를 보낼까요?")
                         
                         DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
                             self.pairFriendCodeTextField.text = ""
