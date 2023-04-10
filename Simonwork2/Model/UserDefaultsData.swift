@@ -8,6 +8,12 @@
 import Foundation
 import Firebase
 
+extension Array {
+    subscript (safe index: Int) -> Element? {
+        return indices ~= index ? self[index] : nil
+    }
+}
+
 extension UserDefaults {
     static var shared: UserDefaults {
         let appGroupId = "group.Simonwork2"

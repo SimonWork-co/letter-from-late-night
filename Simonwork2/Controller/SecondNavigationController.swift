@@ -1,14 +1,14 @@
 //
-//  NavigationController.swift
+//  SecondViewController.swift
 //  Simonwork2
 //
-//  Created by Sangmok Choi on 2023/03/14.
+//  Created by Sangmok Choi on 2023/04/06.
 //
 
 import UIKit
 
 // UINavigationController를 상속하는 커스텀 클래스를 작성
-class NavigationController: UINavigationController {
+class SecondNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

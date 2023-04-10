@@ -22,15 +22,17 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         return f
     }()
     
-    @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor(hex: "FDF2DC")
+        self.navigationController?.navigationBar.standardAppearance.backgroundColor = UIColor(hex: "FDF2DC")
+        self.navigationController?.navigationBar.topItem?.titleView?.backgroundColor = UIColor(hex: "FDF2DC")
+        
         tableView.delegate = self
         tableView.dataSource = self
-        self.navigationItem.title = "보낸 편지함"
         
         registerXib()
         loadMessages()
@@ -38,10 +40,10 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ViewController의 view가 load됨")
-        self.navigationBar.title = "받은 편지함"
-        navigationController?.isNavigationBarHidden = false
-        self.navigationBar.hidesBackButton = true
+        
+        self.navigationController?.navigationBar.topItem?.title = "보낸 편지함"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .automatic
     }
     
     private func registerXib() { // 커스텀한 테이블 뷰 셀을 등록하는 함수
@@ -50,7 +52,6 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     }
     
     func loadMessages(){
-        
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
         
@@ -59,8 +60,6 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
             .whereField("receiver", isEqualTo: userPairFriendCode)
             .order(by: "updateTime", descending: true)
             .addSnapshotListener { (querySnapshot, error) in
-                
-                self.messages = []
                 
                 if let e = error {
                     print("There was an issue retrieving data from Firestore. \(e)")
@@ -76,7 +75,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let messageFriendCode = data["sender"] as! String
                                 let messagePairFriendCode = data["receiver"] as! String
                                 let messageLetterColor = data["letterColor"] as! String
-                                let messageEmoji = data["emoji"] as? String
+                                let messageEmoji = data["emoji"] as! String
                                 
                                 let messageList = LetterData(
                                     sender: messageFriendCode,
@@ -85,7 +84,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                     content: messageContent,
                                     updateTime: messageUpdateTime,
                                     letterColor: messageLetterColor,
-                                    emoji: messageEmoji ?? "no emoji"
+                                    emoji: messageEmoji
                                 )
                                 self.messages.append(messageList)
                                 
@@ -94,16 +93,14 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let setUpdateTime = self.messages[0].updateTime
                                 let setLetterColor = self.messages[0].letterColor
                                 
-                                UserDefaults.shared.set(setTitle, forKey: "latestTitle")
-                                UserDefaults.shared.set(setContent, forKey: "latestContent")
-                                UserDefaults.shared.set(setUpdateTime, forKey: "latesetUpdateDate")
-                                UserDefaults.shared.set(setLetterColor, forKey: "latestLetterColor")
+                                UserDefaults.shared.setValue(setTitle, forKey: "latestTitle")
+                                UserDefaults.shared.setValue(setContent, forKey: "latestContent")
+                                UserDefaults.shared.setValue(setUpdateTime, forKey: "latesetUpdateDate")
+                                UserDefaults.shared.setValue(setLetterColor, forKey: "latestLetterColor")
                                 
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
-                                    let indexPath = IndexPath(row: 0, section: self.messages.count - 1)
-                                    self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
-                                    
+                                    self.tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
                                 }
                             }
                         }
@@ -135,7 +132,8 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         cell.letterDateLabel?.text = formatter.string(from: message.updateTime)
         cell.backgroundColor = UIColor(hex: message.letterColor)
         cell.emojiLabel.text = message.emoji
-        print("cell.backgroundColor: \(cell.backgroundColor)")
+
+        navigationController?.navigationBar.sizeToFit()
         
         return cell
     }
@@ -145,8 +143,6 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
             let nextVC = segue.destination as? LetterViewController
             
             if let index = sender as? Int {
-                print("index : \(index)")
-                
                 nextVC?.receivedTitleText = messages[index].title
                 nextVC?.receivedContentText = messages[index].content
                 nextVC?.receivedUpdateDate = messages[index].updateTime
@@ -159,9 +155,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // cell 클릭 시, cell 내용을 보여주는 view controller로 이동
         performSegue(withIdentifier: "sentLetterToMessageContent", sender: indexPath.section)
-    }
-    
+    }    
 }
 
-// 최신의 (맨 위의) 편지를 위젯으로 불러야 함
  

@@ -10,11 +10,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ThirdView" customModule="Simonwork2" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="675"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iR9-lP-d2T">
-                    <rect key="frame" x="45" y="609" width="303" height="43"/>
+                    <rect key="frame" x="45" y="432" width="303" height="43"/>
                     <color key="backgroundColor" name="AccentColor"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <state key="normal" title="Button"/>
@@ -32,6 +32,7 @@
                 <constraint firstItem="iR9-lP-d2T" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="45" id="gv9-rU-EHl"/>
                 <constraint firstAttribute="bottom" secondItem="iR9-lP-d2T" secondAttribute="bottom" constant="200" id="lS6-Ll-Rzk"/>
             </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="toSignupButton" destination="iR9-lP-d2T" id="R5h-Ya-j1l"/>
             </connections>

@@ -11,6 +11,7 @@ import Firebase
 class WaitingViewController: UIViewController {
     
     var inputPairFriendCode : String?
+    var inputFriendName : String?
     var documentID : String?
     var timer = Timer()
     
@@ -26,8 +27,8 @@ class WaitingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        helloLabel.text = "안녕하세요! \(userName)님"
-        helloLabel.asColor(targetStringList: [userName], color: .black)
+        helloLabel.text = "\(inputFriendName!)님께\n기분을 북돋는 한 마디를\n남겨볼까요?"
+        helloLabel.asColor(targetStringList: [inputFriendName], color: .purple)
         //self.navigationController?.isNavigationBarHidden = true
         
         timer.invalidate()
@@ -39,6 +40,10 @@ class WaitingViewController: UIViewController {
         super.viewWillAppear(animated)
         print("ViewController의 view가 load됨")
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+      navigationController?.setNavigationBarHidden(true, animated: true) // 뷰 컨트롤러가 사라질 때 나타내기
     }
     
     @objc func fire() {
@@ -63,6 +68,7 @@ class WaitingViewController: UIViewController {
                 
                 if data["pairFriendCode"] as? String == self.myFriendCode { // 상대방이 pairFriendCode로 나의 friendCode를 업데이트하면, startVC로 세그
                     print("pairFriendCode 연동 완료")
+
                     // waitingVC 화면으로 보내기
                     let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
                     let StartViewController = storyboard.instantiateViewController(identifier: "StartViewController")

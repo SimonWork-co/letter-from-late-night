@@ -10,7 +10,6 @@ import Foundation
 import EmojiPicker
 
 extension UIColor {
-    
     func hexColorExtract(BackgroundColor: UIView) -> String {
         
         let backgroundColor = BackgroundColor.backgroundColor
@@ -20,7 +19,7 @@ extension UIColor {
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
         backgroundColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-
+        
         // Format the RGB components as a hexadecimal string
         let hexColor = String(
             format: "%02X%02X%02X",
@@ -53,15 +52,18 @@ extension UIColor {
     }
 }
 
-class WritingViewController: UIViewController {
+class WritingViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var navigationBar: UINavigationItem!
-    @IBOutlet weak var titleTextView: UITextView!
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentTextView: UITextView!
+    @IBOutlet weak var textFieldNumLabel: UILabel!
     @IBOutlet weak var textViewTextNumLabel: UILabel!
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var letterBg: UIView!
-    @IBOutlet weak var sendButton: UIBarButtonItem!
+    
+    
+    var textViewText : String = ""
     
     private lazy var emojiButton: UIButton = {
         let button = UIButton()
@@ -72,29 +74,31 @@ class WritingViewController: UIViewController {
         return button
     }()
     
-
+    // Create right UIBarButtonItem.
+    lazy var rightButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "보내기", style: .plain, target: self, action: #selector(sendButtonPressed))
+        button.tag = 2
+        
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UserDefaults.shared.set("latestTitle", forKey: "latestTitle")
-        UserDefaults.shared.set("latestContent", forKey: "latestContent")
-        UserDefaults.shared.set("updateDate", forKey: "updateDate")
+        navigationBar.title = "밤편지 작성"
+        navigationBar.rightBarButtonItem = self.rightButton
         
-        let placeHolder: String = "제목을 입력해주세요"
-        if titleTextView.text.isEmpty {
-            titleTextView.text = placeHolder
-            titleTextView.alpha = 0.5
-        }
-        titleTextView.delegate = self
+        titleTextField.borderStyle = .none
+        titleTextField.delegate = self
+        textFieldNumLabel.text = "0 / 25"
         
-        let placeholder: String = "작성하신 편지는 밤 사이 보낼게요."
-        textViewTextNumLabel.text = "0 / 150자"
+        let contentPlaceholder: String = "작성하신 편지는 밤 사이 보낼게요."
+        textViewTextNumLabel.text = "0 / 150"
         if contentTextView.text.isEmpty {
-            contentTextView.text = placeholder
+            contentTextView.text = contentPlaceholder
             contentTextView.alpha = 0.5
         }
         contentTextView.delegate = self
-        
         setupView()
         
         colorButton.layer.cornerRadius = 10
@@ -103,62 +107,100 @@ class WritingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ViewController의 view가 load됨")
-        //navigationItem.hidesBackButton = true
-        navigationController?.isNavigationBarHidden = false
     }
     
-    @IBAction func sendButtonPressed(_ sender: UIBarButtonItem) {
-        
+    @objc func sendButtonPressed(_ sender: UIBarButtonItem) {
+        let sheet0 = UIAlertController(title: "편지를 보낼까요?", message: "편지를 보내면 수정할 수 없어요", preferredStyle: .alert)
+        sheet0.addAction(UIAlertAction(title: "취소", style: .destructive, handler: { _ in
+            print("취소 클릭")
+        }))
+        sheet0.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
+            print("확인 클릭")
+            self.sendLetterToDB(content: self.textViewText)
+        }))
+        self.present(sheet0, animated: true) {
+        }
+    }
+    
+    func sendLetterToDB(content: String!){
         let userUid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
-        print(userUid)
-        print("userFriendCode : \(userFriendCode)")
-        print("userPairFriendCode : \(userPairFriendCode)")
-        // 이거 대신에 db에서 가져오는 것이 나을 듯...
         
-//        let uid = Auth.auth().currentUser?.uid ?? ""
-//        print(uid)
-//        let cryptedUid = sha256(uid)
-//        print(cryptedUid)
-//        let id = String(cryptedUid.prefix(12))
-//        print(id)
-        
-        if let title = titleTextView.text, let content = contentTextView.text {
-            guard let hexColor = letterBg.backgroundColor?.hexColorExtract(BackgroundColor: letterBg) else {return}
-            print(hexColor)
+        if let title = titleTextField.text, let content = content {
+            print("title: \(title)")
+            print("content: \(content)")
             
-            let updateTime = Date()
-            db.collection("LetterData").addDocument(data: [
-                "sender": userFriendCode, // 나의 친구코드
-                "senderuid": userUid,
-                "receiver": userPairFriendCode, // 상대방의 친구코드
-                "id": "none", // 편지 아이디
-                "title": title, // 편지 제목
-                "content": content, // 편지 내용
-                "updateTime": updateTime,
-                "receiveTime": Date(),
-                "letterColor": hexColor,
-                "emoji" : emojiButton.titleLabel?.text // (이모지)
-            ]) { (error) in
-                if let e = error {
-                    print("There was an issue saving data to firestore, \(e)")
-                    print("제목 또는 내용을 입력해주세요")
-                } else {
-                    UserDefaults.shared.setValue(title, forKey: "latestTitle")
-                    UserDefaults.shared.setValue(content, forKey: "latestContent")
-                    UserDefaults.shared.setValue(updateTime, forKey: "updateDate")
-                    print("작성하신 편지는 새벽 5시에 배달해드릴게요")
-                    print("Successfully saved data.")
-                    
-                    DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
-                        self.contentTextView.text = ""
-                        self.titleTextView.text = ""
+            var titleCount : Int = 0
+            var contentCount : Int = 0
+            
+            if title == "제목을 입력해주세요" {
+                titleCount = 0
+            } else if title == "" {
+                titleCount = 0
+            } else if content == "작성하신 편지는 밤 사이 보낼게요." {
+                contentCount = 0
+            } else if content == "" {
+                contentCount = 0
+            } else {
+                titleCount = 1
+                contentCount = 1
+            }
+            print("titleCount + contentCount = \(titleCount + contentCount)")
+            if titleCount + contentCount == 0 {
+                unableToSendLetter()
+            } else if titleCount + contentCount == 1 {
+                unableToSendLetter()
+            } else if titleCount + contentCount == 2 {
+                
+                guard let hexColor = letterBg.backgroundColor?.hexColorExtract(BackgroundColor: letterBg) else {return}
+                print(hexColor)
+                
+                let updateTime = Date()
+                db.collection("LetterData").addDocument(data: [
+                    "sender": userFriendCode, // 나의 친구코드
+                    "senderuid": userUid,
+                    "receiver": userPairFriendCode, // 상대방의 친구코드
+                    "id": "none", // 편지 아이디
+                    "title": title, // 편지 제목
+                    "content": content, // 편지 내용
+                    "updateTime": updateTime,
+                    "receiveTime": Date(),
+                    "letterColor": hexColor,
+                    "emoji" : emojiButton.titleLabel?.text // (이모지)
+                ]) { (error) in
+                    if let e = error {
+                        print("There was an issue saving data to firestore, \(e)")
+                    } else {
+                        UserDefaults.shared.setValue(title, forKey: "latestTitle")
+                        UserDefaults.shared.setValue(content, forKey: "latestContent")
+                        UserDefaults.shared.setValue(updateTime, forKey: "updateDate")
+                        
+                        DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
+                            self.titleTextField.text = ""
+                            self.contentTextView.text = ""
+                        }
+                        
+                        let sheet1 = UIAlertController(title: "작성 완료!", message: "작성하신 편지는 새벽 5시에 배달해드릴게요", preferredStyle: .alert)
+                        sheet1.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+                            print("yes 클릭")
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }))
+                        self.present(sheet1, animated: true)
+                        //self.dismiss(animated: true)
+                        print("Successfully saved data.")
                     }
                 }
             }
         }
+    }
+    
+    private func unableToSendLetter(){
+        let sheet2 = UIAlertController(title: "제목 또는 내용을 입력해주세요", message: "채워지지 않은 부분이 있어요", preferredStyle: .alert)
+        sheet2.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            print("yes 클릭")
+        }))
+        self.present(sheet2, animated: true)
     }
     
     @IBAction func setupColorButton(_ sender: UIButton) {
@@ -208,7 +250,6 @@ class WritingViewController: UIViewController {
         
         present(viewController, animated: true)
     }
-    
 }
 
 extension WritingViewController: EmojiPickerDelegate {
@@ -229,7 +270,9 @@ extension WritingViewController: UITextViewDelegate{
             textView.text = "작성하신 편지는 밤 사이 보낼게요."
             textView.alpha = 0.5
             
-            textViewTextNumLabel.text = "0 / 150자"
+            textViewTextNumLabel.text = "0 / 150"
+        } else {
+            textViewText = textView.text
         }
     }
     
@@ -239,7 +282,20 @@ extension WritingViewController: UITextViewDelegate{
         
         let changedText = currentText.replacingCharacters(in: stringRange, with: text)
         
-        textViewTextNumLabel.text = "\(changedText.count) / 150자"
-        return changedText.count <= 5 // 150자
+        textViewTextNumLabel.text = "\(changedText.count) / 150"
+        return changedText.count <= 150 // 150자
+    }
+    
+}
+
+extension WritingViewController {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else {return false}
+        
+        let changedText = currentText.replacingCharacters(in: stringRange, with: string)
+        textFieldNumLabel.text = "\(changedText.count) / 25"
+        guard changedText.count <= 25 else {return false}
+        return true //25자
     }
 }

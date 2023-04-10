@@ -23,44 +23,46 @@ extension UILabel {
     }
 }
 
+extension UIViewController {
+    func moveToMain(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainViewController = storyboard.instantiateViewController(identifier: "TabBarController")
+        mainViewController.modalPresentationStyle = .fullScreen
+        self.show(mainViewController, sender: nil)
+    }
+}
 
 class MainViewController: UIViewController {
     
     let db = Firestore.firestore()
     
-    @IBOutlet weak var navigationBar: UINavigationItem!
-    @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var dayCountingLabel: UILabel!
     @IBOutlet weak var todayDateLabel: UILabel!
     @IBOutlet weak var letterSendButton: UIButton!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     let userNotificationCenter = UNUserNotificationCenter.current()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.navigationController?.isNavigationBarHidden = true
-        //dayCountingLabel.text = ""
         changeLabelColor()
         
         let f = DateFormatter()
+        let today = Date()
         f.dateStyle = .long
         //f.timeStyle = .short
-        
-        todayDateLabel.text = f.string(from: Date())
-        
+        todayDateLabel.text = f.string(from: today)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ViewController의 view가 load됨")
-        //navigationItem.hidesBackButton = true
-        navigationController?.isNavigationBarHidden = true
-        self.navigationBar.hidesBackButton = true
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.largeTitleDisplayMode = .never
     }
     
     func changeLabelColor() {
-        //todayDateLabel.text = formatter.string(from: Date()) // 현재 시간을 표현
         
         let userUid = Auth.auth().currentUser?.uid
         let userName : String = UserDefaults.shared.object(forKey: "userName") as! String
@@ -74,6 +76,7 @@ class MainViewController: UIViewController {
                         let data = doc.data()
                         if let message_signupTime = data["signupTime"] as? Timestamp, let messagePairFriendCode = data["pairFriendCode"] as? String {
                             
+                            let friendName = data["friendName"] as? String
                             let calendar = Calendar.current
                             let today = Date()
                             let dateFormatter = DateFormatter()
@@ -89,17 +92,16 @@ class MainViewController: UIViewController {
 
                             daysCount = Calendar.current.dateComponents([.day], from: startDate!, to: today).day! + 1
                             
-                            self.dayCountingLabel.text = "\(userName)님과 편지를\n주고받은 지 \(daysCount)일째"
-                            self.dayCountingLabel.asColor(targetStringList: [userName, String(daysCount)], color: .purple)
+                            self.dayCountingLabel.text = "\(friendName!)님과\n편지를 주고받은 지 \(daysCount)일째"
+                            self.dayCountingLabel.asColor(targetStringList: [friendName, String(daysCount)], color: .purple)
                         }
                     }
                 }
             }
         }
         requestNotificationAuthorization() // 알림 권한 요청 함수
-        
         // if n일 째가 넘어가면 알림 전송하는 함수 추후 구현
-        sendNotification(seconds: 3) // 현재는 3초뒤 테스트 푸시알림
+        sendNotification(seconds: 3) // 현재는 3초뒤 테스트 푸시알림. 오늘 편지를 아직 작성하지 않았을떼 && 시간이 저녁 11시일때 발송
     }
     
     func requestNotificationAuthorization() {
@@ -130,24 +132,11 @@ class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func profileButton(_ sender: UIBarButtonItem) {
-        //GIDSignIn.sharedInstance.signOut()
-        print("worked!")
-        navigationController?.popToRootViewController(animated: true)
-        
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            print("로그아웃 성공")
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-        }
+    @IBAction func letterSendButtonPressed(_ sender: UIButton) {
+        let nextVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WritingViewController") as! WritingViewController
+        let navigationController = UINavigationController(rootViewController: nextVC)
+        self.show(nextVC, sender: nil)
     }
-    
-    @IBAction func settingButtonPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "mainToSetting", sender: self)
-    }
-    
 }
 
 

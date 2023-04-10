@@ -16,34 +16,44 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="밥은 잘 챙겨먹었어?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZQ-oM-ezu">
-                        <rect key="frame" x="0.0" y="22" width="320" height="24"/>
-                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="2023년 3월 12일" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMM-2p-AkN">
-                        <rect key="frame" x="0.0" y="50" width="320" height="33"/>
-                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="emoji" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPH-W5-4UZ">
-                        <rect key="frame" x="16" y="32" width="41" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="So8-U4-aes">
+                        <rect key="frame" x="15" y="10" width="290" height="65"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="😃" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPH-W5-4UZ">
+                                <rect key="frame" x="0.0" y="0.0" width="53.333333333333336" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="53.333333333333336" id="Hak-Ad-OI8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="밥은 잘 챙겨먹었어?" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZQ-oM-ezu">
+                                <rect key="frame" x="83.333333333333329" y="0.0" width="206.66666666666669" height="65"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="nPH-W5-4UZ" firstAttribute="top" secondItem="So8-U4-aes" secondAttribute="top" id="Ira-aY-zT0"/>
+                            <constraint firstAttribute="bottom" secondItem="nPH-W5-4UZ" secondAttribute="bottom" id="pRS-Lt-1ZZ"/>
+                        </constraints>
+                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="2023년 3월 12일" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMM-2p-AkN">
+                        <rect key="frame" x="223.66666666666666" y="60.333333333333336" width="81.333333333333343" height="14.666666666666664"/>
+                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="fMM-2p-AkN" secondAttribute="bottom" constant="2" id="9ko-dF-sah"/>
-                    <constraint firstItem="fMM-2p-AkN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Fgh-Bn-7gT"/>
-                    <constraint firstItem="jZQ-oM-ezu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Uxa-Ky-b79"/>
-                    <constraint firstAttribute="trailing" secondItem="jZQ-oM-ezu" secondAttribute="trailing" id="h9D-Rs-Kx8"/>
-                    <constraint firstItem="jZQ-oM-ezu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="22" id="ngo-KP-wSy"/>
-                    <constraint firstAttribute="trailing" secondItem="fMM-2p-AkN" secondAttribute="trailing" id="xgF-EH-q3Z"/>
-                    <constraint firstItem="fMM-2p-AkN" firstAttribute="top" secondItem="jZQ-oM-ezu" secondAttribute="bottom" constant="4" id="znc-7a-8OP"/>
+                    <constraint firstAttribute="bottom" secondItem="fMM-2p-AkN" secondAttribute="bottom" constant="10" id="gkV-QP-LAq"/>
+                    <constraint firstAttribute="bottom" secondItem="So8-U4-aes" secondAttribute="bottom" constant="10" id="ipI-L5-ef3"/>
+                    <constraint firstAttribute="trailing" secondItem="fMM-2p-AkN" secondAttribute="trailing" constant="15" id="n4F-De-4Bj"/>
+                    <constraint firstAttribute="trailing" secondItem="So8-U4-aes" secondAttribute="trailing" constant="15" id="tNt-rH-waz"/>
+                    <constraint firstItem="So8-U4-aes" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="xd6-Hi-smi"/>
+                    <constraint firstItem="So8-U4-aes" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="zAV-Dd-50t"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -21,19 +21,19 @@ class ConnectViewController: SignupViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         sendUserData(UserName: inputUserName, UserEmail: inputUserEmail)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         //let userName : String = UserDefaults.standard.object(forKey: "userName") as! String
-        
         super.viewWillAppear(animated)
-        print("ViewController의 view가 Load됨")
-        
-        //helloLabel.text = "안녕하세요! \(userName)님"
-        //helloLabel.asColor(targetStringList: [userName], color: .black)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        helloLabel.text = "안녕하세요! \(inputUserName)님"
+        helloLabel.asColor(targetStringList: [inputUserName], color: .purple)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+      navigationController?.setNavigationBarHidden(true, animated: true) // 뷰 컨트롤러가 사라질 때 나타내기
     }
     
     @IBAction func startButtonPressed(_ sender: UIButton) {

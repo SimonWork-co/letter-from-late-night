@@ -169,16 +169,20 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             rawNonce: nonce
         )
         
-        let fullName = appleIDCredential.fullName
-        let familyName = fullName?.familyName
-        let givenName = fullName?.givenName
-        print("Apple FullName: \(fullName)")
-        print("Apple familyName: \(familyName)")
-        print("Apple givenName: \(givenName)")
-        inputUserName = (fullName?.familyName)!+" "+(fullName?.givenName)!
-        inputUserEmail = appleIDCredential.email!
-        print("Apple inputUserName: \(inputUserName)")
-        print("Apple inputUserEmail: \(inputUserEmail)")
+        if let fullName = appleIDCredential.fullName, let familyName = fullName.familyName, let givenName = fullName.givenName, let email = appleIDCredential.email {
+            inputUserName = (fullName.familyName)!+" "+(fullName.givenName)!
+            inputUserEmail = email
+            
+            print("Apple FullName: \(fullName)")
+            print("Apple familyName: \(familyName)")
+            print("Apple givenName: \(givenName)")
+            
+            print("Apple inputUserName: \(inputUserName)")
+            print("Apple inputUserEmail: \(inputUserEmail)")
+        } else {
+            inputUserName = "사용자"
+            inputUserEmail = "No Email"
+        }
         
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error = error {
@@ -189,7 +193,8 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                     self.performSegue(withIdentifier: "signupToConnect", sender: nil)
                 } else if withIdentifier == "signupToMain" {
                     userDefaultsData.receivedData = Auth.auth().currentUser
-                    self.performSegue(withIdentifier: "signupToMain", sender: nil)
+                    self.moveToMain()
+                    //self.performSegue(withIdentifier: "signupToMain", sender: nil)
                 }
             }
         }
@@ -230,19 +235,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         //googleSignupButton.layer.cornerRadius = 10
         //googleSignupButton.layer.borderWidth = 0.75
         //appleSignupButton.layer.cornerRadius = 10
-        // googleAutoLogin()
-        //UserDefaults.shared.removeObject(forKey: "ALetterFromLateNightUid") // 초기 사용자를 가정하기 위해 작성. 나중에는 삭제 필요
-        
-        if UserDefaults.shared.object(forKey: "ALetterFromLateNightUid") != nil { // uid가 있는 경우, 즉, UserData가 있는 경우
-            withIdentifier = "signupToMain"
-            print("withIdentifier: \(withIdentifier)")
-        } else { // uid가 없는 경우, 즉, UserData가 없는 경우
-            withIdentifier = "signupToConnect"
-            print("withIdentifier: \(withIdentifier)")
-        }
-        
-        UserDefaults.shared.set("새벽편지", forKey: "setTitle")
-        UserDefaults.shared.set("불러오는중", forKey: "setContent")
+        //googleAutoLogin()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -259,13 +252,13 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     func googleAutoLogin() {
         if GIDSignIn.sharedInstance.hasPreviousSignIn() == true {
             GIDSignIn.sharedInstance.restorePreviousSignIn()
-            performSegue(withIdentifier: "signupToMain", sender: nil)
+            moveToMain()
             print("구글 자동 로그인")
         } else {}
     }
     
     @IBAction func btn(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "signupToMain", sender: self)
+        moveToMain()
     }
     
     @IBAction func googleSignupButtonPressed(_ sender: Any) {
@@ -293,7 +286,8 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                     if withIdentifier == "signupToConnect" {
                         self.performSegue(withIdentifier: "signupToConnect", sender: nil)
                     } else if withIdentifier == "signupToMain" {
-                        self.performSegue(withIdentifier: "signupToMain", sender: nil)
+                        self.moveToMain()
+                        //self.performSegue(withIdentifier: "signupToMain", sender: nil)
                     }
                 }
             }
