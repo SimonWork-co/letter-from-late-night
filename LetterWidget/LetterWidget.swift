@@ -38,7 +38,7 @@ struct Provider: TimelineProvider {
     // 데이터를 가져와서 표출해주는 함수
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         //let entry = SimpleEntry(date: Date(), title: "밤 프리뷰", content: "콘텐츠 중")
-        let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent)
+        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!")
         completion(entry)
     }
     // 타임라인 설정 관련 함수(홈에 있는 위젯을 언제 업데이트 시킬 것인지 구현)
@@ -80,19 +80,51 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
     var body: some View {
         switch self.family {
             // ExtraLarge는 iPad의 위젯에만 표출
-            //let nameUserDefaults = UserDefaults(suiteName: "group.hyun99999.KakaoQRcodeiOSCloneCoding")
-        case .systemSmall, .systemMedium, .systemLarge, .systemExtraLarge:
+        case .systemSmall:
             VStack {
                 Text(entry.title)
-                    .font(.custom("NanumMyendjoExtraBold", size: 30))
-                    .padding(5)
+                    .font(.custom("NanumMyendjoBold", size: 15))
+                    .padding(1)
                 Text(entry.content)
-                    .font(.custom("NanumMyendjoBold", size: 17))
-                    .padding(10)
-                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
-                    .font(.subheadline)
+                    .font(.custom("NanumMyendjo", size: 10))
             }
             .padding()
+        case .systemMedium :
+            VStack {
+                Text(entry.title)
+                    .font(.custom("NanumMyendjoExtraBold", size: 20))
+                    .padding(1)
+                Text(entry.content)
+                    .font(.custom("NanumMyendjo", size: 15))
+                    .padding(1)
+                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
+                    .font(.custom("NanumMyendjo", size: 12))
+            }
+            .padding()
+        case .systemLarge :
+            VStack {
+            Text(entry.title)
+                .font(.custom("NanumMyendjoExtraBold", size: 30))
+                .padding(5)
+            Text(entry.content)
+                .font(.custom("NanumMyendjo", size: 25))
+                .padding(5)
+            Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
+                .font(.subheadline)
+        }
+        .padding()
+        case .systemExtraLarge :
+            VStack {
+            Text(entry.title)
+                .font(.custom("NanumMyendjoExtraBold", size: 30))
+                .padding(5)
+            Text(entry.content)
+                .font(.custom("NanumMyendjoBold", size: 25))
+                .padding(5)
+            Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
+                .font(.subheadline)
+        }
+        .padding()
         default:
             Text("default")
         }
@@ -101,11 +133,7 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
 
 struct LetterWidget: Widget {
     let kind: String = "LetterWidget"
-//    init() {
-//        //setup firebase
-//        FirebaseApp.configure()
-//        try? Auth.auth().useUserAccessGroup(appGroup)
-//    }
+    
     var body: some WidgetConfiguration {
         StaticConfiguration(
             kind: kind,
@@ -120,7 +148,7 @@ struct LetterWidget: Widget {
         } // 위젯갤러리에 노출
         .configurationDisplayName("밤편지")
         // 위젯을 추가/편집 할 때 위젯에 표시되는 이름을 세팅하는 메소드입니다.
-        .description("150자는 Large 사이즈로 설정해주세요. 등등")
+        .description("원하는 사이즈의 위젯을 선택해주세요")
         // 위젯을 추가/편집 할 때 위젯에 표시되는 설명 부분을 세팅하는 메소드입니다.
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
         // 위젯이 지원하는 크기를 설정할 수 있는 메소드입니다.
@@ -132,7 +160,7 @@ struct LetterWidget_Previews: PreviewProvider {
 //        LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "밤편지", content: "프리뷰 콘텐츠")) // title에다가 Db에서 불러온 편지의 title을, content에다가 db에서 불러온 content를 넣어야 할 둣
 //            .previewContext(WidgetPreviewContext(family: .systemSmall))
         
-        let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent)
+        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!")
         LetterWidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }

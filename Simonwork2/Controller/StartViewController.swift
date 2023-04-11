@@ -25,23 +25,16 @@ class StartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ViewController의 view가 load됨")
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        navigationController?.setNavigationBarHidden(true, animated: true) // 뷰 컨트롤러가 사라질 때 나타내기
     }
-    
-    
     
     @IBAction func startButtonPressed(_ sender: UIButton) {
         // Main 화면으로 보내기
-        performSegue(withIdentifier: "startToMain", sender: self)
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//        let mainViewController = storyboard.instantiateViewController(identifier: "MainViewController")
-//        mainViewController.modalPresentationStyle = .fullScreen
-//        self.navigationController?.show(mainViewController, sender: nil)
+        moveToMain()
     }
 }

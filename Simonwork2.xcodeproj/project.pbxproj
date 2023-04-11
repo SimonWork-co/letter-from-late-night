@@ -32,7 +32,6 @@
 		8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1529B85049008D2050 /* AppDelegate.swift */; };
 		8D9EFF1829B85049008D2050 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1729B85049008D2050 /* SceneDelegate.swift */; };
 		8D9EFF1A29B85049008D2050 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1929B85049008D2050 /* MainViewController.swift */; };
-		8D9EFF1D29B85049008D2050 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1B29B85049008D2050 /* Main.storyboard */; };
 		8D9EFF1F29B8504B008D2050 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1E29B8504B008D2050 /* Assets.xcassets */; };
 		8D9EFF2229B8504B008D2050 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EFF2029B8504B008D2050 /* LaunchScreen.storyboard */; };
 		8D9EFF3029B9A74A008D2050 /* WritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9EFF2F29B9A74A008D2050 /* WritingViewController.swift */; };
@@ -42,6 +41,9 @@
 		8DBD9A3C29D9561D005AF94A /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */; };
 		8DBD9A3E29D956D4005AF94A /* GuideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3D29D956D4005AF94A /* GuideModel.swift */; };
 		8DCA774029DD49A200F4DD52 /* DateFormatterFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA773F29DD49A200F4DD52 /* DateFormatterFile.swift */; };
+		8DCA774229DEAEEA00F4DD52 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA774129DEAEEA00F4DD52 /* TabBarController.swift */; };
+		8DCA774529DECCAA00F4DD52 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DCA774329DECCAA00F4DD52 /* Main.storyboard */; };
+		8DCA774729DEEB4300F4DD52 /* SecondNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA774629DEEB4300F4DD52 /* SecondNavigationController.swift */; };
 		B055BA7E1E5408E3CFB8F879 /* Pods_Simonwork2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC0B482E11379098F719015 /* Pods_Simonwork2.framework */; };
 		DE863BCA29C6E40C00208AE8 /* NanumMyeongjoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */; };
 		DE863BCB29C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */; };
@@ -53,7 +55,6 @@
 		DEA2F28829D85F840021AEC3 /* LetterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA2F28729D85F840021AEC3 /* LetterWidget.swift */; };
 		DEA2F28A29D85F860021AEC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEA2F28929D85F860021AEC3 /* Assets.xcassets */; };
 		DEA2F28E29D85F860021AEC3 /* LetterWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DEA2F27D29D85F840021AEC3 /* LetterWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		DEA2F29429D869DA0021AEC3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D9EFF1B29B85049008D2050 /* Main.storyboard */; };
 		DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */; };
 		DEF46A1929C2F97700D153B1 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DEF46A1829C2F97700D153B1 /* EmojiPicker */; };
 /* End PBXBuildFile section */
@@ -115,7 +116,6 @@
 		8D9EFF1529B85049008D2050 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D9EFF1729B85049008D2050 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8D9EFF1929B85049008D2050 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		8D9EFF1C29B85049008D2050 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8D9EFF1E29B8504B008D2050 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D9EFF2129B8504B008D2050 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D9EFF2329B8504B008D2050 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,6 +126,9 @@
 		8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
 		8DBD9A3D29D956D4005AF94A /* GuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideModel.swift; sourceTree = "<group>"; };
 		8DCA773F29DD49A200F4DD52 /* DateFormatterFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterFile.swift; sourceTree = "<group>"; };
+		8DCA774129DEAEEA00F4DD52 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		8DCA774429DECCAA00F4DD52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8DCA774629DEEB4300F4DD52 /* SecondNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondNavigationController.swift; sourceTree = "<group>"; };
 		8DFDE4AD29C0E423005A9574 /* Simonwork2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Simonwork2.entitlements; sourceTree = "<group>"; };
 		DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoBold.ttf; sourceTree = "<group>"; };
 		DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoExtraBold.ttf; sourceTree = "<group>"; };
@@ -252,6 +255,8 @@
 				8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */,
 				8D402DA829C0406A0010D80C /* NavigationController.swift */,
 				8D4375E829B9A7AD0028427F /* SignupViewController.swift */,
+				8DCA774129DEAEEA00F4DD52 /* TabBarController.swift */,
+				8DCA774629DEEB4300F4DD52 /* SecondNavigationController.swift */,
 				8D9EFF1929B85049008D2050 /* MainViewController.swift */,
 				8D9EFF2F29B9A74A008D2050 /* WritingViewController.swift */,
 				8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */,
@@ -269,7 +274,7 @@
 		8D9EFF2C29B85087008D2050 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8D9EFF1B29B85049008D2050 /* Main.storyboard */,
+				8DCA774329DECCAA00F4DD52 /* Main.storyboard */,
 				8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */,
 				8D6BD68029D99C3300D218C4 /* FirstView.xib */,
 				8D6BD68229D9A06300D218C4 /* SecondView.xib */,
@@ -393,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D9EFF2229B8504B008D2050 /* LaunchScreen.storyboard in Resources */,
+				8DCA774529DECCAA00F4DD52 /* Main.storyboard in Resources */,
 				DE863BCB29C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf in Resources */,
 				DE863BCA29C6E40C00208AE8 /* NanumMyeongjoBold.ttf in Resources */,
 				8D9EFF1F29B8504B008D2050 /* Assets.xcassets in Resources */,
@@ -402,7 +408,6 @@
 				DEF46A1029C2119400D153B1 /* GoogleService-Info.plist in Resources */,
 				8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */,
 				8D6BD68929D9A31700D218C4 /* ThirdView.xib in Resources */,
-				8D9EFF1D29B85049008D2050 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,7 +416,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEA2F28A29D85F860021AEC3 /* Assets.xcassets in Resources */,
-				DEA2F29429D869DA0021AEC3 /* Main.storyboard in Resources */,
 				8D3FF30F29DBABAF00508FB8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,6 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D985CEF29CC2E2D00C04AA8 /* ConnectTypingViewController.swift in Sources */,
+				8DCA774229DEAEEA00F4DD52 /* TabBarController.swift in Sources */,
 				8D985CED29CC2D3600C04AA8 /* ConnectViewController.swift in Sources */,
 				8D9EFF1A29B85049008D2050 /* MainViewController.swift in Sources */,
 				8D6182FA29C85D4A00A85BFB /* LetterData.swift in Sources */,
@@ -507,6 +512,7 @@
 				8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */,
 				8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */,
 				8DBD9A3C29D9561D005AF94A /* GuideViewController.swift in Sources */,
+				8DCA774729DEEB4300F4DD52 /* SecondNavigationController.swift in Sources */,
 				8DA1A1DC29BB0A2900A37C0E /* LetterDataSource.swift in Sources */,
 				8D6BD68729D9A0F000D218C4 /* SecondView.swift in Sources */,
 				8D985CF529CD722700C04AA8 /* SettingViewController.swift in Sources */,
@@ -537,20 +543,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		8D9EFF1B29B85049008D2050 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8D9EFF1C29B85049008D2050 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		8D9EFF2029B8504B008D2050 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				8D9EFF2129B8504B008D2050 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		8DCA774329DECCAA00F4DD52 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8DCA774429DECCAA00F4DD52 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -10,7 +10,6 @@ import Firebase
 
 class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    // let letterData = LetterData(friendCode: "", title: "", content: "", updateTime: Date())
     let db = Firestore.firestore()
     var messages: [LetterData] = []
     
@@ -23,27 +22,37 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         return f
     }()
     
-    @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
+    var updateTimer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor(hex: "FDF2DC")
+        self.navigationController?.navigationBar.standardAppearance.backgroundColor = UIColor(hex: "FDF2DC")
+        self.navigationController?.navigationBar.topItem?.titleView?.backgroundColor = UIColor(hex: "FDF2DC")
+        
         tableView.delegate = self
         tableView.dataSource = self
-        // messages.count = 0
+        
         registerXib()
+        let calender = Calendar.current
+        let now = Date()
+        let date = calender.date(
+            bySettingHour: <#T##Int#>,
+            minute: <#T##Int#>,
+            second: <#T##Int#>,
+            of: now)
         loadMessages()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ViewController의 view가 load됨")
-        //navigationItem.hidesBackButton = true
-        self.navigationBar.title = "받은 편지함"
-        navigationController?.isNavigationBarHidden = false
-        self.navigationBar.hidesBackButton = true
         
+        self.navigationController?.navigationBar.topItem?.title = "받은 편지함"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .automatic
     }
     
     private func registerXib() { // 커스텀한 테이블 뷰 셀을 등록하는 함수
@@ -52,7 +61,6 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     }
     
     func loadMessages(){
-        
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
         
@@ -61,8 +69,6 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
             .whereField("receiver", isEqualTo: userFriendCode)
             .order(by: "updateTime", descending: true)
             .addSnapshotListener { (querySnapshot, error) in
-                
-                self.messages = []
                 
                 if let e = error {
                     print("There was an issue retrieving data from Firestore. \(e)")
@@ -94,15 +100,16 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                 let setTitle = self.messages[0].title
                                 let setContent = self.messages[0].content
                                 let setUpdateTime = self.messages[0].updateTime
+                                let setLetterColor = self.messages[0].letterColor
                                 
                                 UserDefaults.shared.set(setTitle, forKey: "latestTitle")
                                 UserDefaults.shared.set(setContent, forKey: "latestContent")
                                 UserDefaults.shared.set(setUpdateTime, forKey: "latesetUpdateDate")
+                                UserDefaults.shared.setValue(setLetterColor, forKey: "latestLetterColor")
                                 
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
-                                    let indexPath = IndexPath(row: 0, section: self.messages.count - 1)
-                                    self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+                                    self.tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
                                 }
                             }
                         }
@@ -134,7 +141,8 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         cell.letterDateLabel?.text = formatter.string(from: message.updateTime)
         cell.backgroundColor = UIColor(hex: message.letterColor)
         cell.emojiLabel.text = message.emoji
-        print("cell.backgroundColor: \(cell.backgroundColor)")
+        
+        navigationController?.navigationBar.sizeToFit()
         
         return cell
     }
@@ -144,8 +152,6 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
             let nextVC = segue.destination as? LetterViewController
             
             if let index = sender as? Int {
-                print("index : \(index)")
-                
                 nextVC?.receivedTitleText = messages[index].title
                 nextVC?.receivedContentText = messages[index].content
                 nextVC?.receivedUpdateDate = messages[index].updateTime

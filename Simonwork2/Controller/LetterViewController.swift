@@ -26,6 +26,28 @@ class LetterViewController: UIViewController {
     var receivedLetterColor : String?
     var receivedEmoji : String?
     
+    // Create right UIBarButtonItem.
+    lazy var rightButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "수정", style: .plain, target: self, action: #selector(editButtonPressed))
+        button.tag = 2
+        
+        return button
+    }()
+
+// Button event.
+    @objc private func editButtonPressed(_ sender: Any) {
+        if let button = sender as? UIBarButtonItem {
+            switch button.tag {
+            case 2:
+                // Change the background color to red.
+                self.view.backgroundColor = .red
+                // 12시 이전에 수정 버튼 클릭 시 메시지가 수정되는 기능 구현 필요
+            default:
+                print("error")
+            }
+        }
+    }
+    
     let formatter: DateFormatter = {
         let f = DateFormatter()
         f.dateStyle = .long
@@ -33,32 +55,8 @@ class LetterViewController: UIViewController {
         return f
     }()
     
-    struct UserDefaultsManager {
-        static let shared: UserDefaults = {
-            let suiteName = "group.Simonwork2"
-            guard let userDefaults = UserDefaults(suiteName: suiteName) else {
-                fatalError("Could not initialize UserDefaults with suite name: \(suiteName)")
-            }
-            return userDefaults
-        }()
-
-        static let sharedDataKey = "mySharedData"
-
-        static func setSharedData(_ value: String) {
-            shared.set(value, forKey: sharedDataKey)
-        }
-
-        static func sharedData() -> String? {
-            return shared.string(forKey: sharedDataKey)
-        }
-    }
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //loadMessages()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,4 +75,5 @@ class LetterViewController: UIViewController {
         print("emojiLabel.text: \(emojiLabel.text)")
         
     }
+    
 }

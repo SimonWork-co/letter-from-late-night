@@ -26,7 +26,6 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
     //var images = [#imageLiteral(resourceName: "google logo"), #imageLiteral(resourceName: "ellipse"), #imageLiteral(resourceName: "google logo")]
-    @IBOutlet weak var lastView: UIView!
     @IBOutlet weak var startButton: UIButton!
     
     var images = [#imageLiteral(resourceName: "Guide1"), #imageLiteral(resourceName: "Guide2")]
@@ -40,7 +39,6 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
         
         addContentScrollView()
         setPageControl()
-        lastView.isHidden = true
     }
     
     let FirstView : FirstView? = UIView.loadFromNib()
@@ -58,17 +56,9 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
             uiViewName?.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
             scrollView.addSubview(uiViewName!)
             scrollView.contentSize.width = uiViewName!.frame.width * CGFloat(i + 1)
-            if i == 2 {
-                pageControl.addTarget(self, action: #selector(startButtonPressed), for: .touchUpInside)
-                lastView.isHidden = false
-                break
-            }
         }
-        lastView.isHidden = false
-       
     }
         
-    
     private func setPageControl() {
         pageControl.numberOfPages = 3
     }
@@ -81,40 +71,12 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
         let value = scrollView.contentOffset.x/scrollView.frame.size.width
         setPageControlSelectedPage(currentPage: Int(round(value)))
     }
-    
-    
-    
-//    func xibSetup() { // 특정 view를 지정해야 함
-//        guard let view = loadViewFromNib(nibName: "FirstView") else {
-//            return
-//        }
-//        view.frame = bounds
-//        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        addSubview(view)
-//    }
 
-//    func loadViewFromNib(nibName: String) -> UIView? {
-//        let bundle = Bundle(for: type(of: self))
-//        let nib = UINib(nibName: nibName, bundle: bundle)
-//        return nib.instantiate(withOwner: self, options: nil).first as? UIView
-//    }
-    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        loadView()
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        loadView()
-//    }
-//
-//    private func loadView() {
-//        let view = Bundle.main.loadNibNamed("FirstView",owner: self, options: nil)?.first as! UIView
-//        view.frame = bounds
-//        addSubview(view)
-//    }
-    @objc func startButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: "toSignup", sender: nil)
+    @IBAction func startButtonPressed(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialNavigationController = storyboard.instantiateViewController(identifier: "NavigationController")
+        initialNavigationController.modalPresentationStyle = .fullScreen
+        self.show(initialNavigationController, sender: UIButton())
     }
+    
 }

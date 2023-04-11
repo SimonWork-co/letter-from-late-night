@@ -21,6 +21,7 @@ class SettingViewController: UIViewController {
         do {
             try firebaseAuth.signOut()
             print("로그아웃 성공")
+            
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
         }
