@@ -13,6 +13,7 @@ class SecondNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
 //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
 //        let TabBarController = storyboard.instantiateViewController(identifier: "TabBarController")
 //        TabBarController.modalPresentationStyle = .fullScreen

@@ -10,6 +10,7 @@ import UIKit
 
 struct LetterData {
     let sender : String // (친구 코드)
+    let senderName : String // (나의 이름)
     let receiver : String // (상대방 친구 코드)
     let id : String = "" // (편지 아이디)
     let title : String // (편지 제목)

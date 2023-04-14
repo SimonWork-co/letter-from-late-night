@@ -21,11 +21,14 @@ extension UserDefaults {
 
 let dateFormatterFile = DateFormatterFile()
 
+
 let setTitle = UserDefaults.shared.string(forKey: "latestTitle")!
 let setContent = UserDefaults.shared.string(forKey: "latestContent")!
-let setUpdateDate = UserDefaults.shared.object(forKey: "latesetUpdateDate") as! Date
+let setUpdateDate = UserDefaults.shared.object(forKey: "latestUpdateDate") as! Date
 let setLetterColor = UserDefaults.shared.string(forKey: "latestLetterColor")!
+let setEmoji = UserDefaults.shared.string(forKey: "latestEmoji")!
 let uicolor = UIColor(hex: setLetterColor)
+let setSender = UserDefaults.shared.string(forKey: "latestSender")!
 
 // 위젯을 업데이트 할 시기를 WidgetKit에 알리는 역할
 struct Provider: TimelineProvider {
@@ -33,12 +36,12 @@ struct Provider: TimelineProvider {
     // WidgetKit이 Provider에 업데이트 할 시간, TimeLine을 요청
     // 요청을 받은 Provider는 TimeLine을 WidgetKit에 제공
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), title: "Placeholder Title", content: "Placeholder Content")
+        SimpleEntry(date: Date(), title: "Placeholder Title", content: "Placeholder Content", emoji: "😃", sender: "Sender")
     }
     // 데이터를 가져와서 표출해주는 함수
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         //let entry = SimpleEntry(date: Date(), title: "밤 프리뷰", content: "콘텐츠 중")
-        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!")
+        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
         completion(entry)
     }
     // 타임라인 설정 관련 함수(홈에 있는 위젯을 언제 업데이트 시킬 것인지 구현)
@@ -49,13 +52,14 @@ struct Provider: TimelineProvider {
         
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
+        let set5am = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 5), matchingPolicy: .nextTime)! // Schedule the task to start at 5:00 AM
         
-        //for hourOffset in 0 ..< 5 {
-            // 1, 2, ... 4 시간 뒤 enrty값으로 업데이트
-            let entryDate = Calendar.current.date(byAdding: .second, value: 60, to: currentDate)!
-            let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent)
+        for hourOffset in 0 ..< 30 {
+            // 1, 2, ... 30 분 뒤 enrty값으로 업데이트
+            let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset, to: set5am)!
+            let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSender)
             entries.append(entry)
-        //}
+        }
         // 타임라인을 새로 다시 불러옴
         let timeline = Timeline(entries: entries, policy: .atEnd)
         // atEnd: 타임라인의 마지막 날짜가 지난 후 WidgetKit이 새 타임라인을 요청하도록 지정하는 정책
@@ -70,6 +74,8 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let title: String
     let content: String
+    let emoji: String
+    let sender: String
 }
 
 struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 SwiftUI View
@@ -84,45 +90,73 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
             VStack {
                 Text(entry.title)
                     .font(.custom("NanumMyendjoBold", size: 15))
+                    .foregroundColor(.black)
                     .padding(1)
                 Text(entry.content)
                     .font(.custom("NanumMyendjo", size: 10))
+                    .foregroundColor(.black)
             }
             .padding()
         case .systemMedium :
             VStack {
+                HStack{
+                Text(entry.emoji)
+                    .font(.custom("NanumMyendjoExtraBold", size: 40))
                 Text(entry.title)
                     .font(.custom("NanumMyendjoExtraBold", size: 20))
+                    .foregroundColor(.black)
                     .padding(1)
+                }
                 Text(entry.content)
                     .font(.custom("NanumMyendjo", size: 15))
-                    .padding(1)
-                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
-                    .font(.custom("NanumMyendjo", size: 12))
+                    .foregroundColor(.black)
+                HStack{
+                Text(entry.sender)
+                    .font(.custom("NanumMyendjo", size: 10))
+                    .foregroundColor(.black)
+                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date를 string으로 변환
+                    .font(.custom("NanumMyendjo", size: 10))
+                    .foregroundColor(.black)
+                }
             }
             .padding()
         case .systemLarge :
             VStack {
-            Text(entry.title)
-                .font(.custom("NanumMyendjoExtraBold", size: 30))
-                .padding(5)
-            Text(entry.content)
-                .font(.custom("NanumMyendjo", size: 25))
-                .padding(5)
-            Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
-                .font(.subheadline)
+                HStack{
+                Text(entry.emoji)
+                    .font(.custom("NanumMyendjoExtraBold", size: 50))
+                Text(entry.title)
+                    .font(.custom("NanumMyendjoExtraBold", size: 25))
+                    .foregroundColor(.black)
+                    .padding(5)
+                }.padding(5)
+                Text(entry.content)
+                    .font(.custom("NanumMyendjo", size: 20))
+                    .foregroundColor(.black)
+                    .padding(5)
+                HStack{
+                Text(entry.sender)
+                    .font(.custom("NanumMyendjo", size: 15))
+                    .foregroundColor(.black)
+                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date를 string으로 변환
+                    .font(.custom("NanumMyendjo", size: 15))
+                    .foregroundColor(.black)
+                }
         }
         .padding()
         case .systemExtraLarge :
             VStack {
             Text(entry.title)
                 .font(.custom("NanumMyendjoExtraBold", size: 30))
+                .foregroundColor(.black)
                 .padding(5)
             Text(entry.content)
                 .font(.custom("NanumMyendjoBold", size: 25))
+                .foregroundColor(.black)
                 .padding(5)
             Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
                 .font(.subheadline)
+                .foregroundColor(.black)
         }
         .padding()
         default:
@@ -160,7 +194,7 @@ struct LetterWidget_Previews: PreviewProvider {
 //        LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "밤편지", content: "프리뷰 콘텐츠")) // title에다가 Db에서 불러온 편지의 title을, content에다가 db에서 불러온 content를 넣어야 할 둣
 //            .previewContext(WidgetPreviewContext(family: .systemSmall))
         
-        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!")
+        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
         LetterWidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }

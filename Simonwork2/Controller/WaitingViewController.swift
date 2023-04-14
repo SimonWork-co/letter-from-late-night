@@ -11,7 +11,7 @@ import Firebase
 class WaitingViewController: UIViewController {
     
     var inputPairFriendCode : String?
-    var inputFriendName : String?
+    var inputPairFriendName : String?
     var documentID : String?
     var timer = Timer()
     
@@ -27,8 +27,8 @@ class WaitingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        helloLabel.text = "\(inputFriendName!)님께\n기분을 북돋는 한 마디를\n남겨볼까요?"
-        helloLabel.asColor(targetStringList: [inputFriendName], color: .purple)
+        helloLabel.text = "\(inputPairFriendName!)님께\n기분을 북돋는 한 마디를\n남겨볼까요?"
+        helloLabel.asColor(targetStringList: [inputPairFriendName], color: .purple)
         //self.navigationController?.isNavigationBarHidden = true
         
         timer.invalidate()
@@ -51,7 +51,8 @@ class WaitingViewController: UIViewController {
     }
     
     @objc func inputFriendCodeCheck() {
-        //inputFriendCode가 상대방의 friendCode와 일치하는지 실시간으로 조회 (상대방이 나의 친구코드를 connectTyping VC에서 입력하게 되면 dbDocumentsCall()를 실행
+        //inputFriendCode가 상대방의 friendCode와 일치하는지 실시간으로 조회
+        //(상대방이 나의 친구코드를 connectTyping VC에서 입력하게 되면 dbDocumentsCall()를 실행
         
         db.collection("UserData").document(documentId) // 상대방의 uid 가 document의 이름임
             .addSnapshotListener { (documentSnapshot, error) in
@@ -68,12 +69,8 @@ class WaitingViewController: UIViewController {
                 
                 if data["pairFriendCode"] as? String == self.myFriendCode { // 상대방이 pairFriendCode로 나의 friendCode를 업데이트하면, startVC로 세그
                     print("pairFriendCode 연동 완료")
-
-                    // waitingVC 화면으로 보내기
-                    let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-                    let StartViewController = storyboard.instantiateViewController(identifier: "StartViewController")
-                    StartViewController.modalPresentationStyle = .fullScreen
-                    self.navigationController?.show(StartViewController, sender: nil)
+                    // StartViewController 화면으로 보내기
+                    self.performSegue(withIdentifier: "waitingToStart", sender: nil)
                 }
             }
         return

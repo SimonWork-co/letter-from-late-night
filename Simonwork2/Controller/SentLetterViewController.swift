@@ -22,7 +22,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         return f
     }()
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var letterTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +31,11 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         self.navigationController?.navigationBar.standardAppearance.backgroundColor = UIColor(hex: "FDF2DC")
         self.navigationController?.navigationBar.topItem?.titleView?.backgroundColor = UIColor(hex: "FDF2DC")
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
+        self.view.snapshotView(afterScreenUpdates: true)
+        
+        letterTableView.delegate = self
+        letterTableView.dataSource = self
         
         registerXib()
         loadMessages()
@@ -44,22 +47,29 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         self.navigationController?.navigationBar.topItem?.title = "보낸 편지함"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .automatic
+    
     }
     
     private func registerXib() { // 커스텀한 테이블 뷰 셀을 등록하는 함수
         let nibName = UINib(nibName: "CustomizedCell", bundle: nil)
-        tableView.register(nibName, forCellReuseIdentifier: "CustomizedCell")
+        letterTableView.register(nibName, forCellReuseIdentifier: "CustomizedCell")
     }
     
-    func loadMessages(){
+    func loadMessages() -> [LetterData] {
+        
+        print("!!loadMessages 진입!!")
+        
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
+        var messageList = LetterData(sender: "", senderName: "", receiver: "", title: "", content: "", updateTime: Date(), letterColor: "", emoji: "")
         
         db.collection("LetterData")
             .whereField("sender", isEqualTo: userFriendCode)
             .whereField("receiver", isEqualTo: userPairFriendCode)
             .order(by: "updateTime", descending: true)
             .addSnapshotListener { (querySnapshot, error) in
+                
+                self.messages = []
                 
                 if let e = error {
                     print("There was an issue retrieving data from Firestore. \(e)")
@@ -73,12 +83,14 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let messageUpdateTime = message_UpdateTime.dateValue()
                                 let messageContent = data["content"] as! String
                                 let messageFriendCode = data["sender"] as! String
+                                let messageSenderName = data["senderName"] as! String
                                 let messagePairFriendCode = data["receiver"] as! String
                                 let messageLetterColor = data["letterColor"] as! String
                                 let messageEmoji = data["emoji"] as! String
                                 
-                                let messageList = LetterData(
+                                messageList = LetterData(
                                     sender: messageFriendCode,
+                                    senderName: messageSenderName,
                                     receiver: messagePairFriendCode,
                                     title: messageTitle,
                                     content: messageContent,
@@ -92,21 +104,41 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let setContent = self.messages[0].content
                                 let setUpdateTime = self.messages[0].updateTime
                                 let setLetterColor = self.messages[0].letterColor
+                                let setEmoji = self.messages[0].emoji
+                                //let setSender = self.messages[0].sender
                                 
-                                UserDefaults.shared.setValue(setTitle, forKey: "latestTitle")
-                                UserDefaults.shared.setValue(setContent, forKey: "latestContent")
-                                UserDefaults.shared.setValue(setUpdateTime, forKey: "latesetUpdateDate")
+                                print("setTitle: \(setTitle)")
+                                print("setContent: \(setContent)")
+                                print("setUpdateTime: \(setUpdateTime)")
+                                print("setLetterColor: \(setLetterColor)")
+                                print("setEmoji: \(setEmoji)")
+                                
+                                UserDefaults.shared.set(setTitle, forKey: "latestTitle")
+                                UserDefaults.shared.set(setContent, forKey: "latestContent")
+                                UserDefaults.shared.set(setUpdateTime, forKey: "latestUpdateDate")
                                 UserDefaults.shared.setValue(setLetterColor, forKey: "latestLetterColor")
+                                UserDefaults.shared.set(setEmoji, forKey: "latestEmoji")
+                                //UserDefaults.shared.set(setSender, forKey: "latestSender")
                                 
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
-                                    self.tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
-                                }
+                                self.dispatchQueue()
                             }
                         }
                     }
                 }
             }
+        return [messageList]
+    }
+    
+    func dispatchQueue() {
+        DispatchQueue.main.async {
+            if self.letterTableView != nil {
+                self.letterTableView.reloadData()
+                self.letterTableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
+                print("dispatchQueue 완료!")
+            } else {
+                print("self.letterTableView에 nil 출력")
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,7 +155,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // indexPath에 어떤 cell이 들어갈 것인지 결정하는 메소드 -> cellForRowAt
-        // (함수 안에서 UItablenViewCell을 생성하여 커스텀한 다음 그 cell을 반환하면 해당 cell이 특정 행에 적용되어 나타남)
+        // (함수 안에서 UItableViewCell을 생성하여 커스텀한 다음 그 cell을 반환하면 해당 cell이 특정 행에 적용되어 나타남)
         let message = messages[indexPath.section]
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomizedCell", for: indexPath) as! CustomizedCell
         

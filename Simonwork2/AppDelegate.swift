@@ -4,6 +4,8 @@
 //
 //  Created by Sangmok Choi on 2023/03/08.
 //
+//http://yoonbumtae.com/?p=5329 (Swift(스위프트): 백그라운드 작업 (Background Tasks))
+//https://developer.apple.com/documentation/uikit/app_and_environment/scenes/preparing_your_ui_to_run_in_the_background/using_background_tasks_to_update_your_app
 
 import UIKit
 import Firebase
@@ -11,6 +13,8 @@ import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 import FirebaseFirestore
+import BackgroundTasks
+import CryptoKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -18,13 +22,116 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // 1. didFinishLaunchingWithOptions: 앱이 종료되어 있는 경우 알림이 왔을 때
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        //UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
+        
         FirebaseApp.configure()
         
         UNUserNotificationCenter.current().delegate = self
-        
-        sleep(2)
+        //registerBackgroundTasks()
+        //1. 등록
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.simonwork.Simonwork2.refresh_badge", using: nil) { task in
+            print("백그라운드 등록 진입")
+            task.setTaskCompleted(success: true)
+            self.handleAppRefresh(task: task as! BGAppRefreshTask)
+        }
+
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.simonwork.Simonwork2.refresh_process", using: nil) { task in
+            print("백그라운드 등록 진입")
+            task.setTaskCompleted(success: true)
+            self.handleProcessingTask(task: task as! BGProcessingTask)
+        }
+        //sleep(1)
     
         return true
+    }
+    
+//    func applicationDidEnterBackground(_ application: UIApplication) {
+//        scheduleAppRefresh()
+//        scheduleProcessingTaskIfNeeded()
+//    }
+    
+    //2. 스케줄링
+    func scheduleAppRefresh() {
+        print("백그라운드 스케줄링 진입")
+        let request = BGAppRefreshTaskRequest(identifier: "com.simonwork.Simonwork2.refresh_badge")
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15)
+        //request.earliestBeginDate = Date(timeInterval: 15, since: Date())
+        //request.earliestBeginDate = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 8), matchingPolicy: .nextTime) // Schedule the task to start at 8:00 AM
+
+        do {
+            try BGTaskScheduler.shared.submit(request)
+            // Set a breakpoint in the code that executes after a successful call to submit(_:).
+            // 브레이크 포인트 작성
+        } catch {
+            print("\(Date()): Could not schedule app refresh: \(error)")
+        }
+    }
+    
+    //2. 스케줄링
+    func scheduleProcessingTaskIfNeeded() {
+        print("백그라운드 스케줄링 진입")
+        let request = BGProcessingTaskRequest(identifier: "com.simonwork.Simonwork2.refresh_process")
+        request.requiresExternalPower = false
+        request.requiresNetworkConnectivity = true
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15)
+        //request.earliestBeginDate = Date(timeInterval: 15, since: Date())
+        //request.earliestBeginDate = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 8), matchingPolicy: .nextTime) // Schedule the task to start at 8:00 AM
+        
+        do {
+            try BGTaskScheduler.shared.submit(request)
+            // Set a breakpoint in the code that executes after a successful call to submit(_:).
+            // 브레이크 포인트 작성
+        } catch {
+            print("\(Date()): Could not schedule processing task: \(error)")
+        }
+    }
+    // 3.실행&완료
+    func handleAppRefresh(task: BGAppRefreshTask) {
+        // 스케줄링 함수. 다음 동작 수행, 반복시 필요
+        print("실행 완료 진입")
+        scheduleAppRefresh()
+        
+        task.expirationHandler = {
+            task.setTaskCompleted(success: false)
+        }
+    
+        DispatchQueue.global(qos: .background).async {
+            // 가벼운 백그라운드 작업 작성
+            print("메시지 로드 진입")
+            self.handleScheduledLoadMessages()
+            task.setTaskCompleted(success: true)
+            print("setTaskCompleted에 진입")
+        }
+    }
+    // 3.실행&완료
+    func handleProcessingTask(task: BGProcessingTask) {
+        print("실행 완료 진입")
+        task.expirationHandler = {
+            task.setTaskCompleted(success: false)
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            // 가벼운 백그라운드 작업 작성
+            print("메시지 로드 진입")
+            self.handleScheduledLoadMessages()
+            task.setTaskCompleted(success: true)
+            print("setTaskCompleted에 진입")
+        }
+
+    }
+    
+    @objc func handleScheduledLoadMessages() {
+        // This method will be called when the scheduled time is reached
+        DispatchQueue.main.async {
+            let archiveVC = SentLetterViewController()
+            let tableView = archiveVC.letterTableView
+            let messagesList = archiveVC.loadMessages()
+            archiveVC.messages = messagesList
+
+            //tableView?.reloadData()
+            //tableView?.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
+        }
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -44,9 +151,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         //앱이 켜져있는 상태에서 푸쉬 알림을 눌렀을 때
         if application.applicationState == .active {
-            print("푸쉬알림 탭(앱 켜져있음)")
-            
-            
+           print("푸쉬알림 탭(앱 켜져있음)")
+
         }
         
         //앱이 꺼져있는 상태에서 푸쉬 알림을 눌렀을 때
@@ -54,6 +160,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             //                if response.notification.request.content.title == "밤편지" {
             //                }
             print("푸쉬알림 탭(앱 꺼져있음)")
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let mainViewController = storyboard.instantiateViewController(identifier: "SignupViewController")
+            mainViewController.modalPresentationStyle = .fullScreen
+            NavigationController().show(mainViewController, sender: self)
         }
         
         completionHandler()

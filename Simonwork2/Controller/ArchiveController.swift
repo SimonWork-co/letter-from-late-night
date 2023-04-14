@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import WidgetKit
 
 class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -24,6 +25,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var tableView: UITableView!
     var updateTimer = Timer()
+    var timer : Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,25 +34,25 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         self.navigationController?.navigationBar.standardAppearance.backgroundColor = UIColor(hex: "FDF2DC")
         self.navigationController?.navigationBar.topItem?.titleView?.backgroundColor = UIColor(hex: "FDF2DC")
         
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
+        
         tableView.delegate = self
         tableView.dataSource = self
         
         registerXib()
-        let calender = Calendar.current
-        let now = Date()
-        let date = calender.date(
-            bySettingHour: <#T##Int#>,
-            minute: <#T##Int#>,
-            second: <#T##Int#>,
-            of: now)
-        loadMessages()
+        archiveUpdate()
         
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadAllTimelines()
+        } else {
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.topItem?.title = "받은 편지함"
+        self.navigationController?.navigationBar.topItem?.titleView?.tintColor = .black
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .automatic
     }
@@ -60,13 +62,34 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         tableView.register(nibName, forCellReuseIdentifier: "CustomizedCell")
     }
     
-    func loadMessages(){
+    func archiveUpdate() {
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        let components = calendar.dateComponents([.hour, .minute], from: currentDate)
+        if let hour = components.hour, let minute = components.minute {
+            if hour >= 4 && minute >= 30 {
+                // 현재 시간이 오늘 새벽 4시 30분 이후라면 데이터 업데이트 수행
+                let yesterdayMidnight =
+                calendar.startOfDay(for: currentDate).timeIntervalSince1970
+                loadMessages(time: yesterdayMidnight)
+            } else {
+                // 현재 시간이 오늘 새벽 4시 30분 이전이라면 데이터 업데이트 미수행
+                let theDayBeforeYesterDay =
+                calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: currentDate))!.timeIntervalSince1970
+                loadMessages(time: theDayBeforeYesterDay)
+            }
+        }
+    }
+    
+    func loadMessages(time: TimeInterval){ // 어제 자정 이전까지 작성된 편지를 불러옴 (오늘 작성된 편지는 불러오지 않음)
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
         
         db.collection("LetterData")
             .whereField("sender", isEqualTo: userPairFriendCode)
             .whereField("receiver", isEqualTo: userFriendCode)
+            .whereField("updateTime", isLessThan: time)
             .order(by: "updateTime", descending: true)
             .addSnapshotListener { (querySnapshot, error) in
                 
@@ -82,12 +105,14 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                 let messageUpdateTime = message_UpdateTime.dateValue()
                                 let messageContent = data["content"] as! String
                                 let messageFriendCode = data["sender"] as! String
+                                let messageSenderName = data["sender"] as! String
                                 let messagePairFriendCode = data["receiver"] as! String
                                 let messageLetterColor = data["letterColor"] as! String
                                 let messageEmoji = data["emoji"] as! String
                                 
                                 let messageList = LetterData(
                                     sender: messageFriendCode,
+                                    senderName: messageSenderName,
                                     receiver: messagePairFriendCode,
                                     title: messageTitle,
                                     content: messageContent,
@@ -101,11 +126,14 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                 let setContent = self.messages[0].content
                                 let setUpdateTime = self.messages[0].updateTime
                                 let setLetterColor = self.messages[0].letterColor
+                                let setEmoji = self.messages[0].emoji
                                 
                                 UserDefaults.shared.set(setTitle, forKey: "latestTitle")
                                 UserDefaults.shared.set(setContent, forKey: "latestContent")
-                                UserDefaults.shared.set(setUpdateTime, forKey: "latesetUpdateDate")
+                                UserDefaults.shared.set(setUpdateTime, forKey: "latestUpdateDate")
                                 UserDefaults.shared.setValue(setLetterColor, forKey: "latestLetterColor")
+                                UserDefaults.shared.set(setEmoji, forKey: "latestEmoji")
+                                
                                 
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()

@@ -10,6 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
+    var withIdentifier : String = ""
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -17,19 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        //UserDefaults.shared.removeObject(forKey: "ALetterFromLateNightUid")
-        if UserDefaults.shared.object(forKey: "ALetterFromLateNightUid") != nil {
-            withIdentifier = "signupToMain"
-            print("withIdentifier: \(withIdentifier)")
-        } else {
-            withIdentifier = "signupToConnect"
-            print("withIdentifier: \(withIdentifier)")
-            
-            let vc = storyboard.instantiateViewController (withIdentifier: "GuideViewController") as! GuideViewController
-            window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = vc
-            window?.makeKeyAndVisible()
-        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -58,8 +46,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        print("SCENEDIDENTERBACKGROUND 진입!!")
+        appDelegate.scheduleAppRefresh()
+        appDelegate.scheduleProcessingTaskIfNeeded()
     }
-    
-    
 }
 
