@@ -25,13 +25,7 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
-    //var images = [#imageLiteral(resourceName: "google logo"), #imageLiteral(resourceName: "ellipse"), #imageLiteral(resourceName: "google logo")]
     @IBOutlet weak var startButton: UIButton!
-    
-    var images = [#imageLiteral(resourceName: "Guide1"), #imageLiteral(resourceName: "Guide2")]
-    var imagesViews = [UIImageView]()
-    
-    //let views : [UIView] = [FirstView(), SecondView(), ThirdView()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +47,16 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
             let uiViewName = viewNames[i]
             let xPos = scrollView.frame.width * CGFloat(i)
             
-            uiViewName?.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
-            scrollView.addSubview(uiViewName!)
+            uiViewName?.frame = CGRect(
+                x: xPos,
+                y: 0,
+                width: scrollView.bounds.width,
+                height: scrollView.bounds.height)
+            
             scrollView.contentSize.width = uiViewName!.frame.width * CGFloat(i + 1)
+            //scrollView.contentSize.height = uiViewName!.frame.height
+            
+            scrollView.addSubview(uiViewName!)
         }
     }
         
@@ -73,10 +74,7 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
     }
 
     @IBAction func startButtonPressed(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initialNavigationController = storyboard.instantiateViewController(identifier: "NavigationController")
-        initialNavigationController.modalPresentationStyle = .fullScreen
-        self.show(initialNavigationController, sender: UIButton())
+       performSegue(withIdentifier: "guideToConnect", sender: self)
     }
     
 }

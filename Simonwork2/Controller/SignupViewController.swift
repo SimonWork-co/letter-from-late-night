@@ -18,18 +18,14 @@ import CryptoKit
 
 fileprivate var currentNonce: String?
 
-let db = Firestore.firestore() //initialize Cloud Firestore
+let db = Firestore.firestore()
 var userdata: [UserData] = []
 var withIdentifier : String = ""
 
-var loginOrNot : Bool = true // true : 로그인한 상태, false : 로그인 안된 상태
 var handle: AuthStateDidChangeListenerHandle!
 
 var userDefaultsData = UserDefaultsData()
 let userDefaultsDataSave = UserDefaultsData.Save()
-let connectTypingVC = ConnectTypingViewController()
-
-let mainVC = MainViewController()
 
 var inputUserName = ""
 var inputUserEmail = ""
@@ -93,16 +89,70 @@ extension SignupViewController {
         return result
     }
     
-    func sendUserData(UserName: String!, UserEmail: String!) { // 회원가입(첫 로그인) 시에만 작동해야 하는 함수
+    func friendCodeChecking(UserName: String!, UserEmail: String!) {
+        
+        let uid = Auth.auth().currentUser?.uid ?? ""
+        let cryptedUid = sha256(uid)
+        let friendCode = String(cryptedUid.prefix(6))
+        print(uid)
+        print(cryptedUid)
+        print(friendCode)
+        
+        db.collection("UserData").whereField("friendCode", isEqualTo: friendCode).getDocuments { (querySnapshot, error) in
+
+            if let error = error {
+                print("Error: \(error)")
+            } else {
+                if let documents = querySnapshot?.documents {
+                    if documents.isEmpty == true {
+                        print("documents.isEmpty == true // signupToGuide")
+                        withIdentifier = "signupToGuide"
+                        self.sendUserData(UserName: UserName, UserEmail: UserEmail)
+                        print("identifier: \(withIdentifier)")
+                    } else if documents.isEmpty == false {
+                        for doc in documents {
+                            let data = doc.data()
+                            if data["pairFriendCode"] as! String == "none" {
+                                // pairfriendCode가 none이면 회원가입 절차 필요
+                                
+                                print("documents.isEmpty == false // signupToGuide")
+                                withIdentifier = "signupToGuide"
+                                print("identifier: \(withIdentifier)")
+                            } else {
+                                // pairfriendCode가 있으며 회원가입 절차 필요없음
+                                
+                                print("documents.isEmpty == false // signupToMain")
+                                withIdentifier = "signupToMain"
+                                print("identifier: \(withIdentifier)")
+                            }
+                        }
+                    }
+                }
+                
+                if withIdentifier == "signupToGuide" {
+                    self.sendUserData(UserName: UserName, UserEmail: UserEmail)
+                    self.performSegue(withIdentifier: "signupToGuide", sender: nil)
+                } else if withIdentifier == "signupToMain" {
+                    userDefaultsData.receivedData = Auth.auth().currentUser
+                    self.moveToMain()
+                    //self.performSegue(withIdentifier: "signupToMain", sender: nil)
+                }
+            }
+        }
+    }
+    
+    func sendUserData(UserName: String?, UserEmail: String?) { // 회원가입(첫 로그인) 시에만 작동해야 하는 함수
         
         if let UserName, let UserEmail {
+            print("UserName: \(UserName)")
+            print("UserEmail: \(UserEmail)")
             let uid = Auth.auth().currentUser?.uid ?? ""
             print("uid : \(String(describing: uid))")
             let cryptedUid = sha256(uid)
             print("cryptedUid: \(cryptedUid)")
             let friendCode = String(cryptedUid.prefix(6))
             print("friendCode: \(friendCode)")
-            //connectTypingVC.inputFriendCode = friendCode
+            
             let friendName = "none"
             let pairFriendCode = "none"
             let signupTime = Date()
@@ -123,14 +173,6 @@ extension SignupViewController {
                     print("Successfully saved data.")
                 }
             }
-            // UserDefaults.standard.set("저장할 데이터", forKey: "Key값")
-            //            UserDefaults.standard.set(UserName, forKey: "userName")
-            //            UserDefaults.standard.set(UserEmail, forKey: "userEmail")
-            //            UserDefaults.standard.set(friendCode, forKey: "friendCode")
-            //            UserDefaults.standard.set(friendName, forKey: "friendName")
-            //            UserDefaults.standard.set(uid, forKey: "ALetterFromLateNightUid")
-            //            UserDefaults.standard.set(pairFriendCode, forKey: "pairFriendCode")
-            //            UserDefaults.standard.set(signupTime, forKey: "signupTime")
             userDefaultsDataSave.userName(UserName: UserName)
             userDefaultsDataSave.userEmail(UserEmail: UserEmail)
             userDefaultsDataSave.uid(uid: uid)
@@ -170,8 +212,12 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
         )
         
         if let fullName = appleIDCredential.fullName, let familyName = fullName.familyName, let givenName = fullName.givenName, let email = appleIDCredential.email {
-            inputUserName = (fullName.familyName)!+" "+(fullName.givenName)!
+            //inputUserName = (fullName.familyName)!+" "+(fullName.givenName)!
+            inputUserName = fullName.givenName!
             inputUserEmail = email
+            
+            userDefaultsDataSave.userName(UserName: inputUserName)
+            userDefaultsDataSave.userEmail(UserEmail: inputUserEmail)
             
             print("Apple FullName: \(fullName)")
             print("Apple familyName: \(familyName)")
@@ -182,6 +228,9 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
         } else {
             inputUserName = "사용자"
             inputUserEmail = "No Email"
+            
+            userDefaultsDataSave.userName(UserName: inputUserName)
+            userDefaultsDataSave.userEmail(UserEmail: inputUserEmail)
         }
         
         Auth.auth().signIn(with: credential) { authResult, error in
@@ -189,23 +238,9 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                 print ("Error Apple sign in: %@", error)
                 return
             } else {
-                if withIdentifier == "signupToConnect" {
-                    self.performSegue(withIdentifier: "signupToConnect", sender: nil)
-                } else if withIdentifier == "signupToMain" {
-                    userDefaultsData.receivedData = Auth.auth().currentUser
-                    self.moveToMain()
-                    //self.performSegue(withIdentifier: "signupToMain", sender: nil)
-                }
+                self.friendCodeChecking(UserName: inputUserName, UserEmail: inputUserEmail)
             }
         }
-        //        UserDefaults.standard.removeObject(forKey: "userName")
-        //        UserDefaults.standard.removeObject(forKey: "userEmail")
-        //        UserDefaults.standard.removeObject(forKey: "friendCode")
-        //        UserDefaults.standard.removeObject(forKey: "friendName")
-        //        UserDefaults.standard.removeObject(forKey: "ALetterFromLateNightUid")
-        //        UserDefaults.standard.removeObject(forKey: "pairFriendCode")
-        //        UserDefaults.standard.removeObject(forKey: "pairFriendCode")
-        // 위의 removeObject 함수는 유저가 최초로 로그인하는 상황을 가정하기 위해 작성됨. 실제 배포 시에는 해당 함수들의 위치를 옮길 필요가 있음
         print("애플 로그인")
     }
     
@@ -225,10 +260,14 @@ extension SignupViewController : ASAuthorizationControllerPresentationContextPro
 
 class SignupViewController: UIViewController, FUIAuthDelegate {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     //emailTextField passwordTextField signupButton
     @IBOutlet weak var googleSignupButton: UIButton!
     @IBOutlet weak var appleSignupButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -236,6 +275,8 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         //googleSignupButton.layer.borderWidth = 0.75
         //appleSignupButton.layer.cornerRadius = 10
         //googleAutoLogin()
+        imageView.frame.origin.x = -120
+        imageView.frame.origin.y = 83
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -257,10 +298,6 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         } else {}
     }
     
-    @IBAction func btn(_ sender: UIButton) {
-        moveToMain()
-    }
-    
     @IBAction func googleSignupButtonPressed(_ sender: Any) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
@@ -272,8 +309,11 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
             }
             
             guard let authentication = user?.authentication, let idToken = authentication.idToken else { return }
-            inputUserName = (user?.profile?.name)!
+            inputUserName = (user?.profile?.givenName)!
             inputUserEmail = (user?.profile?.email)!
+            
+            userDefaultsDataSave.userName(UserName: inputUserName)
+            userDefaultsDataSave.userEmail(UserEmail: inputUserEmail)
             
             //GIDSignIn을 통해 받은 idToken, accessToken으로 Firebase에 로그인
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken) // Access token을 부여받음
@@ -283,29 +323,13 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                 if let e = error {
                     print(e.localizedDescription)
                 } else {
-                    if withIdentifier == "signupToConnect" {
-                        self.performSegue(withIdentifier: "signupToConnect", sender: nil)
-                    } else if withIdentifier == "signupToMain" {
-                        self.moveToMain()
-                        //self.performSegue(withIdentifier: "signupToMain", sender: nil)
-                    }
+                    self.friendCodeChecking(UserName: inputUserName, UserEmail: inputUserEmail)
                 }
             }
             print("구글 로그인")
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "signupToConnect" {
-            let nextVC = segue.destination as? ConnectViewController
-            
-            nextVC?.inputUserName = inputUserName
-            nextVC?.inputUserEmail = inputUserEmail
-            print("nextVC?.inputUserName : \(nextVC?.inputUserName)")
-            print("nextVC?.inputUserEmail : \(nextVC?.inputUserEmail)")
-        }
-    }
-    
+
     @IBAction func appleSignupButtonPressed(_ sender: UIButton) {
         startSignInWithAppleFlow()
     }

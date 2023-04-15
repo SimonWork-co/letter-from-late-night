@@ -52,7 +52,7 @@ extension UIColor {
     }
 }
 
-class WritingViewController: UIViewController, UITextFieldDelegate {
+class WritingViewController: UIViewController {
     
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var titleTextField: UITextField!
@@ -85,6 +85,7 @@ class WritingViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
         navigationBar.title = "밤편지 작성"
         navigationBar.rightBarButtonItem = self.rightButton
         
@@ -125,6 +126,7 @@ class WritingViewController: UIViewController, UITextFieldDelegate {
     func sendLetterToDB(content: String!){
         let userUid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
+        let userName : String = UserDefaults.shared.object(forKey: "userName") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
         
         if let title = titleTextField.text, let content = content {
@@ -159,6 +161,7 @@ class WritingViewController: UIViewController, UITextFieldDelegate {
                 let updateTime = Date()
                 db.collection("LetterData").addDocument(data: [
                     "sender": userFriendCode, // 나의 친구코드
+                    "senderName": userName,
                     "senderuid": userUid,
                     "receiver": userPairFriendCode, // 상대방의 친구코드
                     "id": "none", // 편지 아이디
@@ -275,27 +278,45 @@ extension WritingViewController: UITextViewDelegate{
             textViewText = textView.text
         }
     }
-    
+
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else {return false}
-        
+
         let changedText = currentText.replacingCharacters(in: stringRange, with: text)
-        
-        textViewTextNumLabel.text = "\(changedText.count) / 150"
-        return changedText.count <= 150 // 150자
+
+        let charCount = countCharacters(changedText)
+
+        if charCount <= 150 { // 150자 이하일 경우에만 텍스트 업데이트
+            textViewTextNumLabel.text = "\(charCount) / 150"
+            return true
+        } else {
+            return false // 150자 이상인 경우 텍스트 업데이트 및 입력 막기
+        }
     }
     
 }
 
-extension WritingViewController {
+extension WritingViewController: UITextFieldDelegate {
+    
+    func countCharacters(_ text: String) -> Int {
+        let charCount = text.utf16.count // String의 utf16 속성을 이용하여 글자 수를 세어줌
+        return charCount
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         guard let stringRange = Range(range, in: currentText) else {return false}
         
         let changedText = currentText.replacingCharacters(in: stringRange, with: string)
-        textFieldNumLabel.text = "\(changedText.count) / 25"
-        guard changedText.count <= 25 else {return false}
-        return true //25자
+        
+        let charCount = countCharacters(changedText)
+        
+        if charCount <= 25 { // 25자 이하일 경우에만 텍스트 업데이트
+            textFieldNumLabel.text = "\(changedText.count) / 25"
+            return true
+        } else {
+            return false // 25자 이상인 경우 텍스트 업데이트 및 입력 막기
+        }
     }
 }
