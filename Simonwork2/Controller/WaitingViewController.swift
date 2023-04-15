@@ -26,7 +26,7 @@ class WaitingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         helloLabel.text = "\(inputPairFriendName!)님께\n기분을 북돋는 한 마디를\n남겨볼까요?"
         helloLabel.asColor(targetStringList: [inputPairFriendName], color: .purple)
         //self.navigationController?.isNavigationBarHidden = true

@@ -19,7 +19,7 @@ extension ConnectTypingViewController {
     }
 }
 
-class ConnectTypingViewController: UIViewController {
+class ConnectTypingViewController: UIViewController, UITextFieldDelegate {
     
     let db = Firestore.firestore()
     
@@ -32,7 +32,8 @@ class ConnectTypingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Auth.auth().currentUser?.uid : \(Auth.auth().currentUser!.uid)")
+        
+        pairFriendCodeTextField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,23 +41,10 @@ class ConnectTypingViewController: UIViewController {
         
         //startButton.layer.cornerRadius = 10
         //startButton.layer.borderWidth = 0.75
+        
         myFriendCodeLabel.text = myFriendCode
-    
+        
     }
-    
-//    func userFriendCodeShowed(){
-//        let uid = Auth.auth().currentUser?.uid
-//        print("uid: \(uid)")
-//
-//        db.collection("UserData").document(uid!).getDocument { (document, error) in
-//            if let document = document {
-//                if let data = document.data(){
-//                    let inputFriendCode = data["friendCode"] as! String
-//                    self.myFriendCodeLabel.text = inputFriendCode
-//                }
-//            }
-//        }
-//    }
     
     func friendCodeCheck() {
         
@@ -82,41 +70,58 @@ class ConnectTypingViewController: UIViewController {
                         let documents = querySnapshot!.documents
                         if documents.isEmpty == false { // friendCode가 DB 상에 있는 경우에 해당
                             print("friend 코드가 db 상에 있음")
-                            
+                            // 무결성 조회가 필요 (다른 사람과 연결되어 있으면 어떻게 할 건지?)
+                            // 1) inputPairFriendCode의 문서에서 다른 사람과 연결되어 있는지 확인
+                            // 2-1) 연결되어 있으면 이미 다른 친구와 연결되었다는 메세지 표시 (문서에서 pairFriendCode가 none이 아닌 경우) "상대방이 이미 다른 사람과 연결되어 있어요"
+                            // "다른 친구코드를 입력하거나 상대방이 다른 친구와 연결을 끊어야 해요"
+                            // 2-2) 연결 안되어 있으면 그대로 진행 (문서에서 pairFriendCode가 none인 경우)
                             for document in documents {
-                                let documentID = document.documentID // document.documentID는 상대방의 uid로 설정되어 있음.
-                                print("\(documentID) => \(document.data())")
                                 let data = document.data()
-                                inputDocumentID = documentID // 상대방의 uid(documentID)를 inputDocumentID로 설정
-                                if let pairFriendName = data["userName"] as? String {
-                                    // 상대방의 UserName 즉, 나의 pairfriend의 Name
-                                    print("friendName: \(pairFriendName)")
+                                // 다른 친구와 이미 연결되었는지 확인
+                                if data["pairFriendCode"] as! String != "none" { // 다른 친구코드가 있음
+                                    let sheet = UIAlertController(title: "상대방이 이미 다른 친구코드와 연결되어 있어요", message: "상대방이 다른 사람과의 연결을 끊거나 다른 친구코드를 입력해주세요", preferredStyle: .actionSheet)
+                                    let ok = UIAlertAction(title: "확인", style: .default, handler: { _ in
+                                        print("yes 클릭")
+                                    })
+                                    sheet.addAction(ok)
+                                    self.present(sheet, animated: true)
                                     
-                                    inputPairFriendName = pairFriendName
-                                    print("inputFriendName: \(inputPairFriendName)")
-                                    
-                                    let uid : String = UserDefaults.shared.object(forKey: "ALetterFromLateNightUid") as! String // 나의 uid / document 이름
-                                    let dcRef = self.db.collection("UserData").document("\(uid)")
-                                    
-                                    // db상 나의 데이터
-                                    dcRef.updateData([
-                                        "pairFriendCode" : inputPairFriendCode,
-                                        "friendName" : pairFriendName
-                                    ])  { (err) in // 나의 UserData에서 pairFriendCode를 inputPairFriendCode로 업데이트
-                                        if let err = err {
-                                            print("Error updating document: \(err)")
-                                        } else {
-                                            print("Document successfully updated")
-                                            self.segueToWaitingVC()
+                                    DispatchQueue.main.async { // '확인' 이후 title, content 내용 초기화
+                                        self.pairFriendCodeTextField.text = ""
+                                    }
+                                } else { // 다른 친구코드 없음
+                                    let documentID = document.documentID // document.documentID는 상대방의 uid로 설정되어 있음.
+                                    print("\(documentID) => \(document.data())")
+                                    inputDocumentID = documentID // 상대방의 uid(documentID)를 inputDocumentID로 설정
+                                    if let pairFriendName = data["userName"] as? String {
+                                        // 상대방의 UserName 즉, 나의 pairfriend의 Name
+                                        print("friendName: \(pairFriendName)")
+                                        
+                                        inputPairFriendName = pairFriendName
+                                        print("inputFriendName: \(inputPairFriendName)")
+                                        
+                                        let uid : String = UserDefaults.shared.object(forKey: "ALetterFromLateNightUid") as! String // 나의 uid / document 이름
+                                        let dcRef = self.db.collection("UserData").document("\(uid)")
+                                        
+                                        // db상 나의 데이터
+                                        dcRef.updateData([
+                                            "pairFriendCode" : inputPairFriendCode,
+                                            "friendName" : pairFriendName
+                                        ])  { (err) in // 나의 UserData에서 pairFriendCode를 inputPairFriendCode로 업데이트
+                                            if let err = err {
+                                                print("Error updating document: \(err)")
+                                            } else {
+                                                print("Document successfully updated")
+                                                userDefaultsDataSave.pairFriendCode(pairFriendCode: inputPairFriendCode)
+                                                self.segueToWaitingVC()
+                                            }
                                         }
                                     }
-                                } else {
-                                    print("NO FriendName!")
                                 }
                                 return
                             }
-                        } else { // 없는 경우에는 제대로 된 코드 입력하라는 알림 필요.
-                            let sheet = UIAlertController(title: "친구가 아직 가입하지 않은 것 같아요", message: "친구에게 앱 다운로드 링크를 보낼까요?", preferredStyle: .actionSheet)
+                        } else { // 입력한 친구코드가 db 상에 없는 경우이므로 제대로 된 코드 입력하라는 알림 필요.
+                            let sheet = UIAlertController(title: "존재하지 않는 친구코드에요", message: "앱 다운로드 링크를 친구에게 보낼까요?", preferredStyle: .actionSheet)
                             let sendInvitation = UIAlertAction(title: "보내기", style: .default, handler: { _ in
                                 print("yes 클릭")
                                 // 여기서 다운로드 링크를 보여줘야 함. 유저가 복사하게끔 하는 것도 괜찮을듯?
@@ -125,14 +130,11 @@ class ConnectTypingViewController: UIViewController {
                                 let copyLink = UIAlertAction(title: "복사", style: .default) { _ in
                                     UIPasteboard.general.string = "저장 할 텍스트"
                                 }
-                                
                             })
-                            let close = UIAlertAction(title: "닫기", style: .destructive, handler: nil)
+                            let close = UIAlertAction(title: "아니오", style: .destructive, handler: nil)
                             sheet.addAction(sendInvitation)
                             sheet.addAction(close)
                             self.present(sheet, animated: true)
-                            
-                            
                             
                             DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
                                 self.pairFriendCodeTextField.text = ""
@@ -162,8 +164,24 @@ class ConnectTypingViewController: UIViewController {
         }
     }
 }
-
-
+//
+//extension ConnectViewController: UITextFieldDelegate {
+//    
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        textField.text = nil
+//        textField.alpha = 1.0
+//    }
+//    
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        if textField.text == "" {
+//            let placeHolder = "친구코드 6자리를 입력해주세요"
+//            textField.text = placeHolder
+//            textField.alpha = 0.5
+//        } else {
+//        }
+//    }
+//    
+//}
 //1.
 // https://itunes.apple.com/kr/app/apple-store/{app이름}
 //iOS의 경우 app이름이 id1234123123 이런식으로 조합된다.

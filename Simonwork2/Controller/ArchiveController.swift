@@ -41,11 +41,6 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         
         registerXib()
         archiveUpdate()
-        
-        if #available(iOS 14.0, *) {
-            WidgetCenter.shared.reloadAllTimelines()
-        } else {
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,14 +65,20 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         if let hour = components.hour, let minute = components.minute {
             if hour >= 4 && minute >= 30 {
                 // 현재 시간이 오늘 새벽 4시 30분 이후라면 데이터 업데이트 수행
-                let yesterdayMidnight =
+                let yesterdayMidnight = // 자정시간 추출. 현재 4/14일 이라면 4/14일 00시를 추출
                 calendar.startOfDay(for: currentDate).timeIntervalSince1970
-                loadMessages(time: yesterdayMidnight)
+                loadMessages(time: yesterdayMidnight) // 오늘 자정시간 이전에 작성된 편지를 불러옴
+                if #available(iOS 14.0, *) {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
             } else {
                 // 현재 시간이 오늘 새벽 4시 30분 이전이라면 데이터 업데이트 미수행
-                let theDayBeforeYesterDay =
+                let theDayBeforeYesterDay = // 어제의 자정시간 추출. 현재 4/14일 이라면 4/13일 00시를 추출
                 calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: currentDate))!.timeIntervalSince1970
-                loadMessages(time: theDayBeforeYesterDay)
+                loadMessages(time: theDayBeforeYesterDay) // 어제 자정시간 이전에 작성된 편지를 불러옴
+                if #available(iOS 14.0, *) {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
             }
         }
     }
@@ -134,16 +135,24 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                 UserDefaults.shared.setValue(setLetterColor, forKey: "latestLetterColor")
                                 UserDefaults.shared.set(setEmoji, forKey: "latestEmoji")
                                 
-                                
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
-                                    self.tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
-                                }
+                                self.dispatchQueue()
                             }
                         }
                     }
                 }
             }
+    }
+    
+    func dispatchQueue() {
+        DispatchQueue.main.async {
+            if self.tableView != nil {
+                self.tableView.reloadData()
+                self.tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
+                print("dispatchQueue 완료!")
+            } else {
+                print("self.letterTableView에 nil 출력")
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
