@@ -15,6 +15,7 @@ import GoogleSignIn
 import FirebaseFirestore
 import BackgroundTasks
 import CryptoKit
+import WidgetKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -125,9 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // This method will be called when the scheduled time is reached
         DispatchQueue.main.async {
             let archiveVC = SentLetterViewController()
-            let tableView = archiveVC.letterTableView
-            let messagesList = archiveVC.loadMessages()
-            archiveVC.messages = messagesList
+            archiveVC.archiveUpdate()
 
             //tableView?.reloadData()
             //tableView?.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)

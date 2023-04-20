@@ -8,6 +8,15 @@
 import UIKit
 import Firebase
 
+extension UIViewController {
+    func alert(title: String, message: String, actiondTitle: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: actiondTitle, style: .default)
+        alertController.addAction(action)
+        self.present(alertController, animated: true)
+    }
+}
+
 class SettingViewController: UIViewController {
     
     @IBOutlet weak var nicknameChangeTextField: UITextField!
@@ -18,9 +27,71 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func changeNicknameButtonPressed(_ sender: UIButton) {
+        
+        let userName = UserDefaults.shared.string(forKey: "userName") ?? ""
+        let userUid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid") ?? ""
+        let userPairFriendCode = UserDefaults.shared.string(forKey: "pairFriendCode") ?? ""
+        
         let inputNewNickname = nicknameChangeTextField.text
         if inputNewNickname != nil {
             
+            let sheet = UIAlertController(title: "\(inputNewNickname!)", message: "입력하신 닉네임으로 변경할까요?", preferredStyle: .alert)
+            let change = UIAlertAction(title: "변경", style: .default, handler: { _ in
+                print("yes 클릭")
+                // 유저의 userName 변경
+                db.collection("UserData").document(userUid).updateData([
+                    "userName" : inputNewNickname!
+                ]) { error in
+                    if let error = error {
+                        print("Error updating document: \(error)")
+                        self.alert(title: "닉네임 변경 실패", message: "서버 정보를 불러오지 못했어요",  actiondTitle: "확인")
+                    } else {
+                        print("유저의 userName 변경")
+                        self.alert(title: "닉네임 변경 완료", message: "\(inputNewNickname!)으로 닉네임을 변경했어요",  actiondTitle: "확인")
+                        // 유저와 연결된 친구의 friendName 변경을 위해 유저의 pairFriendcode로 문서 이름 가져오기
+                        db.collection("UserData").whereField("friendCode", isEqualTo: userPairFriendCode).getDocuments { (querySnapshot, error) in
+                            if let error = error {
+                                print("error: \(error)")
+                                self.alert(title: "정보 불러오기 실패", message: "연결된 친구의 정보를 불러오지 못했어요",  actiondTitle: "확인")
+                            } else {
+                                var userPairFriendUid = "not read"
+                                if let documents = querySnapshot?.documents {
+                                    for document in documents {
+                                        // 문서 이름은 연결된 친구의 uid와 일치하므로 userPairFriendUid 변수에 저장
+                                        userPairFriendUid = document.documentID
+                                    }
+                                }
+                                db.collection("UserData").document(userPairFriendUid).updateData(["friendName" : inputNewNickname!]){ err in
+                                    if let err = err {
+                                        print("Error updating document: \(err)")
+                                        self.alert(title: "변경 오류", message: "연결된 상대방에게 변경된 닉네임으로 나타나지 않아요",  actiondTitle: "확인")
+                                    } else {
+                                        print("연결된 친구의 friendName 변경")
+                                        self.alert(title: "변경 완료", message: "연결된 상대방에게도 변경된 닉네임으로 나타나요",  actiondTitle: "확인")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                
+                let changeDone = UIAlertController(title: "닉네임 변경", message: "완료되었습니다", preferredStyle: .alert)
+                let copyLink = UIAlertAction(title: "확인", style: .default)
+                changeDone.addAction(copyLink)
+                self.present(changeDone, animated: true)
+                
+            })
+            let close = UIAlertAction(title: "아니오", style: .destructive, handler: { _ in
+                print("no 클릭")
+            })
+            sheet.addAction(change)
+            sheet.addAction(close)
+            self.present(sheet, animated: true)
+            
+            DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
+                self.nicknameChangeTextField.text = ""
+            }
         }
     }
     

@@ -68,8 +68,8 @@ class MainViewController: UIViewController {
     
     func changeLabelColor() {
         
-        let userUid = Auth.auth().currentUser?.uid
-        let userName : String = UserDefaults.shared.object(forKey: "userName") as? String ?? ""
+        let userDefaultsUid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")
+        let userUid = Auth.auth().currentUser?.uid ?? userDefaultsUid
         
         db.collection("UserData").whereField("uid", isEqualTo: userUid).getDocuments() { (querySnapshot, error) in
             if let error = error {
@@ -87,8 +87,6 @@ class MainViewController: UIViewController {
                             var daysCount : Int = 0
                     
                             let messagesignupTime = message_signupTime.dateValue() // dateValue() : 날짜는 정확하지만 시간 단위는 부정확할 수 있음.
-                            //print("messagesignupTime: \(messagesignupTime)")
-                            //print("messagePairFriendCode: \(messagePairFriendCode)")
                             
                             dateFormatter.dateFormat = "yyyy-MM-dd"
                             let startDateString = dateFormatter.string(from: messagesignupTime)
@@ -131,7 +129,7 @@ class MainViewController: UIViewController {
         
         let notiContent2 = UNMutableNotificationContent() // 푸시알림 컨텐츠 넣는 클래스
 
-        notiContent2.title = "밤편지"
+        notiContent2.title = "자정이 되기까지 10분 전이에요"
         notiContent2.body = "편지를 보낼 수 있는 시간이 얼마 안 남았어요!"
         
         // Create a calendar

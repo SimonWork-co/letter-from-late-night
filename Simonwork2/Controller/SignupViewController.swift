@@ -89,58 +89,6 @@ extension SignupViewController {
         return result
     }
     
-    func friendCodeChecking(UserName: String!, UserEmail: String!) {
-        
-        let uid = Auth.auth().currentUser?.uid ?? ""
-        let cryptedUid = sha256(uid)
-        let friendCode = String(cryptedUid.prefix(6))
-        print(uid)
-        print(cryptedUid)
-        print(friendCode)
-        
-        db.collection("UserData").whereField("friendCode", isEqualTo: friendCode).getDocuments { (querySnapshot, error) in
-
-            if let error = error {
-                print("Error: \(error)")
-            } else {
-                if let documents = querySnapshot?.documents {
-                    if documents.isEmpty == true {
-                        print("documents.isEmpty == true // signupToGuide")
-                        withIdentifier = "signupToGuide"
-                        self.sendUserData(UserName: UserName, UserEmail: UserEmail)
-                        print("identifier: \(withIdentifier)")
-                    } else if documents.isEmpty == false {
-                        for doc in documents {
-                            let data = doc.data()
-                            if data["pairFriendCode"] as! String == "none" {
-                                // pairfriendCode가 none이면 회원가입 절차 필요
-                                
-                                print("documents.isEmpty == false // signupToGuide")
-                                withIdentifier = "signupToGuide"
-                                print("identifier: \(withIdentifier)")
-                            } else {
-                                // pairfriendCode가 있으며 회원가입 절차 필요없음
-                                
-                                print("documents.isEmpty == false // signupToMain")
-                                withIdentifier = "signupToMain"
-                                print("identifier: \(withIdentifier)")
-                            }
-                        }
-                    }
-                }
-                
-                if withIdentifier == "signupToGuide" {
-                    self.sendUserData(UserName: UserName, UserEmail: UserEmail)
-                    self.performSegue(withIdentifier: "signupToGuide", sender: nil)
-                } else if withIdentifier == "signupToMain" {
-                    userDefaultsData.receivedData = Auth.auth().currentUser
-                    self.moveToMain()
-                    //self.performSegue(withIdentifier: "signupToMain", sender: nil)
-                }
-            }
-        }
-    }
-    
     func sendUserData(UserName: String?, UserEmail: String?) { // 회원가입(첫 로그인) 시에만 작동해야 하는 함수
         
         if let UserName, let UserEmail {
@@ -181,7 +129,6 @@ extension SignupViewController {
             userDefaultsDataSave.pairFriendCode(pairFriendCode: pairFriendCode)
             userDefaultsDataSave.signupTime(signupTime: signupTime)
             UserDefaults.shared.set("", forKey: "documentID")
-            UserDefaults.shared.synchronize()
         }
     }
 }
@@ -238,7 +185,15 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                 print ("Error Apple sign in: %@", error)
                 return
             } else {
-                self.friendCodeChecking(UserName: inputUserName, UserEmail: inputUserEmail)
+                self.view.addSubview(self.activityIndicator)
+                if withIdentifier == "signupToGuide" {
+                    self.sendUserData(UserName: inputUserName, UserEmail: inputUserEmail)
+                    self.stopActivityIndicator()
+                    self.performSegue(withIdentifier: withIdentifier, sender: nil)
+                } else if withIdentifier == "signupToConnectTyping" {
+                    self.stopActivityIndicator()
+                    self.performSegue(withIdentifier: withIdentifier, sender: nil)
+                }
             }
         }
         print("애플 로그인")
@@ -264,6 +219,19 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         return .lightContent
     }
     
+    lazy var activityIndicator: UIActivityIndicatorView = { // indicator가 사용될 때까지 인스턴스를 생성하지 않도록 lazy로 선언
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = self.view .center // indicator의 위치 설정
+        activityIndicator.style = UIActivityIndicatorView.Style.large // indicator의 스타일 설정, large와 medium이 있음
+        activityIndicator.startAnimating() // indicator 실행
+        activityIndicator.isHidden = false
+        return activityIndicator
+    }()
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating() // indicator 종료
+    }
+    
     //emailTextField passwordTextField signupButton
     @IBOutlet weak var googleSignupButton: UIButton!
     @IBOutlet weak var appleSignupButton: UIButton!
@@ -275,8 +243,59 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         //googleSignupButton.layer.borderWidth = 0.75
         //appleSignupButton.layer.cornerRadius = 10
         //googleAutoLogin()
-        imageView.frame.origin.x = -120
-        imageView.frame.origin.y = 83
+        //imageView.frame.origin.x = -120
+        //imageView.frame.origin.y = 83
+        
+        //여기서 로그인 조회 필요. UserDefaults 를 조회하고, 거기에 데이터가 있으면 이를 불러와서 로그인함.
+        autoLogin()
+    }
+    
+    func autoLogin() {
+        let friendCode = UserDefaults.shared.string(forKey: "friendCode") ?? "none"
+        let pairFriendCode = UserDefaults.shared.string(forKey: "pairFriendCode") ?? "none"
+        print("friendCode: \(friendCode)")
+        print("pairFriendCode: \(pairFriendCode)")
+        
+        var friendCodeExists = 0
+        var pairFriendCodeExists = 0
+        
+        if friendCode == "none" {
+            friendCodeExists = 0
+        } else {
+            friendCodeExists = 1
+        }
+        
+        if pairFriendCode == "none" {
+            pairFriendCodeExists = 0
+        } else {
+            pairFriendCodeExists = 1
+        }
+        
+        var exists = (friendCodeExists, pairFriendCodeExists)
+        
+        switch exists
+        {
+        case (0,0) :
+            // case0: 유저의 friendCode && pairfriendCode 가 없으면 최초 진입유저 또는 회원 탈퇴자
+            // login 버튼을 클릭하게끔 내버려둠
+            withIdentifier = "signupToGuide"
+            print("case0: 유저의 friendCode && pairfriendCode 가 없으면 최초 진입유저 또는 회원 탈퇴자")
+            print("exists: \(exists)")
+        case (1,0):
+            // case1 유저의 friendCode 는 있으나 pairfriendCode 가 없으면 회원가입 미완료자 또는 상대방과 연결을 끊은 경우
+            // 로그인 버튼 클릭 후 pairFrinedCode 입력 화면으로 이동 필요 (signupToConnectTyping)
+            withIdentifier = "signupToConnectTyping"
+            print("case1 유저의 friendCode 는 있으나 pairfriendCode 가 없으면 회원가입 미완료자 또는 상대방과 연결을 끊은 경우")
+            print("exists: \(exists)")
+        case (1,1):
+            // case2 유저의 friendCode && pairfriendCode 가 있으면 자동로그인 해당 유저
+            // MainViewController로 곧장 이동 필요
+            print("case2 유저의 friendCode && pairfriendCode 가 있으면 자동로그인 해당 유저")
+            
+            moveToMain()
+        default:
+            print("")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -323,7 +342,15 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                 if let e = error {
                     print(e.localizedDescription)
                 } else {
-                    self.friendCodeChecking(UserName: inputUserName, UserEmail: inputUserEmail)
+                    self.view.addSubview(self.activityIndicator)
+                    if withIdentifier == "signupToGuide" {
+                        self.sendUserData(UserName: inputUserName, UserEmail: inputUserEmail)
+                        self.stopActivityIndicator()
+                        self.performSegue(withIdentifier: withIdentifier, sender: nil)
+                    } else if withIdentifier == "signupToConnectTyping" {
+                        self.stopActivityIndicator()
+                        self.performSegue(withIdentifier: withIdentifier, sender: nil)
+                    }
                 }
             }
             print("구글 로그인")
