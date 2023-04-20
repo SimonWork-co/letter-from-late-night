@@ -18,6 +18,7 @@ class WaitingViewController: UIViewController {
     let db = Firestore.firestore()
     
     @IBOutlet weak var helloLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let userName = UserDefaults.shared.string(forKey: "userName")!
     let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
@@ -40,10 +41,12 @@ class WaitingViewController: UIViewController {
         super.viewWillAppear(animated)
         print("ViewController의 view가 load됨")
         navigationController?.setNavigationBarHidden(true, animated: true)
+        self.activityIndicator.startAnimating()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
       navigationController?.setNavigationBarHidden(true, animated: true) // 뷰 컨트롤러가 사라질 때 나타내기
+        self.activityIndicator.stopAnimating()
     }
     
     @objc func fire() {

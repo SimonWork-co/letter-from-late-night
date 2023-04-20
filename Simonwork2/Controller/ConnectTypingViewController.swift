@@ -8,18 +8,18 @@
 import UIKit
 import Firebase
 
-var inputDocumentID = ""
+var inputDocumentID = "none"
 var inputPairFriendName : String = ""
 
 extension ConnectTypingViewController {
     func inputDocumentIDcheck() {
         print("inputDocumentID: \(inputDocumentID)")
-        UserDefaults.shared.set("\(inputDocumentID)", forKey: "documentID")
+        UserDefaults.shared.set(inputDocumentID, forKey: "documentID")
         UserDefaults.shared.synchronize()
     }
 }
 
-class ConnectTypingViewController: UIViewController, UITextFieldDelegate {
+class ConnectTypingViewController: UIViewController {
     
     let db = Firestore.firestore()
     
@@ -79,7 +79,7 @@ class ConnectTypingViewController: UIViewController, UITextFieldDelegate {
                                 let data = document.data()
                                 // 다른 친구와 이미 연결되었는지 확인
                                 if data["pairFriendCode"] as! String != "none" { // 다른 친구코드가 있음
-                                    let sheet = UIAlertController(title: "상대방이 이미 다른 친구코드와 연결되어 있어요", message: "상대방이 다른 사람과의 연결을 끊거나 다른 친구코드를 입력해주세요", preferredStyle: .actionSheet)
+                                    let sheet = UIAlertController(title: "상대방이 이미 다른 친구코드와 연결되어 있어요", message: "상대방이 다른 사람과의 연결을 끊거나 다른 친구코드를 입력해주세요", preferredStyle: .alert)
                                     let ok = UIAlertAction(title: "확인", style: .default, handler: { _ in
                                         print("yes 클릭")
                                     })
@@ -121,12 +121,12 @@ class ConnectTypingViewController: UIViewController, UITextFieldDelegate {
                                 return
                             }
                         } else { // 입력한 친구코드가 db 상에 없는 경우이므로 제대로 된 코드 입력하라는 알림 필요.
-                            let sheet = UIAlertController(title: "존재하지 않는 친구코드에요", message: "앱 다운로드 링크를 친구에게 보낼까요?", preferredStyle: .actionSheet)
+                            let sheet = UIAlertController(title: "존재하지 않는 친구코드에요", message: "앱 다운로드 링크를 친구에게 보낼까요?", preferredStyle: .alert)
                             let sendInvitation = UIAlertAction(title: "보내기", style: .default, handler: { _ in
                                 print("yes 클릭")
                                 // 여기서 다운로드 링크를 보여줘야 함. 유저가 복사하게끔 하는 것도 괜찮을듯?
                                 // 다운로드 링크를 유저가 상대방에게 공유하고, 공유받은 상대방은 링크를 클릭해서 앱스토어로 이동
-                                let downloadLink = UIAlertController(title: "다운로드 링크를 여기에 표시", message: "URL을 공유해주세요", preferredStyle: .actionSheet)
+                                let downloadLink = UIAlertController(title: "다운로드 링크를 여기에 표시", message: "URL을 공유해주세요", preferredStyle: .alert)
                                 let copyLink = UIAlertAction(title: "복사", style: .default) { _ in
                                     UIPasteboard.general.string = "저장 할 텍스트"
                                 }
@@ -182,6 +182,30 @@ class ConnectTypingViewController: UIViewController, UITextFieldDelegate {
 //    }
 //    
 //}
+
+extension ConnectTypingViewController: UITextFieldDelegate {
+    
+    func countCharacters(_ text: String) -> Int {
+        let charCount = text.utf16.count // String의 utf16 속성을 이용하여 글자 수를 세어줌
+        return charCount
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else {return false}
+        
+        let changedText = currentText.replacingCharacters(in: stringRange, with: string)
+        
+        let charCount = countCharacters(changedText)
+        
+        if charCount <= 6 { // 6자 이하일 경우에만 텍스트 업데이트
+            return true
+        } else {
+            return false // 6자 이상인 경우 텍스트 업데이트 및 입력 막기
+        }
+    }
+}
+
 //1.
 // https://itunes.apple.com/kr/app/apple-store/{app이름}
 //iOS의 경우 app이름이 id1234123123 이런식으로 조합된다.

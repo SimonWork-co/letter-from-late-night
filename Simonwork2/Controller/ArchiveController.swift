@@ -8,8 +8,9 @@
 import UIKit
 import Firebase
 import WidgetKit
+import GoogleMobileAds
 
-class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
 
     let db = Firestore.firestore()
     var messages: [LetterData] = []
@@ -40,14 +41,30 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         
         registerXib()
-        archiveUpdate()
+        showPlaceholderIfNeeded()
+        //archiveUpdate()
+        
+        // 배너 광고 설정
+        setupBannerViewToBottom()
+    }
+
+    func showPlaceholderIfNeeded() {
+        if messages.isEmpty {
+            let placeholderLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            placeholderLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+            placeholderLabel.text = "No data to display"
+            placeholderLabel.textAlignment = .center
+            placeholderLabel.textColor = .gray
+            tableView.backgroundView = placeholderLabel
+        } else {
+            archiveUpdate()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.topItem?.title = "받은 편지함"
-        self.navigationController?.navigationBar.topItem?.titleView?.tintColor = .black
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .automatic
     }
@@ -60,30 +77,44 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     func archiveUpdate() {
         let calendar = Calendar.current
         let currentDate = Date()
+        let currentDateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+        let todayMidnight = calendar.date(from: currentDateComponents)!
         
-        let components = calendar.dateComponents([.hour, .minute], from: currentDate)
-        if let hour = components.hour, let minute = components.minute {
-            if hour >= 4 && minute >= 30 {
-                // 현재 시간이 오늘 새벽 4시 30분 이후라면 데이터 업데이트 수행
-                let yesterdayMidnight = // 자정시간 추출. 현재 4/14일 이라면 4/14일 00시를 추출
-                calendar.startOfDay(for: currentDate).timeIntervalSince1970
-                loadMessages(time: yesterdayMidnight) // 오늘 자정시간 이전에 작성된 편지를 불러옴
-                if #available(iOS 14.0, *) {
-                    WidgetCenter.shared.reloadAllTimelines()
-                }
-            } else {
-                // 현재 시간이 오늘 새벽 4시 30분 이전이라면 데이터 업데이트 미수행
-                let theDayBeforeYesterDay = // 어제의 자정시간 추출. 현재 4/14일 이라면 4/13일 00시를 추출
-                calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: currentDate))!.timeIntervalSince1970
-                loadMessages(time: theDayBeforeYesterDay) // 어제 자정시간 이전에 작성된 편지를 불러옴
-                if #available(iOS 14.0, *) {
-                    WidgetCenter.shared.reloadAllTimelines()
-                }
+        // 새벽 4시반을 나타내는 dateComponents
+        var dateComponents = DateComponents()
+        dateComponents.hour = 4
+        dateComponents.minute = 30
+        
+        let cutoffTime = calendar.date(bySettingHour: 4, minute: 30, second: 0, of: todayMidnight)!
+        
+        if currentDate >= cutoffTime {
+            // 오늘 자정 이전에 작성된 편지를 가져옴
+            let yesterdayMidnight = // 자정시간 추출. 현재 4/14일 이라면 4/14일 00시를 추출
+            calendar.startOfDay(for: currentDate).timeIntervalSince1970
+            
+            let date = Date(timeIntervalSince1970: yesterdayMidnight)
+            let timeStamp = Timestamp(date: date)
+            
+            loadMessages(time: timeStamp) // 오늘 자정시간 이전에 작성된 편지를 불러옴
+            if #available(iOS 14.0, *) {
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        } else {
+            // 어제 자정 이전에 작성된 편지를 가져옴
+            let theDayBeforeYesterDay = // 어제의 자정시간 추출. 현재 4/14일 이라면 4/13일 00시를 추출
+            calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: currentDate))!.timeIntervalSince1970
+            
+            let date = Date(timeIntervalSince1970: theDayBeforeYesterDay)
+            let timeStamp = Timestamp(date: date)
+            loadMessages(time: timeStamp) // 어제 자정시간 이전에 작성된 편지를 불러옴
+            
+            if #available(iOS 14.0, *) {
+                WidgetCenter.shared.reloadAllTimelines()
             }
         }
     }
     
-    func loadMessages(time: TimeInterval){ // 어제 자정 이전까지 작성된 편지를 불러옴 (오늘 작성된 편지는 불러오지 않음)
+    func loadMessages(time: Timestamp){ // 어제 자정 이전까지 작성된 편지를 불러옴 (오늘 작성된 편지는 불러오지 않음)
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
         
@@ -128,12 +159,21 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                 let setUpdateTime = self.messages[0].updateTime
                                 let setLetterColor = self.messages[0].letterColor
                                 let setEmoji = self.messages[0].emoji
+                                let setSenderName = self.messages[0].senderName
                                 
+                                print("setTitle: \(setTitle)")
+                                print("setContent: \(setContent)")
+                                print("setUpdateTime: \(setUpdateTime)")
+                                print("setLetterColor: \(setLetterColor)")
+                                print("setEmoji: \(setEmoji)")
+                                
+                                //위젯에서 최상단의 편지를 보여주기 위해 Userdefaults로 저장
                                 UserDefaults.shared.set(setTitle, forKey: "latestTitle")
                                 UserDefaults.shared.set(setContent, forKey: "latestContent")
                                 UserDefaults.shared.set(setUpdateTime, forKey: "latestUpdateDate")
                                 UserDefaults.shared.setValue(setLetterColor, forKey: "latestLetterColor")
                                 UserDefaults.shared.set(setEmoji, forKey: "latestEmoji")
+                                UserDefaults.shared.set(setSenderName, forKey: "latestSenderName")
                                 
                                 self.dispatchQueue()
                             }
@@ -160,6 +200,17 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     } // section 당 row의 수
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        let placeholderLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        placeholderLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+        placeholderLabel.text = "No data to display"
+        placeholderLabel.textAlignment = .center
+        placeholderLabel.textColor = .gray
+        
+        if messages.count == 0 {
+            tableView.backgroundView = placeholderLabel
+        } else {
+            tableView.backgroundView = nil
+        }
         return messages.count
     } // section 의 수
     

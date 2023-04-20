@@ -8,6 +8,7 @@
 import UIKit
 import Foundation
 import EmojiPicker
+import GoogleMobileAds
 
 extension UIColor {
     func hexColorExtract(BackgroundColor: UIView) -> String {
@@ -57,7 +58,6 @@ class WritingViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentTextView: UITextView!
-    @IBOutlet weak var textFieldNumLabel: UILabel!
     @IBOutlet weak var textViewTextNumLabel: UILabel!
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var letterBg: UIView!
@@ -91,10 +91,9 @@ class WritingViewController: UIViewController {
         
         titleTextField.borderStyle = .none
         titleTextField.delegate = self
-        textFieldNumLabel.text = "0 / 25"
         
         let contentPlaceholder: String = "작성하신 편지는 밤 사이 보낼게요."
-        textViewTextNumLabel.text = "0 / 150"
+        textViewTextNumLabel.text = "0 / 100"
         if contentTextView.text.isEmpty {
             contentTextView.text = contentPlaceholder
             contentTextView.alpha = 0.5
@@ -104,6 +103,9 @@ class WritingViewController: UIViewController {
         
         colorButton.layer.cornerRadius = 10
         setupColorButton(colorButton)
+        
+        // 배너 광고 설정
+        setupBannerViewToBottom()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -175,9 +177,10 @@ class WritingViewController: UIViewController {
                     if let e = error {
                         print("There was an issue saving data to firestore, \(e)")
                     } else {
-                        UserDefaults.shared.setValue(title, forKey: "latestTitle")
-                        UserDefaults.shared.setValue(content, forKey: "latestContent")
-                        UserDefaults.shared.setValue(updateTime, forKey: "updateDate")
+                        // 오늘 편지를 보냈는지 확인하기 위해 userDefaults를 활용 "todayLetterUpdateTime"
+                        UserDefaults.shared.setValue(title, forKey: "todayLetterTitle")
+                        UserDefaults.shared.setValue(content, forKey: "todayLetterContent")
+                        UserDefaults.shared.setValue(updateTime, forKey: "todayLetterUpdateTime")
                         
                         DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
                             self.titleTextField.text = ""
@@ -313,7 +316,6 @@ extension WritingViewController: UITextFieldDelegate {
         let charCount = countCharacters(changedText)
         
         if charCount <= 25 { // 25자 이하일 경우에만 텍스트 업데이트
-            textFieldNumLabel.text = "\(changedText.count) / 25"
             return true
         } else {
             return false // 25자 이상인 경우 텍스트 업데이트 및 입력 막기

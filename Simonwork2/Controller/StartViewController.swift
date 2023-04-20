@@ -19,7 +19,7 @@ class StartViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         helloLabel.text = "안녕하세요! \(userName)님"
-        helloLabel.asColor(targetStringList: [userName], color: .black)
+        helloLabel.asColor(targetStringList: [userName], color: .purple)
         
     }
     

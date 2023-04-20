@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import EmojiPicker
+import GoogleMobileAds
 
 extension UITextView {
     func alignTextVerticallyInContainer() {
@@ -17,7 +18,7 @@ extension UITextView {
     }
 }
 
-class LetterViewController: UIViewController {
+class LetterViewController: UIViewController, GADBannerViewDelegate {
     
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -69,6 +70,8 @@ class LetterViewController: UIViewController {
         contentTextView.text = ""
         
         self.contentTextView.alignTextVerticallyInContainer()
+        // 배너 광고 설정
+        setupBannerViewToBottom()
     }
     
     override func viewWillAppear(_ animated: Bool) {

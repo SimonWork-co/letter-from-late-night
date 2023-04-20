@@ -8,11 +8,13 @@
 import UIKit
 import Firebase
 import WidgetKit
+import GoogleMobileAds
 
-class SentLetterViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SentLetterViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
     
     let db = Firestore.firestore()
     var messages: [LetterData] = []
+    let refreshControl = UIRefreshControl()
     
     let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
     let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
@@ -42,9 +44,27 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         letterTableView.dataSource = self
         
         registerXib()
-        //loadMessages()
-        archiveUpdate()
+        loadMessages()
+        
+        // 배너 광고 설정
+        setupBannerViewToBottom()
+        
+        // Add refresh control to table view
+        if #available(iOS 10.0, *) {
+            letterTableView.refreshControl = refreshControl
+        } else {
+            letterTableView.addSubview(refreshControl)
+        }
+        // Add target action for refresh control
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
+    
+    // Function to handle refresh action
+    @objc func refreshData(_ sender: Any) {
+        loadMessages()
+        refreshControl.endRefreshing()
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -52,7 +72,10 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         self.navigationController?.navigationBar.topItem?.title = "보낸 편지함"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .automatic
+    }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     
     private func registerXib() { // 커스텀한 테이블 뷰 셀을 등록하는 함수
@@ -60,56 +83,51 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         letterTableView.register(nibName, forCellReuseIdentifier: "CustomizedCell")
     }
     
-    func archiveUpdate() {
-        let calendar = Calendar.current
-        let currentDate = Date()
-        let currentDateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
-        let todayMidnight = calendar.date(from: currentDateComponents)!
-        
-        // 새벽 4시반을 나타내는 dateComponents
-        var dateComponents = DateComponents()
-        dateComponents.hour = 4
-        dateComponents.minute = 30
-        
-        let cutoffTime = calendar.date(bySettingHour: 4, minute: 30, second: 0, of: todayMidnight)!
-        
-        if currentDate >= cutoffTime {
-            // 오늘 자정 이전에 작성된 편지를 가져옴
-            let yesterdayMidnight = // 자정시간 추출. 현재 4/14일 이라면 4/14일 00시를 추출
-            calendar.startOfDay(for: currentDate).timeIntervalSince1970
-            
-            let date = Date(timeIntervalSince1970: yesterdayMidnight)
-            let timeStamp = Timestamp(date: date)
-            
-            loadMessages(time: timeStamp) // 오늘 자정시간 이전에 작성된 편지를 불러옴
-            if #available(iOS 14.0, *) {
-                WidgetCenter.shared.reloadAllTimelines()
-            }
-        } else {
-            // 어제 자정 이전에 작성된 편지를 가져옴
-            let theDayBeforeYesterDay = // 어제의 자정시간 추출. 현재 4/14일 이라면 4/13일 00시를 추출
-            calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: currentDate))!.timeIntervalSince1970
-            
-            let date = Date(timeIntervalSince1970: theDayBeforeYesterDay)
-            let timeStamp = Timestamp(date: date)
-            loadMessages(time: timeStamp) // 어제 자정시간 이전에 작성된 편지를 불러옴
-            
-            if #available(iOS 14.0, *) {
-                WidgetCenter.shared.reloadAllTimelines()
-            }
-        }
-    }
+    //    func archiveUpdate() {
+    //        let calendar = Calendar.current
+    //        let currentDate = Date()
+    //        let currentDateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
+    //        let todayMidnight = calendar.date(from: currentDateComponents)!
+    //
+    //        // 새벽 4시반을 나타내는 dateComponents
+    //        var dateComponents = DateComponents()
+    //        dateComponents.hour = 4
+    //        dateComponents.minute = 30
+    //
+    //        let cutoffTime = calendar.date(bySettingHour: 4, minute: 30, second: 0, of: todayMidnight)!
+    //
+    //        if currentDate >= cutoffTime {
+    //            // 오늘 자정 이전에 작성된 편지를 가져옴
+    //            let yesterdayMidnight = // 자정시간 추출. 현재 4/14일 이라면 4/14일 00시를 추출
+    //            calendar.startOfDay(for: currentDate).timeIntervalSince1970
+    //
+    //            let date = Date(timeIntervalSince1970: yesterdayMidnight)
+    //            let timeStamp = Timestamp(date: date)
+    //
+    //            loadMessages(time: timeStamp) // 오늘 자정시간 이전에 작성된 편지를 불러옴
+    //            if #available(iOS 14.0, *) {
+    //                WidgetCenter.shared.reloadAllTimelines()
+    //            }
+    //        } else {
+    //            // 어제 자정 이전에 작성된 편지를 가져옴
+    //            let theDayBeforeYesterDay = // 어제의 자정시간 추출. 현재 4/14일 이라면 4/13일 00시를 추출
+    //            calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: currentDate))!.timeIntervalSince1970
+    //
+    //            let date = Date(timeIntervalSince1970: theDayBeforeYesterDay)
+    //            let timeStamp = Timestamp(date: date)
+    //            loadMessages(time: timeStamp) // 어제 자정시간 이전에 작성된 편지를 불러옴
+    //
+    //            if #available(iOS 14.0, *) {
+    //                WidgetCenter.shared.reloadAllTimelines()
+    //            }
+    //        }
+    //    }
     
-    func loadMessages(time: Timestamp) -> [LetterData] {
-        
-        print("!!loadMessages 진입!!")
-
-        var messageList = LetterData(sender: "", senderName: "", receiver: "", title: "", content: "", updateTime: Date(), letterColor: "", emoji: "")
+    func loadMessages(){
         
         db.collection("LetterData")
             .whereField("sender", isEqualTo: userFriendCode)
             .whereField("receiver", isEqualTo: userPairFriendCode)
-            .whereField("updateTime", isLessThanOrEqualTo: time)
             .order(by: "updateTime", descending: true)
             .addSnapshotListener { (querySnapshot, error) in
                 
@@ -132,7 +150,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let messageLetterColor = data["letterColor"] as! String
                                 let messageEmoji = data["emoji"] as! String
                                 
-                                messageList = LetterData(
+                                let messageList = LetterData(
                                     sender: messageFriendCode,
                                     senderName: messageSenderName,
                                     receiver: messagePairFriendCode,
@@ -149,20 +167,15 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let setUpdateTime = self.messages[0].updateTime
                                 let setLetterColor = self.messages[0].letterColor
                                 let setEmoji = self.messages[0].emoji
-                                //let setSender = self.messages[0].sender
+                                let setSenderName = self.messages[0].senderName
                                 
-                                print("setTitle: \(setTitle)")
-                                print("setContent: \(setContent)")
-                                print("setUpdateTime: \(setUpdateTime)")
-                                print("setLetterColor: \(setLetterColor)")
-                                print("setEmoji: \(setEmoji)")
-                                
+                                //위젯에서 최상단의 편지를 보여주기 위해 Userdefaults로 저장
                                 UserDefaults.shared.set(setTitle, forKey: "latestTitle")
                                 UserDefaults.shared.set(setContent, forKey: "latestContent")
                                 UserDefaults.shared.set(setUpdateTime, forKey: "latestUpdateDate")
                                 UserDefaults.shared.setValue(setLetterColor, forKey: "latestLetterColor")
                                 UserDefaults.shared.set(setEmoji, forKey: "latestEmoji")
-                                //UserDefaults.shared.set(setSender, forKey: "latestSender")
+                                UserDefaults.shared.set(setSenderName, forKey: "latestSenderName")
                                 
                                 self.dispatchQueue()
                             }
@@ -170,12 +183,13 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                     }
                 }
             }
-        return [messageList]
     }
     
     func dispatchQueue() {
         DispatchQueue.main.async {
             if self.letterTableView != nil {
+                // After data is refreshed, end refreshing
+                //self.refreshControl.endRefreshing()
                 self.letterTableView.reloadData()
                 self.letterTableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
                 print("dispatchQueue 완료!")
@@ -190,6 +204,18 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     } // section 당 row의 수
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        let placeholderLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        placeholderLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+        placeholderLabel.text = "No data to display"
+        placeholderLabel.textAlignment = .center
+        placeholderLabel.textColor = .gray
+        
+        if messages.count == 0 {
+            tableView.backgroundView = placeholderLabel
+        } else {
+            tableView.backgroundView = nil
+        }
+        
         return messages.count
     } // section 의 수
     
@@ -208,10 +234,11 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         cell.letterDateLabel?.text = formatter.string(from: message.updateTime)
         cell.backgroundColor = UIColor(hex: message.letterColor)
         cell.emojiLabel.text = message.emoji
-
+        
         navigationController?.navigationBar.sizeToFit()
         
         return cell
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -231,7 +258,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // cell 클릭 시, cell 내용을 보여주는 view controller로 이동
         performSegue(withIdentifier: "sentLetterToMessageContent", sender: indexPath.section)
-    }    
+    }
 }
 
- 
+

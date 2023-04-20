@@ -16,15 +16,23 @@ import FirebaseFirestore
 import BackgroundTasks
 import CryptoKit
 import WidgetKit
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     // 1. didFinishLaunchingWithOptions: 앱이 종료되어 있는 경우 알림이 왔을 때
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-
-        //UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange]
+        // Override point for customization after application launch
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        // 앱 푸시 상태를 확인하는 함수
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(checkNotificationSetting),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
         
         FirebaseApp.configure()
         
@@ -36,21 +44,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             task.setTaskCompleted(success: true)
             self.handleAppRefresh(task: task as! BGAppRefreshTask)
         }
-
+        
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.simonwork.Simonwork2.refresh_process", using: nil) { task in
             print("백그라운드 등록 진입")
             task.setTaskCompleted(success: true)
             self.handleProcessingTask(task: task as! BGProcessingTask)
         }
         //sleep(1)
-    
+        
         return true
     }
     
-//    func applicationDidEnterBackground(_ application: UIApplication) {
-//        scheduleAppRefresh()
-//        scheduleProcessingTaskIfNeeded()
-//    }
+    //    func applicationDidEnterBackground(_ application: UIApplication) {
+    //        scheduleAppRefresh()
+    //        scheduleProcessingTaskIfNeeded()
+    //    }
+    
+    @objc private func checkNotificationSetting() {
+        UNUserNotificationCenter.current()
+            .getNotificationSettings { permission in
+                switch permission.authorizationStatus  {
+                case .authorized:
+                    print("푸시 수신 동의")
+                case .denied:
+                    print("푸시 수신 거부")
+                    SendUserNotification().requestNotificationAuthorization()
+                case .notDetermined:
+                    print("한 번 허용 누른 경우")
+                case .provisional:
+                    print("푸시 수신 임시 중단")
+                case .ephemeral:
+                    // @available(iOS 14.0, *)
+                    print("푸시 설정이 App Clip에 대해서만 부분적으로 동의한 경우")
+                @unknown default:
+                    print("Unknow Status")
+                }
+            }
+    }
     
     //2. 스케줄링
     func scheduleAppRefresh() {
@@ -59,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         request.earliestBeginDate = Date(timeIntervalSinceNow: 15)
         //request.earliestBeginDate = Date(timeInterval: 15, since: Date())
         //request.earliestBeginDate = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 8), matchingPolicy: .nextTime) // Schedule the task to start at 8:00 AM
-
+        
         do {
             try BGTaskScheduler.shared.submit(request)
             // Set a breakpoint in the code that executes after a successful call to submit(_:).
@@ -96,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
         }
-    
+        
         DispatchQueue.global(qos: .background).async {
             // 가벼운 백그라운드 작업 작성
             print("메시지 로드 진입")
@@ -119,15 +149,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             task.setTaskCompleted(success: true)
             print("setTaskCompleted에 진입")
         }
-
+        
     }
     
     @objc func handleScheduledLoadMessages() {
         // This method will be called when the scheduled time is reached
         DispatchQueue.main.async {
-            let archiveVC = SentLetterViewController()
+            let archiveVC = ArchiveViewController()
             archiveVC.archiveUpdate()
-
+            
             //tableView?.reloadData()
             //tableView?.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
         }
@@ -150,8 +180,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         //앱이 켜져있는 상태에서 푸쉬 알림을 눌렀을 때
         if application.applicationState == .active {
-           print("푸쉬알림 탭(앱 켜져있음)")
-
+            print("푸쉬알림 탭(앱 켜져있음)")
+            
         }
         
         //앱이 꺼져있는 상태에서 푸쉬 알림을 눌렀을 때

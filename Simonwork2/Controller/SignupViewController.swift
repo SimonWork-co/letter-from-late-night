@@ -104,6 +104,18 @@ extension SignupViewController {
             let friendName = "none"
             let pairFriendCode = "none"
             let signupTime = Date()
+
+            db.collection("UserData").document(uid).getDocument { documentSnapshot, error in
+                if let error = error {
+                    print("error: \(error)")
+                } else {
+                    if let document = documentSnapshot, document.exists {
+                        print("document: \(document)")
+                    } else {
+                        print("Document does not exist")
+                    }
+                }
+            }
             
             db.collection("UserData").document("\(String(describing: uid))").setData([
                 "userName": UserName,
@@ -119,16 +131,17 @@ extension SignupViewController {
                     print("There was an issue saving data to firestore, \(e)")
                 } else {
                     print("Successfully saved data.")
+                    
+                    userDefaultsDataSave.userName(UserName: UserName)
+                    userDefaultsDataSave.userEmail(UserEmail: UserEmail)
+                    userDefaultsDataSave.uid(uid: uid)
+                    userDefaultsDataSave.friendCode(friendCode: friendCode)
+                    userDefaultsDataSave.friendName(friendName: friendName)
+                    userDefaultsDataSave.pairFriendCode(pairFriendCode: pairFriendCode)
+                    userDefaultsDataSave.signupTime(signupTime: signupTime)
+                    UserDefaults.shared.set("none", forKey: "documentID")
                 }
             }
-            userDefaultsDataSave.userName(UserName: UserName)
-            userDefaultsDataSave.userEmail(UserEmail: UserEmail)
-            userDefaultsDataSave.uid(uid: uid)
-            userDefaultsDataSave.friendCode(friendCode: friendCode)
-            userDefaultsDataSave.friendName(friendName: friendName)
-            userDefaultsDataSave.pairFriendCode(pairFriendCode: pairFriendCode)
-            userDefaultsDataSave.signupTime(signupTime: signupTime)
-            UserDefaults.shared.set("", forKey: "documentID")
         }
     }
 }
@@ -185,13 +198,13 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                 print ("Error Apple sign in: %@", error)
                 return
             } else {
-                self.view.addSubview(self.activityIndicator)
+                
                 if withIdentifier == "signupToGuide" {
                     self.sendUserData(UserName: inputUserName, UserEmail: inputUserEmail)
-                    self.stopActivityIndicator()
+                    self.setAppleLoggedIn()
                     self.performSegue(withIdentifier: withIdentifier, sender: nil)
                 } else if withIdentifier == "signupToConnectTyping" {
-                    self.stopActivityIndicator()
+                    self.setAppleLoggedIn()
                     self.performSegue(withIdentifier: withIdentifier, sender: nil)
                 }
             }
@@ -218,60 +231,172 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    lazy var activityIndicator: UIActivityIndicatorView = { // indicator가 사용될 때까지 인스턴스를 생성하지 않도록 lazy로 선언
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.center = self.view .center // indicator의 위치 설정
-        activityIndicator.style = UIActivityIndicatorView.Style.large // indicator의 스타일 설정, large와 medium이 있음
-        activityIndicator.startAnimating() // indicator 실행
-        activityIndicator.isHidden = false
-        return activityIndicator
-    }()
-    
-    func stopActivityIndicator() {
-        activityIndicator.stopAnimating() // indicator 종료
-    }
-    
+
     //emailTextField passwordTextField signupButton
     @IBOutlet weak var googleSignupButton: UIButton!
     @IBOutlet weak var appleSignupButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     
+    var userFriendCode: String? = "nil"
+    var userPairFriendCode: String? = "nil"
+    var userPairFriendDocumentID : String? = "nil"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //googleSignupButton.layer.cornerRadius = 10
-        //googleSignupButton.layer.borderWidth = 0.75
-        //appleSignupButton.layer.cornerRadius = 10
-        //googleAutoLogin()
         //imageView.frame.origin.x = -120
         //imageView.frame.origin.y = 83
         
         //여기서 로그인 조회 필요. UserDefaults 를 조회하고, 거기에 데이터가 있으면 이를 불러와서 로그인함.
-        autoLogin()
+        loadUserData()
     }
     
-    func autoLogin() {
-        let friendCode = UserDefaults.shared.string(forKey: "friendCode") ?? "none"
-        let pairFriendCode = UserDefaults.shared.string(forKey: "pairFriendCode") ?? "none"
+    func loadUserData() { // 유저의 document를 DB에서 호출하여 친구코드와 상대방의 친구코드를 가져옴
+        // 여기에 추가로 상대방의 친구코드를 이용해 상대방의 DocumentID를 가져와야함
+        let db = Firestore.firestore()
+        let currentUserUid = Auth.auth().currentUser?.uid ?? "none"
+        print("currentUserUid: \(currentUserUid)")
+        
+        db.collection("UserData").document(currentUserUid).getDocument { (documentSnapshot, error) in
+            if let error = error {
+                print("Error: \(error)")
+            } else {
+                if let document = documentSnapshot, document.exists {
+                    if let data = document.data() {
+                        self.userFriendCode = data["friendCode"] as? String
+                        print("self.userFriendCode: \(self.userFriendCode)")
+                        UserDefaults.shared.set(self.userFriendCode ?? "none", forKey: "friendCode")
+                        
+                        self.userPairFriendCode = data["pairFriendCode"] as? String
+                        print("self.userPairFriendCode: \(self.userPairFriendCode)")
+                        UserDefaults.shared.set(self.userPairFriendCode ?? "none", forKey: "pairFriendCode")
+                    }
+            
+                    db.collection("UserData").whereField("friendCode", isEqualTo: self.userPairFriendCode!).getDocuments { (querySnapshot, error) in
+                        if let error = error {
+                            print("error: \(error)")
+                        } else {
+                            if let documents = querySnapshot?.documents {
+                                for document in documents {
+                                    self.userPairFriendDocumentID = document.documentID
+                                    UserDefaults.shared.set(self.userPairFriendDocumentID ?? "none", forKey: "documentID")
+                                }
+                            }
+                        }
+                    }
+                    self.autoLogin()
+                }
+            }
+        }
+    }
+    
+    func autoLogin() { // 유저의 친구코드와 상대방의 친구코드, 상대방의 DocumentID를 UserDefault에 저장.
+        // 이전에 회원가입 과정에서 친구코드 연결이 되다가 말았으면 ConnectTypingVC로 보내야 함
+        let friendCode = UserDefaults.shared.object(forKey: "friendCode") as? String ?? "none"
+        var pairFriendCode = UserDefaults.shared.object(forKey: "pairFriendCode") as? String
+        if pairFriendCode != nil && !pairFriendCode!.isEmpty {
+            print("documentID: \(pairFriendCode!)") // 저장된 값이 있는 경우 해당 값 출력
+        } else {
+            pairFriendCode = "none" // 저장된 값이 없는 경우 "none"을 다른 변수에 할당
+            print("documentID: \(pairFriendCode)") // "none" 출력
+        }
+        
+        var documentID = UserDefaults.shared.object(forKey: "documentID") as? String
+        if documentID != nil && !documentID!.isEmpty {
+            print("documentID: \(documentID!)") // 저장된 값이 있는 경우 해당 값 출력
+        } else {
+            documentID = "none" // 저장된 값이 없는 경우 "none"을 다른 변수에 할당
+            print("documentID: \(documentID ?? "none")") // "none" 출력
+        }
+        
+        // documentID는 ConnectTypingVC에서 불러온 것이며, 상대방의 uid이자 상대방 DB의 문서명이다.
+        // 1) 최초 진입유저 또는 회원 탈퇴자의 경우 documentID가 "none"
+        // 2) 회원가입 미완료자(친구코드를 입력하지 않은 사람) 또는 상대방과 연결을 끊은 경우 documentID가 "none"
+        // 3) 자동로그인 해당 유저의 경우 유효한 documentID가 존재.
         print("friendCode: \(friendCode)")
         print("pairFriendCode: \(pairFriendCode)")
+        print("documentID: \(documentID)")
+        
+        
+        // 현재 로그인하는 유저의 정보를 가져옴 0은 로그인하는 유저의 friendCode, 1은 로그인하는 유저의 pairfriendCode
+        // 이를 통해 구글 로그인인지, 애플 로그인인지를 구분함.
+        let dbUserFriendCode = userFriendCode!
+        print("dbUserFriendCode: \(dbUserFriendCode)")
+        let dbUserPairFriendCode = userPairFriendCode!
+        print("dbUserPairFriendCode: \(dbUserPairFriendCode)")
         
         var friendCodeExists = 0
         var pairFriendCodeExists = 0
         
-        if friendCode == "none" {
+        // friendCode == "none" : 로그인 이력 없음 또는 로그아웃함
+        // friendCode != "none" : 로그인 성공했었음 (구글 로그인인지, 애플 로그인인지는 검증 필요)
+            // friendCode != "none" && friendCode != dbUserFriendCode 이면 이전 소셜 로그인과 현재 로그인 방식 다름
+            // 즉, 별개의 유저로 인식 필요
+        // dbUserFriendCode == "nil" : 로그인 이력 없음
+        
+        if friendCode == "none" && dbUserFriendCode == "nil" {
+            // 로그인 이력이 없는 최초 가입 유저임
             friendCodeExists = 0
-        } else {
+        } else if friendCode != "none" && dbUserFriendCode == "nil" {
+            // 회원가입 중에 로그인 직후 이탈했으며, db 상에 기록되지 않은 유저임
+            friendCodeExists = 0
+        } else if friendCode == "none" && dbUserFriendCode != "nil"{
+            // 유저가 로그아웃하면서 friendCode를 초기화하였으나, db에는 친구코드가 남아있는 상황
             friendCodeExists = 1
+        } else if friendCode == dbUserFriendCode {
+            // userDefault 상의 친구코드와 db 상의 친구코드가 일치하면 그대로 진행가능
+            friendCodeExists = 1
+        } else if friendCode != "none" && friendCode != dbUserFriendCode {
+            // 불일치하면 이전에 가입한 적 있으나 소셜 로그인을 다르게 한 상태임
+            friendCodeExists = 1
+            userDefaultsDataSave.friendCode(friendCode: dbUserFriendCode ?? "") // 여기서 "" 값으로 들어가고 있음
         }
         
-        if pairFriendCode == "none" {
+        // pairFriendCode == "none" : 친구코드를 입력한 적이 없음 또는 로그아웃함
+        // pairFriendCode != "none" : 친구코드를 입력한 적이 있음 (구글 로그인인지, 애플 로그인인지는 검증 필요)
+        // dbUserPairFriendCode == "nil" : 친구코드를 입력한 적이 없음
+        // dbUserPairFriendCode != "nil" : 친구코드를 입력한 적이 있음 (구글 로그인인지, 애플 로그인인지는 검증 필요)
+        
+        if pairFriendCode! == "none" && dbUserPairFriendCode == "nil" {
+            // 친구코드 기입 이력이 없는 최초 가입 유저임
             pairFriendCodeExists = 0
-        } else {
+        } else if pairFriendCode! == dbUserPairFriendCode {
+            // userDefault 상의 pairFriendCode와 db 상의 pairFriendCode 일치하면 그대로 진행가능.
             pairFriendCodeExists = 1
+        } else if pairFriendCode! == "none" && pairFriendCode != "nil" {
+            // 유저가 로그아웃하면서 pairFriendCode를 초기화하였으나, db에는 상대방의 친구코드가 남아있는 상황
+            pairFriendCodeExists = 1
+        } else if pairFriendCode! != "none" && pairFriendCode != dbUserPairFriendCode {
+            // 불일치하면 이전에 가입한 적 있으나 소셜 로그인을 다르게 한 상태임
+            pairFriendCodeExists = 1
+            userDefaultsDataSave.friendCode(friendCode: dbUserPairFriendCode ?? "")
         }
         
         var exists = (friendCodeExists, pairFriendCodeExists)
+        
+        // 상대방의 documentID를 조회하여 상대방의 pairFriendCode가 나의 친구코드로 등록이 되었는지를 확인
+        db.collection("UserData").document(documentID!).getDocument { (documentSnapshot, error) in
+            if let error = error {
+                print("Error: \(error)")
+            } else {
+                if let document = documentSnapshot {
+                    if let data = document.data(){
+                        let isPairFriendCodeExists = data["pairFriendCode"] as! String
+                        if isPairFriendCodeExists == friendCode {
+                            // 상대방의 db 상의 pairFriendCode가 나의 friendCode로 되어있음
+                            pairFriendCodeExists = 1
+                        } else if isPairFriendCodeExists == "none" {
+                            // 상대방의 db 상의 pairFriendCode으로 등록된 내용이 없음
+                            // 내가 상대방의 friendCode를 나의 pairFriendCode로 설정했더라도 상대방의 pairFriendCode가 none이라면, waitingVC에서 내가 도중에 이탈한 경우에 해당함. 따라서, 친구코드를 다시 입력하게끔 유도 필요
+                            pairFriendCodeExists = 0
+                        } else {
+                            // 상대방의 db 상의 pairFriendCode가 내가 아닌 다른 사람의 friendCode로 되어있음
+                            // 내가 상대방에게 요청을 한 사이, 상대방이 다른 사람과 연결이 되어버린 상태임. connectTypingVC으로 유저를 유도하여 친구코드를 다시 입력하게끔 할 필요있음.
+                            pairFriendCodeExists = 0
+                        }
+                    }
+                }
+            }
+        }
         
         switch exists
         {
@@ -284,29 +409,62 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         case (1,0):
             // case1 유저의 friendCode 는 있으나 pairfriendCode 가 없으면 회원가입 미완료자 또는 상대방과 연결을 끊은 경우
             // 로그인 버튼 클릭 후 pairFrinedCode 입력 화면으로 이동 필요 (signupToConnectTyping)
+            // !!단, 저장된 friendCode가 로그인 버튼 클릭 후 생성되는 friendCode와 다른 경우에는 db로 부터 정보를 불러와야함!!
             withIdentifier = "signupToConnectTyping"
             print("case1 유저의 friendCode 는 있으나 pairfriendCode 가 없으면 회원가입 미완료자 또는 상대방과 연결을 끊은 경우")
+            print("exists: \(exists)")
+        case (0,1):
+            // 유저의 친구코드가 있으나, auth.currentUser의 로그인 정보와 다름.
+            // 만약 구글 로그인을 했는데, (0,1)이 나오면 이전에 애플 로그인을 한 것이며, 별개의 유저로 간주가 필요함.
+            // pairFriendCode도 새로운 것으로 인식 필요
+            // 로그아웃 시 해당 케이스 발생함
             print("exists: \(exists)")
         case (1,1):
             // case2 유저의 friendCode && pairfriendCode 가 있으면 자동로그인 해당 유저
             // MainViewController로 곧장 이동 필요
+            // !!단, 저장된 friendCode가 로그인 버튼 클릭 후 생성되는 friendCode와 다른 경우에는 db로 부터 정보를 불러와야함!!
             print("case2 유저의 friendCode && pairfriendCode 가 있으면 자동로그인 해당 유저")
+            print("exists: \(exists)")
+            // 구글 또는 애플 자동 로그인 실행 위치
             
-            moveToMain()
+            if let currentUser = Auth.auth().currentUser {
+                if let providerID = currentUser.providerData.first?.providerID {
+                    if providerID == "apple.com" {
+                        // 애플 계정으로 로그인한 경우
+                        print("유저가 애플 계정으로 로그인함")
+                        // 애플 자동 로그인
+                        appleAutoLogin()
+                    } else if providerID == "google.com" {
+                        // 구글 계정으로 로그인한 경우
+                        print("유저가 구글 계정으로 로그인함")
+                        // 구글 자동 로그인
+                        googleAutoLogin()
+                    }
+                }
+            }
         default:
             print("")
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // print("ViewController의 view가 Load됨")
+
+        if let googleSignupButton = googleSignupButton, let appleSignupButton = appleSignupButton {
+            googleSignupButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+            googleSignupButton.layer.cornerRadius = 10
+            googleSignupButton.layer.borderWidth = 0.75
+            
+            appleSignupButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+            appleSignupButton.layer.cornerRadius = 10
+            appleSignupButton.layer.borderWidth = 0.75
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // print("ViewController의 view가 Load됨")
-        
+
     }
     
     func googleAutoLogin() {
@@ -317,11 +475,33 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         } else {}
     }
     
+    func appleAutoLogin() {
+        if isAppleLoggedIn() == true {
+            moveToMain()
+        } else if isAppleLoggedIn() == false {
+            
+        }
+    }
+    
+    func isAppleLoggedIn() -> Bool {
+        return UserDefaults.shared.bool(forKey: "isAppleLoggedIn")
+    }
+        
+    func setAppleLoggedIn() {
+        UserDefaults.shared.set(true, forKey: "isAppleLoggedIn")
+    }
+        
+    func removeAppleLoggedIn() {
+        UserDefaults.shared.removeObject(forKey: "isAppleLoggedIn")
+    }
+    
     @IBAction func googleSignupButtonPressed(_ sender: Any) {
+        
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { user, error in // 구글로 로그인 승인 요청
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { (user, error) in
+            // 구글로 로그인 승인 요청
             if let error = error {
                 print("ERROR", error.localizedDescription)
                 return
@@ -337,26 +517,24 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
             //GIDSignIn을 통해 받은 idToken, accessToken으로 Firebase에 로그인
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken) // Access token을 부여받음
             
-            // 사용자가 처음으로 로그인하면 신규 사용자 계정이 생성되고 사용자가 로그인할 때 사용한 사용자 인증 정보(사용자 이름과 비밀번호, 전화번호 또는 인증 제공업체 정보)에 연결됩니다.
-            Auth.auth().signIn(with: credential) { _, _ in
+            Auth.auth().signIn(with: credential) { result, error in
                 if let e = error {
                     print(e.localizedDescription)
                 } else {
-                    self.view.addSubview(self.activityIndicator)
+                    
                     if withIdentifier == "signupToGuide" {
                         self.sendUserData(UserName: inputUserName, UserEmail: inputUserEmail)
-                        self.stopActivityIndicator()
                         self.performSegue(withIdentifier: withIdentifier, sender: nil)
                     } else if withIdentifier == "signupToConnectTyping" {
-                        self.stopActivityIndicator()
                         self.performSegue(withIdentifier: withIdentifier, sender: nil)
                     }
                 }
+                return
             }
             print("구글 로그인")
         }
     }
-
+    
     @IBAction func appleSignupButtonPressed(_ sender: UIButton) {
         startSignInWithAppleFlow()
     }

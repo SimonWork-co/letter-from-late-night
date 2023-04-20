@@ -7,6 +7,8 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
+import GoogleMobileAds
 
 extension UIViewController {
     func alert(title: String, message: String, actiondTitle: String) {
@@ -20,14 +22,43 @@ extension UIViewController {
 class SettingViewController: UIViewController {
     
     @IBOutlet weak var nicknameChangeTextField: UITextField!
+    @IBOutlet weak var nicknameChangeButton: UIButton!
+    
+    @IBOutlet weak var nicknameChangeLabel: UILabel!
+    @IBOutlet weak var manualButton: UIButton!
+    @IBOutlet weak var disconnectButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var helpButton: UIButton!
+    @IBOutlet weak var quitButton: UIButton!
+    
+    let signupVC = SignupViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // 배너 광고 설정
+        setupBannerViewToBottom()
+        
+        if let nicknameChangeLabel = nicknameChangeLabel,
+            let nicknameChangeButton = nicknameChangeButton,
+            let manualButton = manualButton,
+            let disconnectButton = disconnectButton,
+            let logoutButton = logoutButton,
+            let helpButton = helpButton,
+            let quitButton = quitButton {
+            nicknameChangeLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 15)
+            nicknameChangeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
+            manualButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+            disconnectButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+            logoutButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+            helpButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+            quitButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+        }
     }
     
     @IBAction func changeNicknameButtonPressed(_ sender: UIButton) {
         
+        // 닉네임 변경 수정 버튼 클릭 시
         let userName = UserDefaults.shared.string(forKey: "userName") ?? ""
         let userUid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid") ?? ""
         let userPairFriendCode = UserDefaults.shared.string(forKey: "pairFriendCode") ?? ""
@@ -74,7 +105,6 @@ class SettingViewController: UIViewController {
                         }
                     }
                 }
-
                 
                 let changeDone = UIAlertController(title: "닉네임 변경", message: "완료되었습니다", preferredStyle: .alert)
                 let copyLink = UIAlertAction(title: "확인", style: .default)
@@ -95,13 +125,39 @@ class SettingViewController: UIViewController {
         }
     }
     
-    @IBAction func manualButton(_ sender: UIButton) {
-        
+    @IBAction func manualButtonPressed(_ sender: UIButton) {
+        // 웹페이지로 이동
     }
     
-    @IBAction func disconnectWIthFriendButton(_ sender: UIButton) {
-        //withIdentifier = "signupToGuide"
-        UserDefaults.shared.setValue("none", forKey: "pairFriendCode")
+    @IBAction func disconnectWIthFriendButtonPressed(_ sender: UIButton) {
+        // 친구와 연결 끊기 버튼 클릭
+        
+        // 나의 pairFriendCode 초기화
+        let myUid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
+        db.collection("UserData").document(myUid).updateData(
+            ["pairFriendCode" : "none"]) // DB 상 나의 pairFriendCode 초기화
+        { (err) in // 나의 UserData에서 pairFriendCode를 inputPairFriendCode로 업데이트
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+                UserDefaults.shared.setValue("none", forKey: "pairFriendCode") // UserDefaults의 pairFriendCode 초기화
+            }
+        }
+        
+//        // 상대방의 pairFriendCode를 초기화
+//        let pairFriendDocumentId = UserDefaults.shared.string(forKey: "documentID") ?? "none"
+//        // pairFriend의 uid이자, documentID임
+//
+//        db.collection("UserData").document(pairFriendDocumentId).updateData(
+//            ["pairFriendCode" : "none"])
+//        { (err) in // 나의 UserData에서 pairFriendCode를 inputPairFriendCode로 업데이트
+//            if let err = err {
+//                print("Error updating document: \(err)")
+//            } else {
+//                print("Document successfully updated")
+//            }
+//        }
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let NavigationController = storyboard.instantiateViewController(identifier: "NavigationController")
@@ -110,12 +166,34 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIButton) {
+        // 로그아웃 버튼 클릭
+        // 구글로 로그인했는지, 애플로 로그인했는지 구분해서, if 문을 통한 로그아웃을 구현해야함.
+        // 유저가 어떤 소셜 로그인을 이용했는지 확인
+        if let currentUser = Auth.auth().currentUser {
+            if let providerID = currentUser.providerData.first?.providerID {
+                UserDefaults.shared.setValue("none", forKey: "friendCode")
+                UserDefaults.shared.setValue("none", forKey: "pairFriendCode")
+                
+                if providerID == "apple.com" {
+                    // 애플 계정으로 로그인한 경우
+                    print("유저가 애플 계정으로 로그인함")
+                    // 애플 로그아웃
+                    signupVC.removeAppleLoggedIn()
+                } else if providerID == "google.com" {
+                    // 구글 계정으로 로그인한 경우
+                    print("유저가 구글 계정으로 로그인함")
+                    // 구글 로그아웃
+                    GIDSignIn.sharedInstance.signOut()
+                    GIDSignIn.sharedInstance.disconnect()
+                }
+            }
+        }
         
         let firebaseAuth = Auth.auth()
+        print("firebaseAuth: \(firebaseAuth)")
         do {
             try firebaseAuth.signOut()
             print("로그아웃 성공")
-            //withIdentifier = "signToMain"
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let NavigationController = storyboard.instantiateViewController(identifier: "NavigationController")
@@ -127,37 +205,45 @@ class SettingViewController: UIViewController {
         }
     }
     
-    @IBAction func helpButton(_ sender: UIButton) {
-        
+    @IBAction func helpButtonPressed(_ sender: UIButton) {
+        // 웹페이지로 이동
     }
     
-    @IBAction func quitButton(_ sender: UIButton) {
+    @IBAction func quitButtonPressed(_ sender: UIButton) {
+        // 회원 탈퇴 버튼
+        if let currentUser = Auth.auth().currentUser {
+            if let providerID = currentUser.providerData.first?.providerID {
+                if providerID == "apple.com" {
+                    // 애플 계정으로 로그인한 경우
+                    print("유저가 애플 계정으로 로그인함")
+                    // 애플 로그아웃
+                    signupVC.removeAppleLoggedIn()
+                } else if providerID == "google.com" {
+                    // 구글 계정으로 로그인한 경우
+                    print("유저가 구글 계정으로 로그인함")
+                    // 구글 로그아웃
+                    GIDSignIn.sharedInstance.signOut()
+                    GIDSignIn.sharedInstance.disconnect()
+                }
+            }
+        }
         let user = Auth.auth().currentUser
-
+        
         user?.delete { error in
-          if let error = error {
-            print("error: \(error)")
-          } else {
-            // Account deleted.
-            print("탈퇴 완료")
-              
-              //withIdentifier = "signupToGuide"
-              UserDefaults.shared.setValue("none", forKey: "pairFriendCode")
-              
-              // LetterData에서 유저가 쓴 데이터 찾아서 삭제
-              
-              // UserData 내에서 해당 유저의 정보 삭제
-              let uid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
-              self.deleteUserData(uid: uid)
-              // 초기 화면으로 이동해야 함
-              let storyboard = UIStoryboard(name: "Main", bundle: nil)
-              let NavigationController = storyboard.instantiateViewController(identifier: "NavigationController")
-              NavigationController.modalPresentationStyle = .fullScreen
-              self.show(NavigationController, sender: nil)
-              
-          }
+            if let error = error {
+                print("error: \(error)")
+            } else {
+                // Account deleted.
+                print("탈퇴 완료")
+                // LetterData에서 유저가 쓴 데이터 찾아서 삭제...는 탈퇴후 30일쯤에 진행하는 걸로
+                
+                // UserData 내에서 해당 유저의 정보 삭제
+                let uid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
+                self.deleteUserData(uid: uid)
+            }
         }
     }
+    
     func deleteLetterData(friendCode: String) {
         db.collection("LetterData").whereField("sender", isEqualTo: friendCode).getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -165,7 +251,13 @@ class SettingViewController: UIViewController {
             } else {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
-                        
+                        doc.reference.delete() { error in
+                            if let error = error {
+                                print("Error deleting document: \(error)")
+                            } else {
+                                print("Document deleted successfully")
+                            }
+                        }
                     }
                 }
             }
@@ -178,8 +270,35 @@ class SettingViewController: UIViewController {
                 print("Error removing document: \(err)")
             } else {
                 print("Document successfully removed!")
+                
+                // UserData 활용목적
+                UserDefaults.shared.removeObject(forKey: "userName")
+                UserDefaults.shared.removeObject(forKey: "userEmail")
+                UserDefaults.shared.removeObject(forKey: "friendCode")
+                UserDefaults.shared.removeObject(forKey: "friendName")
+                UserDefaults.shared.removeObject(forKey: "ALetterFromLateNightUid")
+                UserDefaults.shared.removeObject(forKey: "pairFriendCode")
+                UserDefaults.shared.removeObject(forKey: "signupTime")
+                // 상대방의 document 확인 목적
+                UserDefaults.shared.removeObject(forKey: "DocumentID")
+                // 소셜 로그인 확인 목적
+                UserDefaults.shared.removeObject(forKey: "isAppleLoggedIn")
+                // 오늘 편지 보냈는지 여부 확인 목적
+                UserDefaults.shared.removeObject(forKey: "todayLetterTitle")
+                UserDefaults.shared.removeObject(forKey: "todayLetterContent")
+                UserDefaults.shared.removeObject(forKey: "todayLetterUpdateTime")
+                // 위젯 전달 목적
+                UserDefaults.shared.removeObject(forKey: "latestTitle")
+                UserDefaults.shared.removeObject(forKey: "latestContent")
+                UserDefaults.shared.removeObject(forKey: "latestUpdateDate")
+                UserDefaults.shared.removeObject(forKey: "latestLetterColor")
+                UserDefaults.shared.removeObject(forKey: "latestEmoji")
+                UserDefaults.shared.removeObject(forKey: "latestSender")
+                
+                self.moveToMain()
             }
         }
     }
     
 }
+

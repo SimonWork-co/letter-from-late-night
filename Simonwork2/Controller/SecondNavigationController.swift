@@ -14,9 +14,6 @@ class SecondNavigationController: UINavigationController {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let TabBarController = storyboard.instantiateViewController(identifier: "TabBarController")
-//        TabBarController.modalPresentationStyle = .fullScreen
-//        self.show(TabBarController, sender: nil)
+
     }
 }
