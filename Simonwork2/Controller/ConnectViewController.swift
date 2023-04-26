@@ -12,17 +12,21 @@ class ConnectViewController: SignupViewController {
     //let userName = userDefaultsDataLoad.userName()
     
     @IBOutlet weak var helloLabel: UILabel!
+    @IBOutlet weak var connectStartButton: UIButton!
+    
     let db = Firestore.firestore()
     
     //let userName : String = UserDefaults.standard.object(forKey: "userName") as! String
-    let data = UserDefaultsData().receivedData
     
     //let inputUserName = UserDefaults.shared.string(forKey: "userName")!
-    let inputUserEmail = UserDefaults.shared.string(forKey: "userEmail")!
+    //let inputUserEmail = UserDefaults.shared.string(forKey: "userEmail")!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let connectStartButton = connectStartButton {
+            connectStartButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,7 +38,6 @@ class ConnectViewController: SignupViewController {
     
     func userNameColored(){
         let uid = Auth.auth().currentUser?.uid
-        print("uid: \(uid)")
         
         db.collection("UserData").document(uid!).getDocument { (document, error) in
             if let document = document {
@@ -46,7 +49,6 @@ class ConnectViewController: SignupViewController {
             }
         }
     }
-    
     
     override func viewWillDisappear(_ animated: Bool) {
       navigationController?.setNavigationBarHidden(true, animated: true) // 뷰 컨트롤러가 사라질 때 나타내기

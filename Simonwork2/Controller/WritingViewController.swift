@@ -10,7 +10,7 @@ import Foundation
 import EmojiPicker
 import GoogleMobileAds
 
-extension UIColor {
+extension UIColor { // 색상의 hexcode 추출하는 extension
     func hexColorExtract(BackgroundColor: UIView) -> String {
         
         let backgroundColor = BackgroundColor.backgroundColor
@@ -61,7 +61,6 @@ class WritingViewController: UIViewController {
     @IBOutlet weak var textViewTextNumLabel: UILabel!
     @IBOutlet weak var colorButton: UIButton!
     @IBOutlet weak var letterBg: UIView!
-    
     
     var textViewText : String = ""
     
@@ -177,6 +176,19 @@ class WritingViewController: UIViewController {
                     if let e = error {
                         print("There was an issue saving data to firestore, \(e)")
                     } else {
+                        
+                        db.collection("UserData").document(userUid).updateData([
+                            "todayLetterTitle" : title,
+                            "todayLetterContent" : content,
+                            "todayLetterUpdateTime" : updateTime,
+                        ]) { error in
+                            if let error = error {
+                                print("Error: \(error.localizedDescription)")
+                            } else {
+                                print("Field added successfully")
+                            }
+                        }
+                        
                         // 오늘 편지를 보냈는지 확인하기 위해 userDefaults를 활용 "todayLetterUpdateTime"
                         UserDefaults.shared.setValue(title, forKey: "todayLetterTitle")
                         UserDefaults.shared.setValue(content, forKey: "todayLetterContent")
@@ -187,7 +199,7 @@ class WritingViewController: UIViewController {
                             self.contentTextView.text = ""
                         }
                         
-                        let sheet1 = UIAlertController(title: "작성 완료!", message: "작성하신 편지는 새벽 5시에 배달해드릴게요", preferredStyle: .alert)
+                        let sheet1 = UIAlertController(title: "작성 완료!", message: "작성하신 편지는 새벽에 배달해드릴게요", preferredStyle: .alert)
                         sheet1.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
                             print("yes 클릭")
                             self.navigationController?.popToRootViewController(animated: true)

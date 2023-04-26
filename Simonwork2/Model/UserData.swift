@@ -15,6 +15,10 @@ struct UserData {
     let pairFriendCode : String
     let signupTime : Date
     let letterCount : Int
+    let documentID : String
+    let todayLetterTitle : String
+    let todayLetterContent : String
+    let todayLetterUpdateTime : Date
 }
 
 

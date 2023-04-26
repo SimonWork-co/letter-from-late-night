@@ -16,9 +16,6 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     var messages: [LetterData] = []
     let refreshControl = UIRefreshControl()
     
-    let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
-    let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
-    
     let contentList = LetterDataSource.data // DB 연동
     let cellSpacingHeight: CGFloat = 1
     let formatter: DateFormatter = {
@@ -83,47 +80,13 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         letterTableView.register(nibName, forCellReuseIdentifier: "CustomizedCell")
     }
     
-    //    func archiveUpdate() {
-    //        let calendar = Calendar.current
-    //        let currentDate = Date()
-    //        let currentDateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
-    //        let todayMidnight = calendar.date(from: currentDateComponents)!
-    //
-    //        // 새벽 4시반을 나타내는 dateComponents
-    //        var dateComponents = DateComponents()
-    //        dateComponents.hour = 4
-    //        dateComponents.minute = 30
-    //
-    //        let cutoffTime = calendar.date(bySettingHour: 4, minute: 30, second: 0, of: todayMidnight)!
-    //
-    //        if currentDate >= cutoffTime {
-    //            // 오늘 자정 이전에 작성된 편지를 가져옴
-    //            let yesterdayMidnight = // 자정시간 추출. 현재 4/14일 이라면 4/14일 00시를 추출
-    //            calendar.startOfDay(for: currentDate).timeIntervalSince1970
-    //
-    //            let date = Date(timeIntervalSince1970: yesterdayMidnight)
-    //            let timeStamp = Timestamp(date: date)
-    //
-    //            loadMessages(time: timeStamp) // 오늘 자정시간 이전에 작성된 편지를 불러옴
-    //            if #available(iOS 14.0, *) {
-    //                WidgetCenter.shared.reloadAllTimelines()
-    //            }
-    //        } else {
-    //            // 어제 자정 이전에 작성된 편지를 가져옴
-    //            let theDayBeforeYesterDay = // 어제의 자정시간 추출. 현재 4/14일 이라면 4/13일 00시를 추출
-    //            calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: currentDate))!.timeIntervalSince1970
-    //
-    //            let date = Date(timeIntervalSince1970: theDayBeforeYesterDay)
-    //            let timeStamp = Timestamp(date: date)
-    //            loadMessages(time: timeStamp) // 어제 자정시간 이전에 작성된 편지를 불러옴
-    //
-    //            if #available(iOS 14.0, *) {
-    //                WidgetCenter.shared.reloadAllTimelines()
-    //            }
-    //        }
-    //    }
-    
     func loadMessages(){
+        
+        let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
+        let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
+        
+        print("userFriendCode: \(userFriendCode)")
+        print("userPairFriendCode: \(userPairFriendCode)")
         
         db.collection("LetterData")
             .whereField("sender", isEqualTo: userFriendCode)
@@ -169,7 +132,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let setEmoji = self.messages[0].emoji
                                 let setSenderName = self.messages[0].senderName
                                 
-                                //위젯에서 최상단의 편지를 보여주기 위해 Userdefaults로 저장
+                                //위젯에서 최상단의 편지를 보여주기 위해 Userdefaults로 저장 - sentLetterVC에서는 나중에 삭제 필요
                                 UserDefaults.shared.set(setTitle, forKey: "latestTitle")
                                 UserDefaults.shared.set(setContent, forKey: "latestContent")
                                 UserDefaults.shared.set(setUpdateTime, forKey: "latestUpdateDate")
@@ -188,8 +151,6 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     func dispatchQueue() {
         DispatchQueue.main.async {
             if self.letterTableView != nil {
-                // After data is refreshed, end refreshing
-                //self.refreshControl.endRefreshing()
                 self.letterTableView.reloadData()
                 self.letterTableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
                 print("dispatchQueue 완료!")
@@ -215,7 +176,6 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         } else {
             tableView.backgroundView = nil
         }
-        
         return messages.count
     } // section 의 수
     

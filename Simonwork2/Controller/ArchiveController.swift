@@ -41,24 +41,10 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         tableView.dataSource = self
         
         registerXib()
-        showPlaceholderIfNeeded()
-        //archiveUpdate()
+        archiveUpdate()
         
         // 배너 광고 설정
         setupBannerViewToBottom()
-    }
-
-    func showPlaceholderIfNeeded() {
-        if messages.isEmpty {
-            let placeholderLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
-            placeholderLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-            placeholderLabel.text = "No data to display"
-            placeholderLabel.textAlignment = .center
-            placeholderLabel.textColor = .gray
-            tableView.backgroundView = placeholderLabel
-        } else {
-            archiveUpdate()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,8 +101,12 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     }
     
     func loadMessages(time: Timestamp){ // 어제 자정 이전까지 작성된 편지를 불러옴 (오늘 작성된 편지는 불러오지 않음)
+        
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
+        
+        print("userFriendCode: \(userFriendCode)")
+        print("userPairFriendCode: \(userPairFriendCode)")
         
         db.collection("LetterData")
             .whereField("sender", isEqualTo: userPairFriendCode)
@@ -124,6 +114,8 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
             .whereField("updateTime", isLessThan: time)
             .order(by: "updateTime", descending: true)
             .addSnapshotListener { (querySnapshot, error) in
+                
+                self.messages = []
                 
                 if let e = error {
                     print("There was an issue retrieving data from Firestore. \(e)")
@@ -160,12 +152,6 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                 let setLetterColor = self.messages[0].letterColor
                                 let setEmoji = self.messages[0].emoji
                                 let setSenderName = self.messages[0].senderName
-                                
-                                print("setTitle: \(setTitle)")
-                                print("setContent: \(setContent)")
-                                print("setUpdateTime: \(setUpdateTime)")
-                                print("setLetterColor: \(setLetterColor)")
-                                print("setEmoji: \(setEmoji)")
                                 
                                 //위젯에서 최상단의 편지를 보여주기 위해 Userdefaults로 저장
                                 UserDefaults.shared.set(setTitle, forKey: "latestTitle")

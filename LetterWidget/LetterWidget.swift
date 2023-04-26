@@ -200,5 +200,6 @@ struct LetterWidget_Previews: PreviewProvider {
         let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
         LetterWidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
+            
     }
 }

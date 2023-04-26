@@ -24,15 +24,6 @@ extension UILabel { // 글자 색상 바꾸는 함수
     }
 }
 
-extension UIViewController { // 메인 뷰로 이동하는 함수
-    func moveToMain(){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyboard.instantiateViewController(identifier: "SecondNavigationController")
-        mainViewController.modalPresentationStyle = .fullScreen
-        self.show(mainViewController, sender: nil)
-    }
-}
-
 class MainViewController: UIViewController, GADBannerViewDelegate {
     
     let db = Firestore.firestore()
@@ -67,15 +58,6 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         setupBannerViewToBottom()
         
     }
-//
-//    func addBannerViewToView(_ bannerView: GADBannerView) {
-//        bannerView.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(bannerView)
-//        NSLayoutConstraint.activate([
-//            bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-//            bannerView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-//        ])
-//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -96,7 +78,7 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let message_signupTime = data["signupTime"] as? Timestamp, let messagePairFriendCode = data["pairFriendCode"] as? String {
+                        if let userConnectedTime = data["connectedTime"] as? Timestamp, let messagePairFriendCode = data["pairFriendCode"] as? String {
                             
                             let friendName = data["friendName"] as? String
                             let calendar = Calendar.current
@@ -104,10 +86,11 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
                             let dateFormatter = DateFormatter()
                             var daysCount : Int = 0
                             
-                            let messagesignupTime = message_signupTime.dateValue() // dateValue() : 날짜는 정확하지만 시간 단위는 부정확할 수 있음.
+                            let connectedTime = userConnectedTime.dateValue()
+                            // dateValue() : 날짜는 정확하지만 시간 단위는 부정확할 수 있음.
                             
                             dateFormatter.dateFormat = "yyyy-MM-dd"
-                            let startDateString = dateFormatter.string(from: messagesignupTime)
+                            let startDateString = dateFormatter.string(from: connectedTime)
                             let startDate = dateFormatter.date(from: startDateString)
                             
                             daysCount = Calendar.current.dateComponents([.day], from: startDate!, to: today).day! + 1
@@ -130,6 +113,28 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
     }
     
     @IBAction func letterSendButtonPressed(_ sender: UIButton) {
+        let todayLetterUpdateTime = UserDefaults.shared.object(forKey: "todayLetterUpdateTime") as? Date
+
+        let todayLetterSend = timeCheck() // 마지막 편지를 보낸 날짜와 오늘 날짜를 비교하여 dateDifference를 출력
+        
+        if todayLetterUpdateTime != nil { // 편지를 보낸 적은 있음
+            if todayLetterSend == 0 {
+                // 편지를 마지막으로 보낸 일자가 오늘인 경우, writingVC로 이동 불가능
+                // 아래의 alert 구현
+                print("todayLetterUpdateTime2 (편지를 마지막으로 보낸 일자가 오늘인 경우, writingVC로 이동 불가능): \(todayLetterUpdateTime)")
+                print("todayLetterSend: \(todayLetterSend)")
+                alert(title: "오늘 이미 편지를 작성하셨어요!", message: "자정 이후에 다시 편지를 쓸 수 있어요", actionTitle: "확인")
+                
+            } else { // 편지를 마지막으로 보낸 일자가 오늘이 아닌 더 이전인 경우, writingVC로 이동 가능
+                print("todayLetterUpdateTime3 (편지를 마지막으로 보낸 일자가 오늘이 아닌 더 이전인 경우, writingVC로 이동 가능): \(todayLetterUpdateTime)")
+                print("todayLetterSend: \(todayLetterSend)")
+                moveToWritingVC()
+            }
+        } else { // 편지를 보낸 적이 없으므로 nil이 출력되며, writingVC로 이동 가능
+            moveToWritingVC()
+        }
+    }
+    func moveToWritingVC() {
         let nextVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WritingViewController") as! WritingViewController
         let navigationController = UINavigationController(rootViewController: nextVC)
         self.show(nextVC, sender: nil)

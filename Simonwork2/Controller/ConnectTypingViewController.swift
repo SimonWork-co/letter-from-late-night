@@ -11,20 +11,11 @@ import Firebase
 var inputDocumentID = "none"
 var inputPairFriendName : String = ""
 
-extension ConnectTypingViewController {
-    func inputDocumentIDcheck() {
-        print("inputDocumentID: \(inputDocumentID)")
-        UserDefaults.shared.set(inputDocumentID, forKey: "documentID")
-        UserDefaults.shared.synchronize()
-    }
-}
-
 class ConnectTypingViewController: UIViewController {
     
     let db = Firestore.firestore()
     
     let waitingVC = WaitingViewController()
-    let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
     
     @IBOutlet weak var pairFriendCodeTextField: UITextField!
     @IBOutlet weak var startButton: UIButton!
@@ -42,11 +33,13 @@ class ConnectTypingViewController: UIViewController {
         //startButton.layer.cornerRadius = 10
         //startButton.layer.borderWidth = 0.75
         
+        let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
         myFriendCodeLabel.text = myFriendCode
         
     }
     
     func friendCodeCheck() {
+        let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
         
         if let inputPairFriendCode = pairFriendCodeTextField.text {
             // 내가 입력한 pairFriendCode가 DB상에 존재하는지 확인
@@ -78,7 +71,7 @@ class ConnectTypingViewController: UIViewController {
                             for document in documents {
                                 let data = document.data()
                                 // 다른 친구와 이미 연결되었는지 확인
-                                if data["pairFriendCode"] as! String != "none" { // 다른 친구코드가 있음
+                                if data["pairFriendCode"] as! String != "no pairFriendCode" && data["pairFriendCode"] as! String != myFriendCode { // 이미 연결된 다른 친구코드가 있음
                                     let sheet = UIAlertController(title: "상대방이 이미 다른 친구코드와 연결되어 있어요", message: "상대방이 다른 사람과의 연결을 끊거나 다른 친구코드를 입력해주세요", preferredStyle: .alert)
                                     let ok = UIAlertAction(title: "확인", style: .default, handler: { _ in
                                         print("yes 클릭")
@@ -89,7 +82,9 @@ class ConnectTypingViewController: UIViewController {
                                     DispatchQueue.main.async { // '확인' 이후 title, content 내용 초기화
                                         self.pairFriendCodeTextField.text = ""
                                     }
-                                } else { // 다른 친구코드 없음
+                                } else { // 상대방의 pairFriendCode가 none이며 연결된 친구가 아직 없음 (data["pairFriendCode"] as! String == "no pairFriendCode")
+                                    // 또는 내가 상대방과 연결을 끊은 상태인데, 아직 상대방은 나를 pairFriendCode에 유지하고 있음(이 경우에는 그대로 연결할 수 있게끔 유도)
+                                    // data["pairFriendCode"] as! String == myFriendCode
                                     let documentID = document.documentID // document.documentID는 상대방의 uid로 설정되어 있음.
                                     print("\(documentID) => \(document.data())")
                                     inputDocumentID = documentID // 상대방의 uid(documentID)를 inputDocumentID로 설정
@@ -112,7 +107,10 @@ class ConnectTypingViewController: UIViewController {
                                                 print("Error updating document: \(err)")
                                             } else {
                                                 print("Document successfully updated")
-                                                userDefaultsDataSave.pairFriendCode(pairFriendCode: inputPairFriendCode)
+                                                //나의 pairFriendCode 및 pairFriendCode 업데이트
+                                                UserDefaults.shared.set(inputPairFriendCode, forKey: "pairFriendCode")
+                                                UserDefaults.shared.set(pairFriendName, forKey: "friendName")
+                                                
                                                 self.segueToWaitingVC()
                                             }
                                         }
@@ -147,7 +145,6 @@ class ConnectTypingViewController: UIViewController {
     }
     
     func segueToWaitingVC() {
-        inputDocumentIDcheck()
         // waitingVC 화면으로 보내기
         performSegue(withIdentifier: "connectTypingToWaiting", sender: nil)
     }
@@ -164,24 +161,6 @@ class ConnectTypingViewController: UIViewController {
         }
     }
 }
-//
-//extension ConnectViewController: UITextFieldDelegate {
-//    
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        textField.text = nil
-//        textField.alpha = 1.0
-//    }
-//    
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if textField.text == "" {
-//            let placeHolder = "친구코드 6자리를 입력해주세요"
-//            textField.text = placeHolder
-//            textField.alpha = 0.5
-//        } else {
-//        }
-//    }
-//    
-//}
 
 extension ConnectTypingViewController: UITextFieldDelegate {
     

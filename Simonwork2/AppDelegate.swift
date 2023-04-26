@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-        
+
         // 앱 푸시 상태를 확인하는 함수
         NotificationCenter.default.addObserver(
             self,
@@ -63,22 +63,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     @objc private func checkNotificationSetting() {
         UNUserNotificationCenter.current()
             .getNotificationSettings { permission in
+                print("add observer 진입")
                 switch permission.authorizationStatus  {
                 case .authorized:
-                    print("푸시 수신 동의")
+                    print("사용자가 앱의 알림 권한을 허용한 상태입니다. 이 경우, 앱은 알림을 전송할 수 있고, 사용자에게 알림을 표시할 수 있습니다.")
+                    NotificationCenter.default.removeObserver(self)
                 case .denied:
-                    print("푸시 수신 거부")
-                    SendUserNotification().requestNotificationAuthorization()
+                    print("사용자가 앱의 알림 권한을 거부한 상태입니다. 이 경우, 앱은 알림을 전송할 수 없고, 알림 설정에서 변경을 요청하는 사용자를 안내해야 합니다.")
+                    let sendUserNotification = SendUserNotification()
+                    sendUserNotification.requestNotificationAuthorization()
+                    NotificationCenter.default.removeObserver(self)
                 case .notDetermined:
-                    print("한 번 허용 누른 경우")
+                    print("사용자가 아직 앱의 알림 권한에 대한 결정을 내리지 않은 상태입니다. 이 경우, 알림 권한을 요청하기 전에 사용자에게 알림 권한에 대한 안내를 표시할 수 있습니다.")
+                    NotificationCenter.default.removeObserver(self)
                 case .provisional:
-                    print("푸시 수신 임시 중단")
+                    print("iOS 12부터 도입된 권한 상태로, 사용자가 앱의 알림 권한에 대한 최초의 응답을 기다리는 동안에 사용됩니다. 사용자가 알림을 허용하지 않아도 앱은 일부 알림을 받을 수 있습니다.")
+                    NotificationCenter.default.removeObserver(self)
                 case .ephemeral:
                     // @available(iOS 14.0, *)
-                    print("푸시 설정이 App Clip에 대해서만 부분적으로 동의한 경우")
+                    print(" iOS 15부터 도입된 권한 상태로, 앱의 알림이 사용자의 알림 센터에 표시되지 않는 상태입니다.")
+                    NotificationCenter.default.removeObserver(self)
                 @unknown default:
-                    print("Unknow Status")
+                    print("푸시 Unknow Status")
+                    NotificationCenter.default.removeObserver(self)
                 }
+                
             }
     }
     
@@ -131,6 +140,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             // 가벼운 백그라운드 작업 작성
             print("메시지 로드 진입")
             self.handleScheduledLoadMessages()
+            
+            WidgetCenter.shared.reloadAllTimelines()
+            
             task.setTaskCompleted(success: true)
             print("setTaskCompleted에 진입")
         }
