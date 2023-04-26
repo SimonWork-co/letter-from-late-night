@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		1BA11AD875D6D1DF8DF99C75 /* Pods_Simonwork2_LetterWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C3EACD8E6DEB474DF608859 /* Pods_Simonwork2_LetterWidgetExtension.framework */; };
+		8D17DE0A29F1612D0087765B /* NanumMyeongjoExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC829C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf */; };
+		8D17DE0B29F1612F0087765B /* NanumMyeongjoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC729C6E40B00208AE8 /* NanumMyeongjoBold.ttf */; };
+		8D17DE0C29F161320087765B /* NanumMyeongjo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE863BC929C6E40C00208AE8 /* NanumMyeongjo.ttf */; };
 		8D272A8229D5756A00DDD636 /* UserDefaultsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D272A8129D5756A00DDD636 /* UserDefaultsData.swift */; };
 		8D3FF30F29DBABAF00508FB8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D3FF30E29DBABAF00508FB8 /* GoogleService-Info.plist */; };
 		8D402DA929C0406A0010D80C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D402DA829C0406A0010D80C /* NavigationController.swift */; };
 		8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375E829B9A7AD0028427F /* SignupViewController.swift */; };
 		8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375EA29B9A9010028427F /* ArchiveController.swift */; };
+		8D4CA9E729EFCA1C00DF2EF6 /* ADControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4CA9E629EFCA1C00DF2EF6 /* ADControl.swift */; };
 		8D6182FA29C85D4A00A85BFB /* LetterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182F929C85D4A00A85BFB /* LetterData.swift */; };
-		8D6182FE29C88FCA00A85BFB /* UserDataLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182FD29C88FCA00A85BFB /* UserDataLoad.swift */; };
+		8D6182FE29C88FCA00A85BFB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182FD29C88FCA00A85BFB /* Constants.swift */; };
 		8D64C32A29B9AA7C00B347B5 /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */; };
 		8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */; };
 		8D675F0429C7410A0078042A /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D675F0329C7410A0078042A /* UserData.swift */; };
@@ -39,7 +43,7 @@
 		8DAA05D029BB20A0008D8167 /* CustomizedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */; };
 		8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */; };
 		8DBD9A3C29D9561D005AF94A /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */; };
-		8DBD9A3E29D956D4005AF94A /* GuideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3D29D956D4005AF94A /* GuideModel.swift */; };
+		8DBD9A3E29D956D4005AF94A /* SendUserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBD9A3D29D956D4005AF94A /* SendUserNotification.swift */; };
 		8DCA774029DD49A200F4DD52 /* DateFormatterFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA773F29DD49A200F4DD52 /* DateFormatterFile.swift */; };
 		8DCA774229DEAEEA00F4DD52 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCA774129DEAEEA00F4DD52 /* TabBarController.swift */; };
 		8DCA774529DECCAA00F4DD52 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DCA774329DECCAA00F4DD52 /* Main.storyboard */; };
@@ -96,8 +100,9 @@
 		8D402DA829C0406A0010D80C /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8D4375E829B9A7AD0028427F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		8D4375EA29B9A9010028427F /* ArchiveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveController.swift; sourceTree = "<group>"; };
+		8D4CA9E629EFCA1C00DF2EF6 /* ADControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADControl.swift; sourceTree = "<group>"; };
 		8D6182F929C85D4A00A85BFB /* LetterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterData.swift; sourceTree = "<group>"; };
-		8D6182FD29C88FCA00A85BFB /* UserDataLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataLoad.swift; sourceTree = "<group>"; };
+		8D6182FD29C88FCA00A85BFB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
 		8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentLetterViewController.swift; sourceTree = "<group>"; };
 		8D675F0329C7410A0078042A /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -124,7 +129,7 @@
 		8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomizedCell.swift; path = Simonwork2/Model/CustomizedCell.swift; sourceTree = SOURCE_ROOT; };
 		8DAA05CF29BB20A0008D8167 /* CustomizedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomizedCell.xib; path = Simonwork2/Model/CustomizedCell.xib; sourceTree = SOURCE_ROOT; };
 		8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
-		8DBD9A3D29D956D4005AF94A /* GuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideModel.swift; sourceTree = "<group>"; };
+		8DBD9A3D29D956D4005AF94A /* SendUserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendUserNotification.swift; sourceTree = "<group>"; };
 		8DCA773F29DD49A200F4DD52 /* DateFormatterFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterFile.swift; sourceTree = "<group>"; };
 		8DCA774129DEAEEA00F4DD52 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8DCA774429DECCAA00F4DD52 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -239,12 +244,13 @@
 				8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */,
 				8D675F0329C7410A0078042A /* UserData.swift */,
 				8D6182F929C85D4A00A85BFB /* LetterData.swift */,
-				8D6182FD29C88FCA00A85BFB /* UserDataLoad.swift */,
+				8D6182FD29C88FCA00A85BFB /* Constants.swift */,
 				8D272A8129D5756A00DDD636 /* UserDefaultsData.swift */,
-				8DBD9A3D29D956D4005AF94A /* GuideModel.swift */,
+				8DBD9A3D29D956D4005AF94A /* SendUserNotification.swift */,
 				8D6BD68429D9A09800D218C4 /* FirstView.swift */,
 				8D6BD68629D9A0F000D218C4 /* SecondView.swift */,
 				8D6BD68A29D9A33900D218C4 /* ThirdView.swift */,
+				8D4CA9E629EFCA1C00DF2EF6 /* ADControl.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -252,18 +258,18 @@
 		8D9EFF2B29B85080008D2050 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */,
 				8D402DA829C0406A0010D80C /* NavigationController.swift */,
 				8D4375E829B9A7AD0028427F /* SignupViewController.swift */,
-				8DCA774129DEAEEA00F4DD52 /* TabBarController.swift */,
-				8DCA774629DEEB4300F4DD52 /* SecondNavigationController.swift */,
-				8D9EFF1929B85049008D2050 /* MainViewController.swift */,
-				8D9EFF2F29B9A74A008D2050 /* WritingViewController.swift */,
+				8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */,
 				8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */,
 				8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */,
 				8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */,
 				8D985CF229CC2E5C00C04AA8 /* StartViewController.swift */,
 				8D985CF429CD722700C04AA8 /* SettingViewController.swift */,
+				8DCA774629DEEB4300F4DD52 /* SecondNavigationController.swift */,
+				8DCA774129DEAEEA00F4DD52 /* TabBarController.swift */,
+				8D9EFF1929B85049008D2050 /* MainViewController.swift */,
+				8D9EFF2F29B9A74A008D2050 /* WritingViewController.swift */,
 				8D4375EA29B9A9010028427F /* ArchiveController.swift */,
 				8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */,
 				8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */,
@@ -416,7 +422,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEA2F28A29D85F860021AEC3 /* Assets.xcassets in Resources */,
+				8D17DE0B29F1612F0087765B /* NanumMyeongjoBold.ttf in Resources */,
 				8D3FF30F29DBABAF00508FB8 /* GoogleService-Info.plist in Resources */,
+				8D17DE0C29F161320087765B /* NanumMyeongjo.ttf in Resources */,
+				8D17DE0A29F1612D0087765B /* NanumMyeongjoExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,8 +504,9 @@
 				8DCA774229DEAEEA00F4DD52 /* TabBarController.swift in Sources */,
 				8D985CED29CC2D3600C04AA8 /* ConnectViewController.swift in Sources */,
 				8D9EFF1A29B85049008D2050 /* MainViewController.swift in Sources */,
+				8D4CA9E729EFCA1C00DF2EF6 /* ADControl.swift in Sources */,
 				8D6182FA29C85D4A00A85BFB /* LetterData.swift in Sources */,
-				8D6182FE29C88FCA00A85BFB /* UserDataLoad.swift in Sources */,
+				8D6182FE29C88FCA00A85BFB /* Constants.swift in Sources */,
 				8D985CF329CC2E5C00C04AA8 /* StartViewController.swift in Sources */,
 				8D402DA929C0406A0010D80C /* NavigationController.swift in Sources */,
 				8D9EFF3029B9A74A008D2050 /* WritingViewController.swift in Sources */,
@@ -504,7 +514,7 @@
 				8D272A8229D5756A00DDD636 /* UserDefaultsData.swift in Sources */,
 				8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */,
 				8D675F0429C7410A0078042A /* UserData.swift in Sources */,
-				8DBD9A3E29D956D4005AF94A /* GuideModel.swift in Sources */,
+				8DBD9A3E29D956D4005AF94A /* SendUserNotification.swift in Sources */,
 				8D6BD68529D9A09800D218C4 /* FirstView.swift in Sources */,
 				8D6BD68B29D9A33900D218C4 /* ThirdView.swift in Sources */,
 				8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */,
@@ -692,8 +702,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -727,8 +738,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

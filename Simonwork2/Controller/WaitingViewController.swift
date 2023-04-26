@@ -18,11 +18,7 @@ class WaitingViewController: UIViewController {
     let db = Firestore.firestore()
     
     @IBOutlet weak var helloLabel: UILabel!
-    
-    let userName = UserDefaults.shared.string(forKey: "userName")!
-    let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
-    let uid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
-    let documentId = UserDefaults.shared.string(forKey: "documentID")!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,18 +28,20 @@ class WaitingViewController: UIViewController {
         //self.navigationController?.isNavigationBarHidden = true
         
         timer.invalidate()
-        let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(inputFriendCodeCheck), userInfo: nil, repeats: false)
+        let timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(inputFriendCodeCheck), userInfo: nil, repeats: false)
         // inputFriendCode를 friendCode로 가지고 있는 유저의 문서를 실시간 조회 -> 실시간으로 조회하는 중에 유저가 pairFriendCode에다가 나의 friendCode를 넣으면 mainVC로 세그
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ViewController의 view가 load됨")
-        navigationController?.setNavigationBarHidden(true, animated: true)
+
+        //navigationController?.setNavigationBarHidden(true, animated: true)
+        self.activityIndicator.startAnimating()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-      navigationController?.setNavigationBarHidden(true, animated: true) // 뷰 컨트롤러가 사라질 때 나타내기
+        //navigationController?.setNavigationBarHidden(true, animated: true) // 뷰 컨트롤러가 사라질 때 나타내기
+        self.activityIndicator.stopAnimating()
     }
     
     @objc func fire() {
@@ -53,6 +51,8 @@ class WaitingViewController: UIViewController {
     @objc func inputFriendCodeCheck() {
         //inputFriendCode가 상대방의 friendCode와 일치하는지 실시간으로 조회
         //(상대방이 나의 친구코드를 connectTyping VC에서 입력하게 되면 dbDocumentsCall()를 실행
+        let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
+        let documentId = inputDocumentID
         
         db.collection("UserData").document(documentId) // 상대방의 uid 가 document의 이름임
             .addSnapshotListener { (documentSnapshot, error) in
@@ -67,8 +67,29 @@ class WaitingViewController: UIViewController {
                 }
                 print("Current data: \(data)")
                 
-                if data["pairFriendCode"] as? String == self.myFriendCode { // 상대방이 pairFriendCode로 나의 friendCode를 업데이트하면, startVC로 세그
+                if data["pairFriendCode"] as? String == myFriendCode { // 상대방이 pairFriendCode로 나의 friendCode를 업데이트하면, startVC로 세그
+                    
+                    let uid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
+                    let connectedTime = Date()
+                    UserDefaults.shared.set(connectedTime, forKey: "connectedTime")
+                    
+                    let dcRef = self.db.collection("UserData").document(uid)
+                    
+                    // db상 나의 데이터
+                    dcRef.updateData([
+                        "documentID" : documentId,
+                        "connectedTime" : connectedTime
+                    ])  { (err) in // 나의 UserData에서 documentId를 업데이트
+                        if let err = err {
+                            print("Error updating document: \(err)")
+                        } else {
+                            print("Document successfully updated")
+                            UserDefaults.shared.set(documentId, forKey: "documentID")
+                        }
+                    }
                     print("pairFriendCode 연동 완료")
+                    // 연동이 완료됐으므로 documentId를 userDefaults에 저장
+                    
                     // StartViewController 화면으로 보내기
                     self.performSegue(withIdentifier: "waitingToStart", sender: nil)
                 }

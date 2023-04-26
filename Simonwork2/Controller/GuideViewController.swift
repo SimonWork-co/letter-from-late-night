@@ -31,6 +31,8 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         scrollView.delegate = self
         
+        self.navigationItem.hidesBackButton = true
+        
         addContentScrollView()
         setPageControl()
     }

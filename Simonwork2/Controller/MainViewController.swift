@@ -9,8 +9,9 @@ import UIKit
 import Firebase
 import GoogleSignIn
 import UserNotifications
+import GoogleMobileAds
 
-extension UILabel {
+extension UILabel { // 글자 색상 바꾸는 함수
     func asColor(targetStringList: [String?], color: UIColor) {
         let fullText = text ?? ""
         let attributedString = NSMutableAttributedString(string: fullText)
@@ -23,18 +24,10 @@ extension UILabel {
     }
 }
 
-extension UIViewController {
-    func moveToMain(){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let mainViewController = storyboard.instantiateViewController(identifier: "SecondNavigationController")
-        mainViewController.modalPresentationStyle = .fullScreen
-        self.show(mainViewController, sender: nil)
-    }
-}
-
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, GADBannerViewDelegate {
     
     let db = Firestore.firestore()
+    let sendUserNotification = SendUserNotification()
     
     @IBOutlet weak var dayCountingLabel: UILabel!
     @IBOutlet weak var todayDateLabel: UILabel!
@@ -42,21 +35,28 @@ class MainViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var settingButton: UIButton!
     
-    let userNotificationCenter = UNUserNotificationCenter.current()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        dayCountingLabel.textColor = UIColor(hex: "FDF2DC")
-        
-        changeLabelColor()
-        
-        settingButton.setTitle("", for: .normal)
         
         let f = DateFormatter()
         let today = Date()
         f.dateStyle = .long
         //f.timeStyle = .short
-        todayDateLabel.text = f.string(from: today)
+        
+        if let dayCountingLabel = dayCountingLabel,
+           let letterSendButton = letterSendButton,
+           let settingButton = settingButton,
+           let todayDateLabel = todayDateLabel {
+            dayCountingLabel.textColor = UIColor(hex: "FDF2DC")
+            letterSendButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+            settingButton.setTitle("", for: .normal)
+            todayDateLabel.text = f.string(from: today)
+        }
+        changeLabelColor()
+        
+        // 배너 광고 설정
+        setupBannerViewToBottom()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,97 +78,63 @@ class MainViewController: UIViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let message_signupTime = data["signupTime"] as? Timestamp, let messagePairFriendCode = data["pairFriendCode"] as? String {
+                        if let userConnectedTime = data["connectedTime"] as? Timestamp, let messagePairFriendCode = data["pairFriendCode"] as? String {
                             
                             let friendName = data["friendName"] as? String
                             let calendar = Calendar.current
                             let today = Date()
                             let dateFormatter = DateFormatter()
                             var daysCount : Int = 0
-                    
-                            let messagesignupTime = message_signupTime.dateValue() // dateValue() : 날짜는 정확하지만 시간 단위는 부정확할 수 있음.
+                            
+                            let connectedTime = userConnectedTime.dateValue()
+                            // dateValue() : 날짜는 정확하지만 시간 단위는 부정확할 수 있음.
                             
                             dateFormatter.dateFormat = "yyyy-MM-dd"
-                            let startDateString = dateFormatter.string(from: messagesignupTime)
+                            let startDateString = dateFormatter.string(from: connectedTime)
                             let startDate = dateFormatter.date(from: startDateString)
-
-                            daysCount = Calendar.current.dateComponents([.day], from: startDate!, to: today).day! + 1
                             
-                            self.dayCountingLabel.text = "\(friendName!)님과\n편지를 주고받은 지 \(daysCount)일째"
-                            self.dayCountingLabel.textColor = .black
-                            self.dayCountingLabel.asColor(targetStringList: [friendName, String(daysCount)], color: .purple)
+                            daysCount = Calendar.current.dateComponents([.day], from: startDate!, to: today).day! + 1
+                            if let dayCountingLabel = self.dayCountingLabel {
+                                dayCountingLabel.text = "\(friendName!)님과\n편지를 주고받은 지 \(daysCount)일째"
+                                dayCountingLabel.textColor = .black
+                                dayCountingLabel.asColor(targetStringList: [friendName, String(daysCount)], color: .purple)
+                            }
                         }
                     }
                 }
             }
         }
-        requestNotificationAuthorization() // 알림 권한 요청 함수
+        sendUserNotification.requestNotificationAuthorization() // 알림 권한 요청 함수
         // if n일 째가 넘어가면 알림 전송하는 함수 추후 구현
-        sendNotification(seconds: 5) // 현재는 3초뒤 테스트 푸시알림. 오늘 편지를 아직 작성하지 않았을떼 && 시간이 저녁 11시일때 발송
-    }
-    
-    func requestNotificationAuthorization() {
-        let authOptions = UNAuthorizationOptions(arrayLiteral: .alert, .sound)
-        userNotificationCenter.requestAuthorization(options: authOptions) { success, error in
-            if let error = error {
-                print("Error: \(error)")
-            }
-        }
-    }
-    
-    func sendNotification(seconds: Double) {
-        let notiContent = UNMutableNotificationContent() // 푸시알림 컨텐츠 넣는 클래스
-
-        notiContent.title = "밤편지"
-        notiContent.body = "답장을 기다리고 있는 상대방에게 밤편지를 전해주세요."
+        //sendNotification(seconds: 5) // 현재는 3초뒤 테스트 푸시알림. 오늘 편지를 아직 작성하지 않았을때 && 시간이 저녁 11시일때 발송
         
-        let TimeIntervalTrigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
-        let request1 = UNNotificationRequest(identifier: "intervalTimerDone",
-                                            content: notiContent,
-                                            trigger: TimeIntervalTrigger)
-        
-        let notiContent2 = UNMutableNotificationContent() // 푸시알림 컨텐츠 넣는 클래스
-
-        notiContent2.title = "자정이 되기까지 10분 전이에요"
-        notiContent2.body = "편지를 보낼 수 있는 시간이 얼마 안 남았어요!"
-        
-        // Create a calendar
-        let calendar = Calendar.current
-
-        // Get the current date
-        let currentDate = Date()
-
-        // Create a Set of Calendar.Component for hour and minute
-        var dateComponents = Set<Calendar.Component>()
-        dateComponents.insert(.hour)
-        dateComponents.insert(.minute)
-
-        // Create a DateComponents object for 11pm
-        var components = calendar.dateComponents(dateComponents, from: currentDate)
-        components.hour = 23 // 11pm
-        components.minute = 0
-
-        // Create a UNCalendarNotificationTrigger with the updated date components
-        let calendarNotificationTrigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true) // 오후 11시에 푸시 알림 보내는 트리거
-        let request2 = UNNotificationRequest(identifier: "elevenDone",
-                                            content: notiContent2,
-                                            trigger: calendarNotificationTrigger)
-        
-        // 알림센터에 추가
-        userNotificationCenter.add(request1) { error in
-            if let error = error {
-                print("Notification Error: ", error)
-            }
-        }
-        userNotificationCenter.add(request2) { error in
-            if let error = error {
-                print("Notification Error: ", error)
-            }
-        }
-        
+        sendUserNotification.letterSendingPush() // 유저가 오늘 편지를 보냈는지 여부에 따라 notification을 전달하는 함수
+        // 오늘 편지를 작성했는지 여부는 userDefaults의 LetterData, updateTime을 확인하면 될 듯
     }
     
     @IBAction func letterSendButtonPressed(_ sender: UIButton) {
+        let todayLetterUpdateTime = UserDefaults.shared.object(forKey: "todayLetterUpdateTime") as? Date
+
+        let todayLetterSend = timeCheck() // 마지막 편지를 보낸 날짜와 오늘 날짜를 비교하여 dateDifference를 출력
+        
+        if todayLetterUpdateTime != nil { // 편지를 보낸 적은 있음
+            if todayLetterSend == 0 {
+                // 편지를 마지막으로 보낸 일자가 오늘인 경우, writingVC로 이동 불가능
+                // 아래의 alert 구현
+                print("todayLetterUpdateTime2 (편지를 마지막으로 보낸 일자가 오늘인 경우, writingVC로 이동 불가능): \(todayLetterUpdateTime)")
+                print("todayLetterSend: \(todayLetterSend)")
+                alert(title: "오늘 이미 편지를 작성하셨어요!", message: "자정 이후에 다시 편지를 쓸 수 있어요", actionTitle: "확인")
+                
+            } else { // 편지를 마지막으로 보낸 일자가 오늘이 아닌 더 이전인 경우, writingVC로 이동 가능
+                print("todayLetterUpdateTime3 (편지를 마지막으로 보낸 일자가 오늘이 아닌 더 이전인 경우, writingVC로 이동 가능): \(todayLetterUpdateTime)")
+                print("todayLetterSend: \(todayLetterSend)")
+                moveToWritingVC()
+            }
+        } else { // 편지를 보낸 적이 없으므로 nil이 출력되며, writingVC로 이동 가능
+            moveToWritingVC()
+        }
+    }
+    func moveToWritingVC() {
         let nextVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WritingViewController") as! WritingViewController
         let navigationController = UINavigationController(rootViewController: nextVC)
         self.show(nextVC, sender: nil)

@@ -28,7 +28,7 @@ let setUpdateDate = UserDefaults.shared.object(forKey: "latestUpdateDate") as! D
 let setLetterColor = UserDefaults.shared.string(forKey: "latestLetterColor")!
 let setEmoji = UserDefaults.shared.string(forKey: "latestEmoji")!
 let uicolor = UIColor(hex: setLetterColor)
-let setSender = UserDefaults.shared.string(forKey: "latestSender")!
+let setSenderName = UserDefaults.shared.string(forKey: "latestSenderName")!
 
 // 위젯을 업데이트 할 시기를 WidgetKit에 알리는 역할
 struct Provider: TimelineProvider {
@@ -56,8 +56,8 @@ struct Provider: TimelineProvider {
         
         for hourOffset in 0 ..< 30 {
             // 1, 2, ... 30 분 뒤 enrty값으로 업데이트
-            let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset, to: set5am)!
-            let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSender)
+            let entryDate = Calendar.current.date(byAdding: .second, value: hourOffset, to: set5am)!
+            let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSenderName)
             entries.append(entry)
         }
         // 타임라인을 새로 다시 불러옴
@@ -89,11 +89,11 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
         case .systemSmall:
             VStack {
                 Text(entry.title)
-                    .font(.custom("NanumMyendjoBold", size: 15))
+                    .font(.custom("NanumMyeongjoBold", size: 11))
                     .foregroundColor(.black)
-                    .padding(1)
+                    .padding(0.1)
                 Text(entry.content)
-                    .font(.custom("NanumMyendjo", size: 10))
+                    .font(.custom("NanumMyeongjo", size: 10))
                     .foregroundColor(.black)
             }
             .padding()
@@ -101,21 +101,23 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
             VStack {
                 HStack{
                 Text(entry.emoji)
-                    .font(.custom("NanumMyendjoExtraBold", size: 40))
+                    .font(.custom("NanumMyeongjo", size: 25))
                 Text(entry.title)
-                    .font(.custom("NanumMyendjoExtraBold", size: 20))
+                    .font(.custom("NanumMyeongjoBold", size: 15))
+                    .foregroundColor(.black)
+                }.padding(1)
+                
+                Text(entry.content)
+                    .font(.custom("NanumMyeongjo", size: 12))
                     .foregroundColor(.black)
                     .padding(1)
-                }
-                Text(entry.content)
-                    .font(.custom("NanumMyendjo", size: 15))
-                    .foregroundColor(.black)
+                
                 HStack{
                 Text(entry.sender)
-                    .font(.custom("NanumMyendjo", size: 10))
+                    .font(.custom("NanumMyeongjoBold", size: 10))
                     .foregroundColor(.black)
                 Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date를 string으로 변환
-                    .font(.custom("NanumMyendjo", size: 10))
+                    .font(.custom("NanumMyeongjo", size: 10))
                     .foregroundColor(.black)
                 }
             }
@@ -124,22 +126,23 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
             VStack {
                 HStack{
                 Text(entry.emoji)
-                    .font(.custom("NanumMyendjoExtraBold", size: 50))
+                    .font(.custom("NanumMyeongjoExtraBold", size: 40))
                 Text(entry.title)
-                    .font(.custom("NanumMyendjoExtraBold", size: 25))
+                    .font(.custom("NanumMyeongjoBold", size: 20))
                     .foregroundColor(.black)
-                    .padding(5)
-                }.padding(5)
+                }.padding(3)
+                
                 Text(entry.content)
-                    .font(.custom("NanumMyendjo", size: 20))
+                    .font(.custom("NanumMyeongjo", size: 17))
                     .foregroundColor(.black)
                     .padding(5)
+                
                 HStack{
                 Text(entry.sender)
-                    .font(.custom("NanumMyendjo", size: 15))
+                    .font(.custom("NanumMyeongjoBold", size: 15))
                     .foregroundColor(.black)
                 Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date를 string으로 변환
-                    .font(.custom("NanumMyendjo", size: 15))
+                    .font(.custom("NanumMyeongjo", size: 15))
                     .foregroundColor(.black)
                 }
         }
@@ -147,11 +150,11 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
         case .systemExtraLarge :
             VStack {
             Text(entry.title)
-                .font(.custom("NanumMyendjoExtraBold", size: 30))
+                .font(.custom("NanumMyeongjoExtraBold", size: 30))
                 .foregroundColor(.black)
                 .padding(5)
             Text(entry.content)
-                .font(.custom("NanumMyendjoBold", size: 25))
+                .font(.custom("NanumMyeongjoBold", size: 25))
                 .foregroundColor(.black)
                 .padding(5)
             Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
@@ -197,5 +200,6 @@ struct LetterWidget_Previews: PreviewProvider {
         let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
         LetterWidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
+            
     }
 }
