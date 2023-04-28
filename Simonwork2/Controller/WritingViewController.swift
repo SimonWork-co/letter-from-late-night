@@ -92,11 +92,13 @@ class WritingViewController: UIViewController {
         titleTextField.delegate = self
         
         let contentPlaceholder: String = "작성하신 편지는 밤 사이 보낼게요."
-        textViewTextNumLabel.text = "0 / 100"
+        textViewTextNumLabel.text = "0 / 120"
         if contentTextView.text.isEmpty {
+            contentTextView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 17)
             contentTextView.text = contentPlaceholder
             contentTextView.alpha = 0.5
         }
+        letterBg.backgroundColor = #colorLiteral(red: 0.9714143724, green: 0.8500511808, blue: 0.5509617485, alpha: 1)
         contentTextView.delegate = self
         setupView()
         
@@ -160,6 +162,7 @@ class WritingViewController: UIViewController {
                 print(hexColor)
                 
                 let updateTime = Date()
+                let replaceContent = content.replacingOccurrences(of: "\n", with: "\\n")
                 db.collection("LetterData").addDocument(data: [
                     "sender": userFriendCode, // 나의 친구코드
                     "senderName": userName,
@@ -222,19 +225,24 @@ class WritingViewController: UIViewController {
     }
     
     @IBAction func setupColorButton(_ sender: UIButton) {
-        let colorDics: Dictionary<String, UIColor> = ["Pupple": #colorLiteral(red: 0.6891200542, green: 0.6007183194, blue: 0.8024315238, alpha: 1), "Yellow": #colorLiteral(red: 0.9509314895, green: 0.9013540745, blue: 0, alpha: 1), "Tree": #colorLiteral(red: 0, green: 0.5727785826, blue: 0.324849844, alpha: 1), "Sky": #colorLiteral(red: 0.2408812046, green: 0.6738553047, blue: 1, alpha: 1)]
+        let colorDics: Dictionary<String, UIColor> =
+        ["Apricot": #colorLiteral(red: 0.9714143724, green: 0.8500511808, blue: 0.5509617485, alpha: 1),
+         "Puppleberry": #colorLiteral(red: 0.862745098, green: 0.7529411765, blue: 1, alpha: 1),
+         "Mango": #colorLiteral(red: 0.9509314895, green: 0.9013540745, blue: 0, alpha: 1),
+         "Forest": #colorLiteral(red: 0, green: 0.5727785826, blue: 0.324849844, alpha: 1),
+         "Cerulean": #colorLiteral(red: 0.2408812046, green: 0.6738553047, blue: 1, alpha: 1)]
         
         let popUpButtonClosure = { [self] (action: UIAction) in
             var userSelectedColor = self.colorButton.currentTitle!
             letterBg.backgroundColor = colorDics[userSelectedColor]
-            print(userSelectedColor)
         }
         
         colorButton.menu = UIMenu(children: [
-            UIAction(title: "Pupple", handler: popUpButtonClosure),
-            UIAction(title: "Yellow", handler: popUpButtonClosure),
-            UIAction(title: "Tree", handler: popUpButtonClosure),
-            UIAction(title: "Sky", handler: popUpButtonClosure)
+            UIAction(title: "Apricot", handler: popUpButtonClosure),
+            UIAction(title: "Puppleberry", handler: popUpButtonClosure),
+            UIAction(title: "Mango", handler: popUpButtonClosure),
+            UIAction(title: "Forest", handler: popUpButtonClosure),
+            UIAction(title: "Cerulean", handler: popUpButtonClosure)
         ])
         colorButton.showsMenuAsPrimaryAction = true
     }
@@ -279,16 +287,18 @@ extension WritingViewController: EmojiPickerDelegate {
 extension WritingViewController: UITextViewDelegate{
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 17)
         textView.text = nil
         textView.alpha = 1
     }
+
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "작성하신 편지는 밤 사이 보낼게요."
             textView.alpha = 0.5
             
-            textViewTextNumLabel.text = "0 / 150"
+            textViewTextNumLabel.text = "0 / 120"
         } else {
             textViewText = textView.text
         }
@@ -302,11 +312,11 @@ extension WritingViewController: UITextViewDelegate{
 
         let charCount = countCharacters(changedText)
 
-        if charCount <= 150 { // 150자 이하일 경우에만 텍스트 업데이트
-            textViewTextNumLabel.text = "\(charCount) / 150"
+        if charCount <= 120 { // 120자 이하일 경우에만 텍스트 업데이트
+            textViewTextNumLabel.text = "\(charCount) / 120"
             return true
         } else {
-            return false // 150자 이상인 경우 텍스트 업데이트 및 입력 막기
+            return false // 120자 이상인 경우 텍스트 업데이트 및 입력 막기
         }
     }
     

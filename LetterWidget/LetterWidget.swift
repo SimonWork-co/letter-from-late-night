@@ -41,7 +41,7 @@ struct Provider: TimelineProvider {
     // 데이터를 가져와서 표출해주는 함수
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         //let entry = SimpleEntry(date: Date(), title: "밤 프리뷰", content: "콘텐츠 중")
-        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
         completion(entry)
     }
     // 타임라인 설정 관련 함수(홈에 있는 위젯을 언제 업데이트 시킬 것인지 구현)
@@ -56,7 +56,7 @@ struct Provider: TimelineProvider {
         
         for hourOffset in 0 ..< 30 {
             // 1, 2, ... 30 분 뒤 enrty값으로 업데이트
-            let entryDate = Calendar.current.date(byAdding: .second, value: hourOffset, to: set5am)!
+            let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset, to: set5am)!
             let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSenderName)
             entries.append(entry)
         }
@@ -92,76 +92,83 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
                     .font(.custom("NanumMyeongjoBold", size: 11))
                     .foregroundColor(.black)
                     .padding(0.1)
+                Spacer()
                 Text(entry.content)
                     .font(.custom("NanumMyeongjo", size: 10))
                     .foregroundColor(.black)
-            }
-            .padding()
+                    .multilineTextAlignment(.leading)
+                Spacer()
+            }.padding()
         case .systemMedium :
             VStack {
                 HStack{
-                Text(entry.emoji)
-                    .font(.custom("NanumMyeongjo", size: 25))
-                Text(entry.title)
-                    .font(.custom("NanumMyeongjoBold", size: 15))
-                    .foregroundColor(.black)
+                    Text(entry.emoji)
+                        .font(.custom("NanumMyeongjo", size: 25))
+                    Text(entry.title)
+                        .font(.custom("NanumMyeongjoBold", size: 15))
+                        .foregroundColor(.black)
+                    Spacer()
                 }.padding(1)
-                
+                Spacer()
                 Text(entry.content)
                     .font(.custom("NanumMyeongjo", size: 12))
                     .foregroundColor(.black)
                     .padding(1)
-                
-                HStack{
-                Text(entry.sender)
-                    .font(.custom("NanumMyeongjoBold", size: 10))
-                    .foregroundColor(.black)
-                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date를 string으로 변환
-                    .font(.custom("NanumMyeongjo", size: 10))
-                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Spacer()
+                HStack(alignment: .bottom){
+                    Spacer()
+                    Text(entry.sender)
+                        .font(.custom("NanumMyeongjoBold", size: 10))
+                        .foregroundColor(.black)
+                    Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date를 string으로 변환
+                        .font(.custom("NanumMyeongjo", size: 10))
+                        .foregroundColor(.black)
                 }
             }
             .padding()
         case .systemLarge :
             VStack {
                 HStack{
-                Text(entry.emoji)
-                    .font(.custom("NanumMyeongjoExtraBold", size: 40))
-                Text(entry.title)
-                    .font(.custom("NanumMyeongjoBold", size: 20))
-                    .foregroundColor(.black)
+                    Text(entry.emoji)
+                        .font(.custom("NanumMyeongjoExtraBold", size: 40))
+                    Text(entry.title)
+                        .font(.custom("NanumMyeongjoBold", size: 20))
+                        .foregroundColor(.black)
                 }.padding(3)
-                
+                Spacer()
                 Text(entry.content)
                     .font(.custom("NanumMyeongjo", size: 17))
                     .foregroundColor(.black)
                     .padding(5)
-                
-                HStack{
-                Text(entry.sender)
-                    .font(.custom("NanumMyeongjoBold", size: 15))
-                    .foregroundColor(.black)
-                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date를 string으로 변환
-                    .font(.custom("NanumMyeongjo", size: 15))
-                    .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
+                Spacer()
+                HStack(alignment: .bottom){
+                    Spacer()
+                    Text(entry.sender)
+                        .font(.custom("NanumMyeongjoBold", size: 15))
+                        .foregroundColor(.black)
+                    Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date를 string으로 변환
+                        .font(.custom("NanumMyeongjo", size: 15))
+                        .foregroundColor(.black)
                 }
-        }
-        .padding()
+            }
+            .padding()
         case .systemExtraLarge :
             VStack {
-            Text(entry.title)
-                .font(.custom("NanumMyeongjoExtraBold", size: 30))
-                .foregroundColor(.black)
-                .padding(5)
-            Text(entry.content)
-                .font(.custom("NanumMyeongjoBold", size: 25))
-                .foregroundColor(.black)
-                .padding(5)
-            Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
-                .font(.subheadline)
-                .foregroundColor(.black)
-        }
-        .padding()
+                Text(entry.title)
+                    .font(.custom("NanumMyeongjoExtraBold", size: 30))
+                    .foregroundColor(.black)
+                    .padding(5)
+                Text(entry.content)
+                    .font(.custom("NanumMyeongjoBold", size: 25))
+                    .foregroundColor(.black)
+                    .padding(5)
+                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
+                    .font(.subheadline)
+                    .foregroundColor(.black)
+            }
+            .padding()
         default:
             Text("default")
         }
@@ -194,12 +201,12 @@ struct LetterWidget: Widget {
 
 struct LetterWidget_Previews: PreviewProvider {
     static var previews: some View {
-//        LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "밤편지", content: "프리뷰 콘텐츠")) // title에다가 Db에서 불러온 편지의 title을, content에다가 db에서 불러온 content를 넣어야 할 둣
-//            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        //        LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "밤편지", content: "프리뷰 콘텐츠")) // title에다가 Db에서 불러온 편지의 title을, content에다가 db에서 불러온 content를 넣어야 할 둣
+        //            .previewContext(WidgetPreviewContext(family: .systemSmall))
         
         let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
         LetterWidgetEntryView(entry: entry)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
-            
+        
     }
 }

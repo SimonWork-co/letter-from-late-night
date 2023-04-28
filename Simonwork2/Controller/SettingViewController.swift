@@ -59,7 +59,11 @@ class SettingViewController: UIViewController {
         
         // 배너 광고 설정
         setupBannerViewToBottom()
+        viewChange()
         
+    }
+    
+    func viewChange() {
         if let userNameLabel = userNameLabel,
             let nicknameChangeLabel = nicknameChangeLabel,
            let nicknameChangeButton = nicknameChangeButton,
@@ -75,7 +79,7 @@ class SettingViewController: UIViewController {
            let quitButton = quitButton {
             
             let userName = UserDefaults.shared.string(forKey: "userName")!
-            userNameLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 40)
+            userNameLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 25)
             userNameLabel.text = "\(userName)님 안녕하세요"
             userNameLabel.asColor(targetStringList: [userName], color: .purple)
             
@@ -128,6 +132,8 @@ class SettingViewController: UIViewController {
                     } else {
                         print("유저의 userName 변경")
                         self.alert(title: "닉네임 변경 완료", message: "\(inputNewNickname!)으로 닉네임을 변경했어요",  actionTitle: "확인")
+                        UserDefaults.shared.set(inputNewNickname, forKey: "userName")
+                        
                         // 유저와 연결된 친구의 friendName 변경을 위해 유저의 pairFriendcode로 문서 이름 가져오기
                         db.collection("UserData").whereField("friendCode", isEqualTo: userPairFriendCode).getDocuments { (querySnapshot, error) in
                             if let error = error {
@@ -341,7 +347,11 @@ class SettingViewController: UIViewController {
                     
                     // UserData 내에서 해당 유저의 정보 삭제
                     let uid = UserDefaults.shared.string(forKey: "ALetterFromLateNightUid")!
+                    let friendCode = UserDefaults.shared.string(forKey: "friendCode")!
+                    
+                    self.deleteLetterData(friendCode: friendCode)
                     self.deleteUserData(uid: uid)
+                    
                 }
             }
         }
@@ -381,7 +391,7 @@ class SettingViewController: UIViewController {
                 // 소셜 로그인 확인 목적
                 self.signupVC.removeAppleLoggedIn()
                 
-                self.moveToMain()
+                self.moveToSignup()
             }
         }
     }
