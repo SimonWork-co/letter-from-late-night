@@ -164,6 +164,15 @@ class ConnectTypingViewController: UIViewController {
             nextVC?.inputPairFriendName = inputPairFriendName
         }
     }
+    
+    @IBAction func copyButtonPressed(_ sender: UIButton) {
+        let pasteBoard = UIPasteboard.general
+        pasteBoard.string = myFriendCodeLabel.text
+        print("pasteBoard.string: \(pasteBoard.string)")
+        
+        alert(title: "친구코드가 복사되었습니다", message: "상대방에게 친구코드를 알려주세요", actionTitle: "확인")
+    }
+    
 }
 
 extension ConnectTypingViewController: UITextFieldDelegate {

@@ -139,6 +139,7 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         let navigationController = UINavigationController(rootViewController: nextVC)
         self.show(nextVC, sender: nil)
     }
+
 }
 
 
