@@ -126,8 +126,12 @@ class ConnectTypingViewController: UIViewController {
                                 // 다운로드 링크를 유저가 상대방에게 공유하고, 공유받은 상대방은 링크를 클릭해서 앱스토어로 이동
                                 let downloadLink = UIAlertController(title: "다운로드 링크를 여기에 표시", message: "URL을 공유해주세요", preferredStyle: .alert)
                                 let copyLink = UIAlertAction(title: "복사", style: .default) { _ in
-                                    UIPasteboard.general.string = "저장 할 텍스트"
+                                    UIPasteboard.general.string = "저장할 텍스트"
+                                    // "저장할 텍스트" 자리에 다운로드 url을 넣어주면 복사가 완료됨
                                 }
+                                
+                                downloadLink.addAction(copyLink)
+                                self.present(downloadLink, animated: true)
                             })
                             let close = UIAlertAction(title: "아니오", style: .destructive, handler: nil)
                             sheet.addAction(sendInvitation)

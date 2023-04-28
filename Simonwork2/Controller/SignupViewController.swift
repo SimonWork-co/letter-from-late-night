@@ -228,8 +228,12 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //imageView.frame.origin.x = -120
-        //imageView.frame.origin.y = 83
+        googleAutoLogin()
+        appleAutoLogin()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
     }
     
@@ -407,7 +411,8 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     }
     
     func googleAutoLogin() {
-        if GIDSignIn.sharedInstance.hasPreviousSignIn() == true {
+        let friendName = UserDefaults.shared.string(forKey: "friendName") ?? "no FriendName"
+        if GIDSignIn.sharedInstance.hasPreviousSignIn() == true && friendName != "no FriendName" {
             GIDSignIn.sharedInstance.restorePreviousSignIn()
             moveToMain()
             print("구글 자동 로그인")
@@ -415,16 +420,17 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     }
     
     func appleAutoLogin() {
-        if isAppleLoggedIn() == true {
+        let friendName = UserDefaults.shared.string(forKey: "friendName") ?? "no FriendName"
+        if isAppleLoggedIn() == true && friendName != "no FriendName" {
             moveToMain()
         } else {}
     }
     
-    func isAppleLoggedIn() -> Bool {
+    func isAppleLoggedIn() -> Bool { // 애플 로그인 여부 파악용 함수
         return UserDefaults.shared.bool(forKey: "isAppleLoggedIn")
     }
     
-    func setAppleLoggedIn() {
+    func setAppleLoggedIn() { // 애플 로그인 버튼 클릭시 활성화
         UserDefaults.shared.set(true, forKey: "isAppleLoggedIn")
     }
     

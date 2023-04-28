@@ -129,7 +129,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                 let messageUpdateTime = message_UpdateTime.dateValue()
                                 let messageContent = data["content"] as! String
                                 let messageFriendCode = data["sender"] as! String
-                                let messageSenderName = data["sender"] as! String
+                                let messageSenderName = data["senderName"] as! String
                                 let messagePairFriendCode = data["receiver"] as! String
                                 let messageLetterColor = data["letterColor"] as! String
                                 let messageEmoji = data["emoji"] as! String
