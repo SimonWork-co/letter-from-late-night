@@ -94,7 +94,6 @@ class WritingViewController: UIViewController {
         let contentPlaceholder: String = "작성하신 편지는 밤 사이 보낼게요."
         textViewTextNumLabel.text = "0 / 120"
         if contentTextView.text.isEmpty {
-            contentTextView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 17)
             contentTextView.text = contentPlaceholder
             contentTextView.alpha = 0.5
         }

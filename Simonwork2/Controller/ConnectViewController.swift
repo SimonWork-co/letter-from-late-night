@@ -24,9 +24,9 @@ class ConnectViewController: SignupViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let connectStartButton = connectStartButton {
-            connectStartButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-        }
+//        if let connectStartButton = connectStartButton {
+//            connectStartButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

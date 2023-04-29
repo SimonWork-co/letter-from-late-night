@@ -98,7 +98,7 @@ extension SignupViewController {
             let signupTime = Date()
             
             let documentID = "no documentID"
-            let connectedTime = Date() - (24 * 60 * 60)
+            let connectedTime = Date()
             let todayLetterTitle = "no todayLetterTitle"
             let todayLetterContent = "no todayLetterContent"
             let todayLetterUpdateTime = Date() - (24 * 60 * 60)
@@ -309,21 +309,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                                                 todayLetterContent: todayLetterContent,
                                                 todayLetterUpdateTime: todayLetterUpdateTime
                                             )
-                                            print(UserDefaultsData(
-                                                UserName: UserName,
-                                                UserEmail: UserEmail,
-                                                friendCode: UserFriendCode,
-                                                friendName: friendName,
-                                                uid: currentUserUid,
-                                                pairFriendCode: opponentFriendCode,
-                                                signupTime: signupTime,
-                                                documentID: userPairFriendDocumentID,
-                                                connectedTime: connectedTime,
-                                                todayLetterTitle: todayLetterTitle,
-                                                todayLetterContent: todayLetterContent,
-                                                todayLetterUpdateTime: todayLetterUpdateTime
-                                            ))
-                                            
+                                                                                        
                                             if UserPairFriendCode == "no pairFriendCode" {
                                                 // 회원가입 과정 중 pairFriendCode를 입력하지 않고 이탈 (connectTypingVC로 이동 필요)
                                                 withIdentifier = "signupToConnectTyping"
@@ -394,15 +380,15 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if let googleSignupButton = googleSignupButton, let appleSignupButton = appleSignupButton {
-            googleSignupButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-            googleSignupButton.layer.cornerRadius = 10
-            googleSignupButton.layer.borderWidth = 0.75
-            
-            appleSignupButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-            appleSignupButton.layer.cornerRadius = 10
-            appleSignupButton.layer.borderWidth = 0.75
-        }
+        //if let googleSignupButton = googleSignupButton, let appleSignupButton = appleSignupButton {
+        //googleSignupButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+        googleSignupButton.layer.cornerRadius = 10
+        googleSignupButton.layer.borderWidth = 0.75
+        
+        //appleSignupButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
+        appleSignupButton.layer.cornerRadius = 10
+        appleSignupButton.layer.borderWidth = 0.75
+        //}
     }
     
     override func viewWillDisappear(_ animated: Bool) {

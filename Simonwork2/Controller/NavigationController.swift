@@ -12,10 +12,6 @@ class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let TabBarController = storyboard.instantiateViewController(identifier: "TabBarController")
-//        TabBarController.modalPresentationStyle = .fullScreen
-//        self.show(TabBarController, sender: nil)
+
     }
 }

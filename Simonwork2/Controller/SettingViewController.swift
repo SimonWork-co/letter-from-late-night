@@ -64,49 +64,49 @@ class SettingViewController: UIViewController {
     }
     
     func viewChange() {
-        if let userNameLabel = userNameLabel,
-            let nicknameChangeLabel = nicknameChangeLabel,
-           let nicknameChangeButton = nicknameChangeButton,
-           let emailChangeLabel = emailChangeLabel,
-           let emailChangeButton = emailChangeButton,
-           let menuLabel = menuLabel,
-           let manualButton = manualButton,
-           let disconnectButton = disconnectButton,
-           let logoutButton = logoutButton,
-           let helpButton = helpButton,
-           let myFriendCodeLabel = myFriendCodeLabel,
-           let myFriendCode = myFriendCode,
-           let quitButton = quitButton {
-            
-            let userName = UserDefaults.shared.string(forKey: "userName")!
-            userNameLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 25)
-            userNameLabel.text = "\(userName)님 안녕하세요"
-            userNameLabel.asColor(targetStringList: [userName], color: .purple)
-            
-            nicknameChangeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
-            nicknameChangeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-            
-            emailChangeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
-            emailChangeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-            
-            menuLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
-            
-            manualButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-            
-            disconnectButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-            
-            logoutButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-            
-            myFriendCodeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
-            let userFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
-            myFriendCode.text = userFriendCode
-            myFriendCode.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 40)
-            
-            helpButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-            
-            quitButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-            
-        }
+        //        if let userNameLabel = userNameLabel,
+        //            let nicknameChangeLabel = nicknameChangeLabel,
+        //           let nicknameChangeButton = nicknameChangeButton,
+        //           let emailChangeLabel = emailChangeLabel,
+        //           let emailChangeButton = emailChangeButton,
+        //           let menuLabel = menuLabel,
+        //           let manualButton = manualButton,
+        //           let disconnectButton = disconnectButton,
+        //           let logoutButton = logoutButton,
+        //           let helpButton = helpButton,
+        //           let myFriendCodeLabel = myFriendCodeLabel,
+        //           let myFriendCode = myFriendCode,
+        //           let quitButton = quitButton {
+        
+        let userName = UserDefaults.shared.string(forKey: "userName")!
+        //userNameLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 25)
+        userNameLabel.text = "\(userName)님 안녕하세요"
+        userNameLabel.asColor(targetStringList: [userName], color: .purple)
+        
+        //            nicknameChangeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
+        //            nicknameChangeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
+        //
+        //            emailChangeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
+        //            emailChangeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
+        //
+        //            menuLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
+        //
+        //            manualButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
+        //
+        //            disconnectButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
+        //
+        //            logoutButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
+        //
+        //            myFriendCodeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
+        let userFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
+        myFriendCode.text = userFriendCode
+        //            myFriendCode.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 40)
+        //            
+        //            helpButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
+        //            
+        //            quitButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
+        
+        //}
     }
     
     @IBAction func changeNicknameButtonPressed(_ sender: UIButton) {
@@ -198,7 +198,7 @@ class SettingViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-
+            
             if let textField = alertController.textFields?.first, let inputText = textField.text {
                 
                 if inputText != nil && inputText.contains("@") {

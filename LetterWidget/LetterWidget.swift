@@ -40,9 +40,20 @@ struct Provider: TimelineProvider {
     }
     // 데이터를 가져와서 표출해주는 함수
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        //let entry = SimpleEntry(date: Date(), title: "밤 프리뷰", content: "콘텐츠 중")
-        let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
-        completion(entry)
+        let entry: SimpleEntry
+            
+        switch context.family {
+            case .systemSmall:
+                entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+            case .systemMedium:
+                entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨 가면서 해\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+            case .systemLarge:
+                entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨가면서 해\n어제 만났을 때 보니깐 너무 피곤해보였어\n점심시간에 눈도 잠깐 붙이면서 쉬엄쉬엄해~\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+            @unknown default:
+                entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+            }
+            
+            completion(entry)
     }
     // 타임라인 설정 관련 함수(홈에 있는 위젯을 언제 업데이트 시킬 것인지 구현)
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) { //처음에 WidgetKit은 Provider에게 TimeLine을 요청하며, 이 메소드를 호출.
