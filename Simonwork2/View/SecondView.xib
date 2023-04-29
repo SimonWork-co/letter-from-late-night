@@ -43,7 +43,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="widget example" translatesAutoresizingMaskIntoConstraints="NO" id="gpX-U0-ydH">
-                    <rect key="frame" x="15" y="131" width="342" height="181"/>
+                    <rect key="frame" x="19" y="131" width="342" height="181"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="자정까지 편지를 쓰면  새벽에 조용히 전달할게요.  수정이나 회수가 어려우니  한 글자씩 진심을 담아 적어주세요." lineBreakMode="tailTruncation" numberOfLines="11" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MiM-xc-Xeb" userLabel="STEP1.  함께할 친구와 가입하기">

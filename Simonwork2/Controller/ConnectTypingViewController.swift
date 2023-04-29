@@ -30,9 +30,6 @@ class ConnectTypingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //startButton.layer.cornerRadius = 10
-        //startButton.layer.borderWidth = 0.75
-        
         let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
         myFriendCodeLabel.text = myFriendCode
         

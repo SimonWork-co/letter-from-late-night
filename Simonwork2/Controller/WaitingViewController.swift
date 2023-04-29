@@ -14,6 +14,7 @@ class WaitingViewController: UIViewController {
     var inputPairFriendName : String?
     var documentID : String?
     var timer = Timer()
+    var listener: ListenerRegistration? // ListenerRegistration 선언
     
     let db = Firestore.firestore()
     
@@ -54,7 +55,10 @@ class WaitingViewController: UIViewController {
         let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
         let documentId = inputDocumentID
         
-        db.collection("UserData").document(documentId) // 상대방의 uid 가 document의 이름임
+        // 기존 listener가 있으면 삭제
+        listener?.remove()
+        
+        listener = db.collection("UserData").document(documentId) // 상대방의 uid 가 document의 이름임
             .addSnapshotListener { (documentSnapshot, error) in
                 
                 guard let document = documentSnapshot else {
@@ -85,13 +89,13 @@ class WaitingViewController: UIViewController {
                         } else {
                             print("Document successfully updated")
                             UserDefaults.shared.set(documentId, forKey: "documentID")
+                            self.timer.invalidate()
+                            // StartViewController 화면으로 보내기
+                            self.listener?.remove()
+                            self.performSegue(withIdentifier: "waitingToStart", sender: nil)
                         }
                     }
                     print("pairFriendCode 연동 완료")
-                    // 연동이 완료됐으므로 documentId를 userDefaults에 저장
-                    
-                    // StartViewController 화면으로 보내기
-                    self.performSegue(withIdentifier: "waitingToStart", sender: nil)
                 }
             }
         return

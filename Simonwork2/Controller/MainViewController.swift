@@ -43,15 +43,15 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         f.dateStyle = .long
         //f.timeStyle = .short
         
-        if let dayCountingLabel = dayCountingLabel,
-           let letterSendButton = letterSendButton,
-           let settingButton = settingButton,
-           let todayDateLabel = todayDateLabel {
-            dayCountingLabel.textColor = UIColor(hex: "FDF2DC")
-            letterSendButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
-            settingButton.setTitle("", for: .normal)
-            todayDateLabel.text = f.string(from: today)
-        }
+        //        if let dayCountingLabel = dayCountingLabel,
+        //           let letterSendButton = letterSendButton,
+        //           let settingButton = settingButton,
+        //           let todayDateLabel = todayDateLabel {
+        dayCountingLabel.textColor = UIColor(hex: "FDF2DC")
+        //letterSendButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+        settingButton.setTitle("", for: .normal)
+        todayDateLabel.text = f.string(from: today)
+        //}
         changeLabelColor()
         
         // 배너 광고 설정
@@ -114,7 +114,7 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
     
     @IBAction func letterSendButtonPressed(_ sender: UIButton) {
         let todayLetterUpdateTime = UserDefaults.shared.object(forKey: "todayLetterUpdateTime") as? Date
-
+        
         let todayLetterSend = timeCheck() // 마지막 편지를 보낸 날짜와 오늘 날짜를 비교하여 dateDifference를 출력
         
         if todayLetterUpdateTime != nil { // 편지를 보낸 적은 있음
@@ -139,7 +139,7 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         let navigationController = UINavigationController(rootViewController: nextVC)
         self.show(nextVC, sender: nil)
     }
-
+    
 }
 
 
