@@ -41,7 +41,6 @@ class ConnectTypingViewController: UIViewController {
         if let inputPairFriendCode = pairFriendCodeTextField.text {
             // 내가 입력한 pairFriendCode가 DB상에 존재하는지 확인
             if inputPairFriendCode == myFriendCode { // 본인의 친구코드를 그대로 입력한 경우 오류 메시지 출력
-                print("나의 친구코드가 아닌 상대방의 친구코드를 입력해주세요")
                 let sheet = UIAlertController(title: "다른 친구코드를 입력해주세요!", message: "나의 친구코드가 아닌 상대방의 친구코드를 입력해주세요", preferredStyle: .alert)
                 sheet.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
                     print("yes 클릭")

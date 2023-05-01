@@ -21,7 +21,6 @@ extension UserDefaults {
 
 let dateFormatterFile = DateFormatterFile()
 
-
 let setTitle = UserDefaults.shared.string(forKey: "latestTitle")!
 let setContent = UserDefaults.shared.string(forKey: "latestContent")!
 let setUpdateDate = UserDefaults.shared.object(forKey: "latestUpdateDate") as! Date
@@ -33,33 +32,42 @@ let setSenderName = UserDefaults.shared.string(forKey: "latestSenderName")!
 // 위젯을 업데이트 할 시기를 WidgetKit에 알리는 역할
 struct Provider: TimelineProvider {
     // 위젯의 업데이트할 시기를 WidgetKit에 알려준다.
-    // WidgetKit이 Provider에 업데이트 할 시간, TimeLine을 요청
-    // 요청을 받은 Provider는 TimeLine을 WidgetKit에 제공
+    // WidgetKit이 Provider에 업데이트 할 시간, TimeLine을 요청, 요청을 받은 Provider는 TimeLine을 WidgetKit에 제공
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), title: "Placeholder Title", content: "Placeholder Content", emoji: "😃", sender: "Sender")
     }
     // 데이터를 가져와서 표출해주는 함수
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let entry: SimpleEntry
-            
+        
         switch context.family {
-            case .systemSmall:
-                entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
-            case .systemMedium:
-                entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨 가면서 해\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
-            case .systemLarge:
-                entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨가면서 해\n어제 만났을 때 보니깐 너무 피곤해보였어\n점심시간에 눈도 잠깐 붙이면서 쉬엄쉬엄해~\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
-            @unknown default:
-                entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
-            }
-            
-            completion(entry)
+        case .systemSmall:
+            entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+        case .systemMedium:
+            entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨 가면서 해\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+        case .systemLarge:
+            entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨가면서 해\n\n어제 만났을 때 보니깐 너무 피곤해보였어\n\n점심시간에 눈도 잠깐 붙이면서 쉬엄쉬엄해~\n\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+        @unknown default:
+            entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
+        }
+        
+        completion(entry)
     }
     // 타임라인 설정 관련 함수(홈에 있는 위젯을 언제 업데이트 시킬 것인지 구현)
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) { //처음에 WidgetKit은 Provider에게 TimeLine을 요청하며, 이 메소드를 호출.
         
-        // 문서 제목이 나의 uid >. 문서에서 나의 friendCode와 pairFriendCode 추출
-        var entries: [SimpleEntry] = []
+        var entries: [SimpleEntry]
+        
+        switch context.family {
+        case .systemSmall:
+            entries = [SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")]
+        case .systemMedium:
+            entries = [SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨 가면서 해\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")]
+        case .systemLarge:
+            entries = [SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨가면서 해\n\n어제 만났을 때 보니깐 너무 피곤해보였어\n\n점심시간에 눈도 잠깐 붙이면서 쉬엄쉬엄해~\n\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")]
+        @unknown default:
+            entries = [SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹은거지?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")]
+        }
         
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
@@ -69,6 +77,7 @@ struct Provider: TimelineProvider {
             // 1, 2, ... 30 분 뒤 enrty값으로 업데이트
             let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset, to: set5am)!
             let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSenderName)
+            entries = []
             entries.append(entry)
         }
         // 타임라인을 새로 다시 불러옴
@@ -96,7 +105,6 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
     @ViewBuilder
     var body: some View {
         switch self.family {
-            // ExtraLarge는 iPad의 위젯에만 표출
         case .systemSmall:
             VStack {
                 Text(entry.title)
@@ -152,7 +160,7 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
                     .font(.custom("NanumMyeongjo", size: 17))
                     .foregroundColor(.black)
                     .padding(5)
-                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()
                 HStack(alignment: .bottom){
                     Spacer()
@@ -163,21 +171,6 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
                         .font(.custom("NanumMyeongjo", size: 15))
                         .foregroundColor(.black)
                 }
-            }
-            .padding()
-        case .systemExtraLarge :
-            VStack {
-                Text(entry.title)
-                    .font(.custom("NanumMyeongjoExtraBold", size: 30))
-                    .foregroundColor(.black)
-                    .padding(5)
-                Text(entry.content)
-                    .font(.custom("NanumMyeongjoBold", size: 25))
-                    .foregroundColor(.black)
-                    .padding(5)
-                Text(dateFormatterFile.dateFormatting(date: entry.date)) // entry.date 를 string으로 변환
-                    .font(.subheadline)
-                    .foregroundColor(.black)
             }
             .padding()
         default:
@@ -205,19 +198,28 @@ struct LetterWidget: Widget {
         // 위젯을 추가/편집 할 때 위젯에 표시되는 이름을 세팅하는 메소드입니다.
         .description("원하는 사이즈의 위젯을 선택해주세요")
         // 위젯을 추가/편집 할 때 위젯에 표시되는 설명 부분을 세팅하는 메소드입니다.
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
         // 위젯이 지원하는 크기를 설정할 수 있는 메소드입니다.
     }
 }
 
 struct LetterWidget_Previews: PreviewProvider {
     static var previews: some View {
-        //        LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "밤편지", content: "프리뷰 콘텐츠")) // title에다가 Db에서 불러온 편지의 title을, content에다가 db에서 불러온 content를 넣어야 할 둣
-        //            .previewContext(WidgetPreviewContext(family: .systemSmall))
         
         let entry = SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람")
-        LetterWidgetEntryView(entry: entry)
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
         
+        Group {
+            LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람"))
+                .background(Color.init(uiColor: UIColor(hex: "F7D88C")!))
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+            
+            LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨 가면서 해\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람"))
+                .background(Color.init(uiColor: UIColor(hex: "F7D88C")!))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+            
+            LetterWidgetEntryView(entry: SimpleEntry(date: Date(), title: "밥은 잘 챙겨먹었어?", content: "바쁘더라도 끼니 굶지 말고\n몸 잘 챙겨가면서 해\n\n어제 만났을 때 보니깐 너무 피곤해보였어\n\n점심시간에 눈도 잠깐 붙이면서 쉬엄쉬엄해~\n\n오늘 하루도 화이팅!", emoji: "😃", sender: "하나뿐인 사람"))
+                .background(Color.init(uiColor: UIColor(hex: "F7D88C")!))
+                .previewContext(WidgetPreviewContext(family: .systemLarge))
+        }
     }
 }

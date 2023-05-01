@@ -7,12 +7,6 @@
 
 import UIKit
 
-//[iOS/UI] Swift 스크롤뷰로 이미지 페이지처럼 넘기기(Image Paging with UIScrollView)
-//https://fomaios.tistory.com/entry/Swift-%EC%8A%A4%ED%81%AC%EB%A1%A4%EB%B7%B0%EB%A1%9C-%EC%9D%B4%EB%AF%B8%EC%A7%80-%ED%8E%98%EC%9D%B4%EC%A7%80%EC%B2%98%EB%9F%BC-%EB%84%98%EA%B8%B0%EA%B8%B0Image-Paging-with-UIScrollView
-
-//[iOS] 커스텀 UIView - xib이용하기 (2가지 방법)
-//https://dongminyoon.tistory.com/50
-
 extension UIView {
     static func loadFromNib<T>() -> T? {
         let identifier = String(describing: T.self)
@@ -56,8 +50,6 @@ class GuideViewController: UIViewController, UIScrollViewDelegate {
                 height: scrollView.bounds.height)
             
             scrollView.contentSize.width = uiViewName!.frame.width * CGFloat(i + 1)
-            //scrollView.contentSize.height = uiViewName!.frame.height
-            
             scrollView.addSubview(uiViewName!)
         }
     }

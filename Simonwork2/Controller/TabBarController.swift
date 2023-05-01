@@ -22,7 +22,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
             let tabOne = UINavigationController(rootViewController: MainViewController()) // 네비게이션 컨트롤러 없는 뷰컨트롤러
             let tabTwo = UINavigationController(rootViewController: ArchiveViewController()) // 뷰컨 품은 네비게이션 컨트롤러
             let tabThree = UINavigationController(rootViewController: SentLetterViewController())
-            //탭바컨트롤러에 뷰 컨트롤러를 array형식으로 넣어주면 탭바가 완성됩니다.
+
             self.viewControllers = [tabOne, tabTwo, tabThree]
         }
 }

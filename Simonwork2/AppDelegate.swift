@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             task.setTaskCompleted(success: true)
             self.handleProcessingTask(task: task as! BGProcessingTask)
         }
-        //sleep(1)
+        sleep(1)
         
         return true
     }
@@ -95,14 +95,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func scheduleAppRefresh() {
         print("백그라운드 스케줄링 진입")
         let request = BGAppRefreshTaskRequest(identifier: "com.simonwork.Simonwork2.refresh_badge")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 15)
-        //request.earliestBeginDate = Date(timeInterval: 15, since: Date())
-        //request.earliestBeginDate = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 8), matchingPolicy: .nextTime) // Schedule the task to start at 8:00 AM
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 5)
         
         do {
             try BGTaskScheduler.shared.submit(request)
-            // Set a breakpoint in the code that executes after a successful call to submit(_:).
-            // 브레이크 포인트 작성
         } catch {
             print("\(Date()): Could not schedule app refresh: \(error)")
         }
@@ -114,14 +110,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let request = BGProcessingTaskRequest(identifier: "com.simonwork.Simonwork2.refresh_process")
         request.requiresExternalPower = false
         request.requiresNetworkConnectivity = true
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 15)
-        //request.earliestBeginDate = Date(timeInterval: 15, since: Date())
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 10)
         //request.earliestBeginDate = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 8), matchingPolicy: .nextTime) // Schedule the task to start at 8:00 AM
         
         do {
             try BGTaskScheduler.shared.submit(request)
-            // Set a breakpoint in the code that executes after a successful call to submit(_:).
-            // 브레이크 포인트 작성
         } catch {
             print("\(Date()): Could not schedule processing task: \(error)")
         }
@@ -161,17 +154,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             task.setTaskCompleted(success: true)
             print("setTaskCompleted에 진입")
         }
-        
     }
     
     @objc func handleScheduledLoadMessages() {
-        // This method will be called when the scheduled time is reached
         DispatchQueue.main.async {
             let archiveVC = ArchiveViewController()
             archiveVC.archiveUpdate()
-            
-            //tableView?.reloadData()
-            //tableView?.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
         }
     }
     
@@ -193,20 +181,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //앱이 켜져있는 상태에서 푸쉬 알림을 눌렀을 때
         if application.applicationState == .active {
             print("푸쉬알림 탭(앱 켜져있음)")
-            
         }
         
         //앱이 꺼져있는 상태에서 푸쉬 알림을 눌렀을 때
         if application.applicationState == .inactive {
-            //                if response.notification.request.content.title == "밤편지" {
-            //                }
             print("푸쉬알림 탭(앱 꺼져있음)")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let mainViewController = storyboard.instantiateViewController(identifier: "SignupViewController")
             mainViewController.modalPresentationStyle = .fullScreen
             NavigationController().show(mainViewController, sender: self)
         }
-        
         completionHandler()
     }
     
@@ -267,7 +251,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     }
                 }
             }
-            
         } catch let error as NSError {
             print("error: \(error)")
         }

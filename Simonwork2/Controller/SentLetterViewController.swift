@@ -16,7 +16,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     var messages: [LetterData] = []
     let refreshControl = UIRefreshControl()
     
-    let contentList = LetterDataSource.data // DB 연동
+    //let contentList = LetterDataSource.data // DB 연동
     let cellSpacingHeight: CGFloat = 1
     let formatter: DateFormatter = {
         let f = DateFormatter()
@@ -44,7 +44,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         loadMessages()
         
         // 배너 광고 설정
-        setupBannerViewToBottom()
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.sentLetterVC)
         
         // Add refresh control to table view
         if #available(iOS 10.0, *) {
@@ -131,14 +131,6 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                                 let setLetterColor = self.messages[0].letterColor
                                 let setEmoji = self.messages[0].emoji
                                 let setSenderName = self.messages[0].senderName
-                                
-                                //위젯에서 최상단의 편지를 보여주기 위해 Userdefaults로 저장 - sentLetterVC에서는 나중에 삭제 필요
-                                UserDefaults.shared.set(setTitle, forKey: "latestTitle")
-                                UserDefaults.shared.set(setContent, forKey: "latestContent")
-                                UserDefaults.shared.set(setUpdateTime, forKey: "latestUpdateDate")
-                                UserDefaults.shared.setValue(setLetterColor, forKey: "latestLetterColor")
-                                UserDefaults.shared.set(setEmoji, forKey: "latestEmoji")
-                                UserDefaults.shared.set(setSenderName, forKey: "latestSenderName")
                                 
                                 self.dispatchQueue()
                             }

@@ -12,7 +12,7 @@ import UserNotifications
 extension UIViewController {
     func timeCheck() -> Int {
         let currentDate = Date()
-        let latestLetterSentDate = UserDefaults.shared.object(forKey: "todayLetterUpdateTime") as? Date // ?? Date()
+        let latestLetterSentDate = UserDefaults.shared.object(forKey: "todayLetterUpdateTime") as? Date
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -61,42 +61,6 @@ class SendUserNotification : UIViewController {
             }
         }
     }
-    
-    func showPermissionDeniedAlert() {
-        let alertController = UIAlertController(
-            title: "알림을 받지 못하면, 상대방이 편지를 잘 받았는지 알려드릴 수 없어요",
-            message: "알림을 허용하려면 설정에서 권한을 설정해주세요",
-            preferredStyle: .alert
-        )
-        
-        let settingsAction = UIAlertAction(
-            title: "설정으로 이동",
-            style: .default,
-            handler: { _ in
-                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                    return
-                }
-                
-                if UIApplication.shared.canOpenURL(settingsUrl) {
-                    UIApplication.shared.open(settingsUrl, completionHandler: nil)
-                }
-            }
-        )
-        
-        let cancelAction = UIAlertAction(
-            title: "취소",
-            style: .cancel,
-            handler: nil
-        )
-        
-        alertController.addAction(settingsAction)
-        alertController.addAction(cancelAction)
-        
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true)
-        }
-    }
-
     
     func letterSendingPush(){ // 오늘 편지를 보냈는지 확인하는 함수
         

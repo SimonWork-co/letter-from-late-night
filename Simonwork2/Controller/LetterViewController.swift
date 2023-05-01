@@ -71,14 +71,18 @@ class LetterViewController: UIViewController, GADBannerViewDelegate {
         
         self.contentTextView.alignTextVerticallyInContainer()
         // 배너 광고 설정
-        setupBannerViewToBottom()
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.letterVC)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        titleLabel.font = UIFont(name: "NanumMyeongjoBold", size: 20)
+        contentTextView.font = UIFont(name: "NanumMyeongjo", size: 17)
+        
         titleLabel.text = receivedTitleText
         contentTextView.text = receivedContentText
+        
         dateLabel.text = formatter.string(from: receivedUpdateDate ?? Date())
         letterBg.backgroundColor = UIColor(hex: receivedLetterColor!)
         

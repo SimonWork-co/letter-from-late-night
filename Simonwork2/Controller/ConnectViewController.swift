@@ -9,28 +9,18 @@ import UIKit
 import Firebase
 
 class ConnectViewController: SignupViewController {
-    //let userName = userDefaultsDataLoad.userName()
     
     @IBOutlet weak var helloLabel: UILabel!
     @IBOutlet weak var connectStartButton: UIButton!
     
     let db = Firestore.firestore()
     
-    //let userName : String = UserDefaults.standard.object(forKey: "userName") as! String
-    
-    //let inputUserName = UserDefaults.shared.string(forKey: "userName")!
-    //let inputUserEmail = UserDefaults.shared.string(forKey: "userEmail")!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        if let connectStartButton = connectStartButton {
-//            connectStartButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-//        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //let userName : String = UserDefaults.standard.object(forKey: "userName") as! String
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
         userNameColored()

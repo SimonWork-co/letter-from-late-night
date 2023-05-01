@@ -102,7 +102,7 @@
 		8D4375EA29B9A9010028427F /* ArchiveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveController.swift; sourceTree = "<group>"; };
 		8D4CA9E629EFCA1C00DF2EF6 /* ADControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADControl.swift; sourceTree = "<group>"; };
 		8D6182F929C85D4A00A85BFB /* LetterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterData.swift; sourceTree = "<group>"; };
-		8D6182FD29C88FCA00A85BFB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8D6182FD29C88FCA00A85BFB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Controller/Constants.swift; sourceTree = "<group>"; };
 		8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterViewController.swift; sourceTree = "<group>"; };
 		8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentLetterViewController.swift; sourceTree = "<group>"; };
 		8D675F0329C7410A0078042A /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -230,6 +230,7 @@
 				8D9EFF1529B85049008D2050 /* AppDelegate.swift */,
 				8D9EFF1729B85049008D2050 /* SceneDelegate.swift */,
 				8D9EFF1E29B8504B008D2050 /* Assets.xcassets */,
+				8D6182FD29C88FCA00A85BFB /* Constants.swift */,
 				8D9EFF2029B8504B008D2050 /* LaunchScreen.storyboard */,
 				8D9EFF2329B8504B008D2050 /* Info.plist */,
 				DEF46A0F29C2119400D153B1 /* GoogleService-Info.plist */,
@@ -244,7 +245,6 @@
 				8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */,
 				8D675F0329C7410A0078042A /* UserData.swift */,
 				8D6182F929C85D4A00A85BFB /* LetterData.swift */,
-				8D6182FD29C88FCA00A85BFB /* Constants.swift */,
 				8D272A8129D5756A00DDD636 /* UserDefaultsData.swift */,
 				8DBD9A3D29D956D4005AF94A /* SendUserNotification.swift */,
 				8D6BD68429D9A09800D218C4 /* FirstView.swift */,

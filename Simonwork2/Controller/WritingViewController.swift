@@ -105,7 +105,7 @@ class WritingViewController: UIViewController {
         setupColorButton(colorButton)
         
         // 배너 광고 설정
-        setupBannerViewToBottom()
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.writingVC)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -287,10 +287,11 @@ extension WritingViewController: UITextViewDelegate{
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 17)
-        textView.text = nil
+        if textView.text == "작성하신 편지는 밤 사이 보낼게요." {
+            textView.text = nil
+        }
         textView.alpha = 1
     }
-
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {

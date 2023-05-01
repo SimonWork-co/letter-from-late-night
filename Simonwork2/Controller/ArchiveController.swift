@@ -15,7 +15,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     let db = Firestore.firestore()
     var messages: [LetterData] = []
     
-    let contentList = LetterDataSource.data // DB 연동
+    //let contentList = LetterDataSource.data // DB 연동
     let cellSpacingHeight: CGFloat = 1
     let formatter: DateFormatter = {
         let f = DateFormatter()
@@ -44,7 +44,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         archiveUpdate()
         
         // 배너 광고 설정
-        setupBannerViewToBottom()
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.archiveVC)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,7 +60,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         tableView.register(nibName, forCellReuseIdentifier: "CustomizedCell")
     }
     
-    func archiveUpdate() {
+    func archiveUpdate() { // 인앱에서 불러오기까지만 진행. 위젯에 보여주는 것은 따로 진행하는 함수 존재
         let calendar = Calendar.current
         let currentDate = Date()
         let currentDateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)

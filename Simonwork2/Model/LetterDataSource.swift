@@ -1,28 +1,28 @@
+////
+////  LetterDataSource.swift
+////  Simonwork2
+////
+////  Created by Sangmok Choi on 2023/03/10.
+////
 //
-//  LetterDataSource.swift
-//  Simonwork2
+//import UIKit
+//import Foundation
 //
-//  Created by Sangmok Choi on 2023/03/10.
+//class LetterDataSource {
+//    let title: String
+//    let content: String
+//    var date: Date
+//    
+//    init(title: String, content: String) {
+//        self.title = title
+//        self.content = content
+//        date = Date()
+//    }
+//}
 //
-
-import UIKit
-import Foundation
-
-class LetterDataSource {
-    let title: String
-    let content: String
-    var date: Date
-    
-    init(title: String, content: String) {
-        self.title = title
-        self.content = content
-        date = Date()
-    }
-}
-
-extension LetterDataSource {
-    static var data = [
-        LetterDataSource(title: "밥은 잘 먹었어?", content: "아무말 아무말"),
-        LetterDataSource(title: "밥은 잘 먹었어?", content: "아무말 아무말")
-    ]
-}
+//extension LetterDataSource {
+//    static var data = [
+//        LetterDataSource(title: "밥은 잘 먹었어?", content: "아무말 아무말"),
+//        LetterDataSource(title: "밥은 잘 먹었어?", content: "아무말 아무말")
+//    ]
+//}
