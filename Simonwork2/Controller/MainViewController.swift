@@ -44,15 +44,10 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         let today = Date()
         f.dateStyle = .long
         //f.timeStyle = .short
-        
-        //        if let dayCountingLabel = dayCountingLabel,
-        //           let letterSendButton = letterSendButton,
-        //           let settingButton = settingButton,
-        //           let todayDateLabel = todayDateLabel {
-        dayCountingLabel.textColor = UIColor(hex: "FDF2DC")
-        //letterSendButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
-        settingButton.setTitle("", for: .normal)
-        todayDateLabel.text = f.string(from: today)
+
+        dayCountingLabel?.textColor = UIColor(hex: "FDF2DC")
+        settingButton?.setTitle("", for: .normal)
+        todayDateLabel?.text = f.string(from: today)
         //}
         changeLabelColor()
         

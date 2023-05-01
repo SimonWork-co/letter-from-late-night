@@ -31,7 +31,7 @@ class ConnectTypingViewController: UIViewController {
         super.viewWillAppear(animated)
         
         let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
-        myFriendCodeLabel.text = myFriendCode
+        myFriendCodeLabel?.text = myFriendCode
         
     }
     
@@ -117,13 +117,14 @@ class ConnectTypingViewController: UIViewController {
                         } else { // 입력한 친구코드가 db 상에 없는 경우이므로 제대로 된 코드 입력하라는 알림 필요.
                             let sheet = UIAlertController(title: "존재하지 않는 친구코드에요", message: "앱 다운로드 링크를 친구에게 보낼까요?", preferredStyle: .alert)
                             let sendInvitation = UIAlertAction(title: "보내기", style: .default, handler: { _ in
-                                print("yes 클릭")
+
                                 // 여기서 다운로드 링크를 보여줘야 함. 유저가 복사하게끔 하는 것도 괜찮을듯?
                                 // 다운로드 링크를 유저가 상대방에게 공유하고, 공유받은 상대방은 링크를 클릭해서 앱스토어로 이동
-                                let downloadLink = UIAlertController(title: "다운로드 링크를 여기에 표시", message: "URL을 공유해주세요", preferredStyle: .alert)
+                                let downloadLink = UIAlertController(title: "다운로드 URL을 공유해주세요", message: "https://sites.google.com/view/aletterfromlatenight/%ED%99%88", preferredStyle: .alert)
                                 let copyLink = UIAlertAction(title: "복사", style: .default) { _ in
-                                    UIPasteboard.general.string = "저장할 텍스트"
+                                    UIPasteboard.general.string = "https://sites.google.com/view/aletterfromlatenight/%ED%99%88"
                                     // "저장할 텍스트" 자리에 다운로드 url을 넣어주면 복사가 완료됨
+                                    
                                 }
                                 
                                 downloadLink.addAction(copyLink)

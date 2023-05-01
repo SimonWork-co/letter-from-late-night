@@ -350,11 +350,11 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        googleSignupButton.layer.cornerRadius = 10
-        googleSignupButton.layer.borderWidth = 0.75
+        googleSignupButton?.layer.cornerRadius = 10
+        googleSignupButton?.layer.borderWidth = 0.75
         
-        appleSignupButton.layer.cornerRadius = 10
-        appleSignupButton.layer.borderWidth = 0.75
+        appleSignupButton?.layer.cornerRadius = 10
+        appleSignupButton?.layer.borderWidth = 0.75
     }
     
     override func viewWillDisappear(_ animated: Bool) {

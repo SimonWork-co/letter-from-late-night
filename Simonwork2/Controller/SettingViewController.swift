@@ -67,11 +67,11 @@ class SettingViewController: UIViewController {
         
         let userName = UserDefaults.shared.string(forKey: "userName")!
         //userNameLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 25)
-        userNameLabel.text = "\(userName)님 안녕하세요"
-        userNameLabel.asColor(targetStringList: [userName], color: .purple)
+        userNameLabel?.text = "\(userName)님 안녕하세요"
+        userNameLabel?.asColor(targetStringList: [userName], color: .purple)
 
         let userFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
-        myFriendCode.text = userFriendCode
+        myFriendCode?.text = userFriendCode
     }
     
     @IBAction func changeNicknameButtonPressed(_ sender: UIButton) {
@@ -195,7 +195,10 @@ class SettingViewController: UIViewController {
     
     
     @IBAction func manualButtonPressed(_ sender: UIButton) {
-        // 웹페이지로 이동
+        // 웹페이지 이동
+        if let url = URL(string: "https://sites.google.com/view/aletterfromlatenight/%ED%99%88") {
+              UIApplication.shared.open(url, options: [:], completionHandler: nil)
+           }
     }
     
     @IBAction func disconnectWIthFriendButtonPressed(_ sender: UIButton) {
@@ -275,7 +278,10 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func helpButtonPressed(_ sender: UIButton) {
-        // 웹페이지로 이동
+        // 웹페이지 이동
+        if let url = URL(string: "https://sites.google.com/view/aletterfromlatenightpolicy/%ED%99%88") {
+              UIApplication.shared.open(url, options: [:], completionHandler: nil)
+           }
     }
     
     @IBAction func quitButtonPressed(_ sender: UIButton) {
