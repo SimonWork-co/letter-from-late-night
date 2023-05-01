@@ -8,10 +8,10 @@
 import GoogleMobileAds
 
 extension UIViewController {
-    func setupBannerViewToBottom(height: CGFloat = 60) {
+    func setupBannerViewToBottom(height: CGFloat = 60, adUnitID: String) {
         let adSize = GADAdSizeFromCGSize(CGSize(width: view.frame.width, height: height))
         let bannerView = GADBannerView(adSize: adSize)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = adUnitID
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
         bannerView.translatesAutoresizingMaskIntoConstraints = false

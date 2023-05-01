@@ -28,6 +28,8 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
     
     let db = Firestore.firestore()
     let sendUserNotification = SendUserNotification()
+    let archiveVC = ArchiveViewController()
+    let sentLetterVC = SentLetterViewController()
     
     @IBOutlet weak var dayCountingLabel: UILabel!
     @IBOutlet weak var todayDateLabel: UILabel!
@@ -42,20 +44,15 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         let today = Date()
         f.dateStyle = .long
         //f.timeStyle = .short
-        
-        //        if let dayCountingLabel = dayCountingLabel,
-        //           let letterSendButton = letterSendButton,
-        //           let settingButton = settingButton,
-        //           let todayDateLabel = todayDateLabel {
-        dayCountingLabel.textColor = UIColor(hex: "FDF2DC")
-        //letterSendButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
-        settingButton.setTitle("", for: .normal)
-        todayDateLabel.text = f.string(from: today)
+
+        dayCountingLabel?.textColor = UIColor(hex: "FDF2DC")
+        settingButton?.setTitle("", for: .normal)
+        todayDateLabel?.text = f.string(from: today)
         //}
         changeLabelColor()
         
         // 배너 광고 설정
-        setupBannerViewToBottom()
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.mainVC)
         
     }
     
@@ -64,6 +61,8 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.largeTitleDisplayMode = .never
+        archiveVC.archiveUpdate()
+        sentLetterVC.loadMessages()
     }
     
     func changeLabelColor() {
@@ -109,7 +108,6 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         //sendNotification(seconds: 5) // 현재는 3초뒤 테스트 푸시알림. 오늘 편지를 아직 작성하지 않았을때 && 시간이 저녁 11시일때 발송
         
         sendUserNotification.letterSendingPush() // 유저가 오늘 편지를 보냈는지 여부에 따라 notification을 전달하는 함수
-        // 오늘 편지를 작성했는지 여부는 userDefaults의 LetterData, updateTime을 확인하면 될 듯
     }
     
     @IBAction func letterSendButtonPressed(_ sender: UIButton) {

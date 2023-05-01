@@ -24,9 +24,8 @@ class WaitingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        helloLabel.text = "\(inputPairFriendName!)님께\n기분을 북돋는 한 마디를\n남겨볼까요?"
-        helloLabel.asColor(targetStringList: [inputPairFriendName], color: .purple)
-        //self.navigationController?.isNavigationBarHidden = true
+        helloLabel?.text = "\(inputPairFriendName!)님께\n기분을 북돋는 한 마디를\n남겨볼까요?"
+        helloLabel?.asColor(targetStringList: [inputPairFriendName], color: .purple)
         
         timer.invalidate()
         let timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(inputFriendCodeCheck), userInfo: nil, repeats: false)
@@ -35,13 +34,10 @@ class WaitingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        //navigationController?.setNavigationBarHidden(true, animated: true)
         self.activityIndicator.startAnimating()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        //navigationController?.setNavigationBarHidden(true, animated: true) // 뷰 컨트롤러가 사라질 때 나타내기
         self.activityIndicator.stopAnimating()
     }
     

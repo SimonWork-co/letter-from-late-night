@@ -15,11 +15,9 @@ class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let userName : String = UserDefaults.shared.object(forKey: "userName") as! String
-        helloLabel.text = "안녕하세요! \(userName)님"
-        helloLabel.asColor(targetStringList: [userName], color: .purple)
-        
+        helloLabel?.text = "안녕하세요! \(userName)님"
+        helloLabel?.asColor(targetStringList: [userName], color: .purple)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,7 +31,6 @@ class StartViewController: UIViewController {
     }
     
     @IBAction func startButtonPressed(_ sender: UIButton) {
-        // Main 화면으로 보내기
         moveToMain()
     }
 }

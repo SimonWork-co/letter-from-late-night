@@ -173,19 +173,9 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             //inputUserName = (fullName.familyName)!+" "+(fullName.givenName)!
             inputUserName = fullName.givenName!
             inputUserEmail = email
-            
-            print("Apple FullName: \(fullName)")
-            print("Apple familyName: \(familyName)")
-            print("Apple givenName: \(givenName)")
-            
-            print("Apple inputUserName: \(inputUserName)")
-            print("Apple inputUserEmail: \(inputUserEmail)")
         } else {
             inputUserName = "사용자"
             inputUserEmail = "No Email"
-            
-            print("Apple inputUserName: \(inputUserName)")
-            print("Apple inputUserEmail: \(inputUserEmail)")
         }
         
         Auth.auth().signIn(with: credential) { authResult, error in
@@ -248,9 +238,8 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                 print("Error: \(error)")
             } else {
                 if let document = documentSnapshot, document.exists {
-                    print("document가 exists한 상태임")
+
                     if let data = document.data() {
-                        print("document의 data가 exists한 상태임")
                         
                         let UserName = data["userName"] as! String
                         UserDefaults.shared.set(UserName, forKey: "userName")
@@ -279,13 +268,9 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                                 print("error: \(error)")
                                 // 친구의 정보가 없거나 불러오는데 오류가 발생함.
                             } else {
-                                print("if let documents로 진입")
                                 if let documents = querySnapshot?.documents {
-                                    print("documents로 진입")
-                                    print(documents)
                                     if documents != [] {
                                         for document in documents {
-                                            print("document의 data로 진입")
                                             // 상대방의 documentID 추출
                                             let userPairFriendDocumentID = document.documentID
                                             
@@ -330,7 +315,6 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                                         }
                                     } else {// 친구의 정보가 없어서 빈 []를 불러옴
                                         // 상대방의 친구코드를 입력해야 하므로 signupToConnectTyping로 세그
-                                        
                                         // 현재 아래에 적힌 documentID는 가데이터이므로 connectingVC에서 문서 조회 시 문서가 조회되지 않음.
                                         // 상대방의 친구코드가 아직 존재하지 않으므로 connectingVC에서 상대방의 문서를 조회한후 문서ID를 나의 userData의 documentID로 업데이트해야함
                                         UserDefaultsData(
@@ -347,19 +331,6 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                                             todayLetterContent: todayLetterContent,
                                             todayLetterUpdateTime: todayLetterUpdateTime
                                         )
-                                        print(UserDefaultsData(
-                                            UserName: UserName,
-                                            UserEmail: UserEmail,
-                                            friendCode: UserFriendCode,
-                                            friendName: friendName,
-                                            uid: currentUserUid,
-                                            pairFriendCode: UserPairFriendCode,
-                                            signupTime: signupTime,
-                                            documentID: documentID,
-                                            connectedTime: connectedTime,
-                                            todayLetterTitle: todayLetterTitle,
-                                            todayLetterContent: todayLetterContent,
-                                            todayLetterUpdateTime: todayLetterUpdateTime))
                                         withIdentifier = "signupToConnectTyping"
                                         self.performSegue(withIdentifier: withIdentifier, sender: nil)
                                     }
@@ -379,16 +350,11 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        googleSignupButton?.layer.cornerRadius = 10
+        googleSignupButton?.layer.borderWidth = 0.75
         
-        //if let googleSignupButton = googleSignupButton, let appleSignupButton = appleSignupButton {
-        //googleSignupButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-        googleSignupButton.layer.cornerRadius = 10
-        googleSignupButton.layer.borderWidth = 0.75
-        
-        //appleSignupButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-        appleSignupButton.layer.cornerRadius = 10
-        appleSignupButton.layer.borderWidth = 0.75
-        //}
+        appleSignupButton?.layer.cornerRadius = 10
+        appleSignupButton?.layer.borderWidth = 0.75
     }
     
     override func viewWillDisappear(_ animated: Bool) {

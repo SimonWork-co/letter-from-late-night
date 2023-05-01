@@ -58,55 +58,20 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
         
         // 배너 광고 설정
-        setupBannerViewToBottom()
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.settingVC)
         viewChange()
         
     }
     
     func viewChange() {
-        //        if let userNameLabel = userNameLabel,
-        //            let nicknameChangeLabel = nicknameChangeLabel,
-        //           let nicknameChangeButton = nicknameChangeButton,
-        //           let emailChangeLabel = emailChangeLabel,
-        //           let emailChangeButton = emailChangeButton,
-        //           let menuLabel = menuLabel,
-        //           let manualButton = manualButton,
-        //           let disconnectButton = disconnectButton,
-        //           let logoutButton = logoutButton,
-        //           let helpButton = helpButton,
-        //           let myFriendCodeLabel = myFriendCodeLabel,
-        //           let myFriendCode = myFriendCode,
-        //           let quitButton = quitButton {
         
         let userName = UserDefaults.shared.string(forKey: "userName")!
         //userNameLabel.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 25)
-        userNameLabel.text = "\(userName)님 안녕하세요"
-        userNameLabel.asColor(targetStringList: [userName], color: .purple)
-        
-        //            nicknameChangeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
-        //            nicknameChangeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-        //
-        //            emailChangeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
-        //            emailChangeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-        //
-        //            menuLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
-        //
-        //            manualButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-        //
-        //            disconnectButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-        //
-        //            logoutButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-        //
-        //            myFriendCodeLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 15)
+        userNameLabel?.text = "\(userName)님 안녕하세요"
+        userNameLabel?.asColor(targetStringList: [userName], color: .purple)
+
         let userFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
-        myFriendCode.text = userFriendCode
-        //            myFriendCode.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 40)
-        //            
-        //            helpButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-        //            
-        //            quitButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)
-        
-        //}
+        myFriendCode?.text = userFriendCode
     }
     
     @IBAction func changeNicknameButtonPressed(_ sender: UIButton) {
@@ -121,7 +86,6 @@ class SettingViewController: UIViewController {
             
             let sheet = UIAlertController(title: "\(inputNewNickname!)", message: "입력하신 닉네임으로 변경할까요?", preferredStyle: .alert)
             let change = UIAlertAction(title: "변경", style: .default, handler: { _ in
-                print("yes 클릭")
                 // 유저의 userName 변경
                 db.collection("UserData").document(userUid).updateData([
                     "userName" : inputNewNickname!
@@ -231,7 +195,10 @@ class SettingViewController: UIViewController {
     
     
     @IBAction func manualButtonPressed(_ sender: UIButton) {
-        // 웹페이지로 이동
+        // 웹페이지 이동
+        if let url = URL(string: "https://sites.google.com/view/aletterfromlatenight/%ED%99%88") {
+              UIApplication.shared.open(url, options: [:], completionHandler: nil)
+           }
     }
     
     @IBAction func disconnectWIthFriendButtonPressed(_ sender: UIButton) {
@@ -311,7 +278,10 @@ class SettingViewController: UIViewController {
     }
     
     @IBAction func helpButtonPressed(_ sender: UIButton) {
-        // 웹페이지로 이동
+        // 웹페이지 이동
+        if let url = URL(string: "https://sites.google.com/view/aletterfromlatenightpolicy/%ED%99%88") {
+              UIApplication.shared.open(url, options: [:], completionHandler: nil)
+           }
     }
     
     @IBAction func quitButtonPressed(_ sender: UIButton) {
