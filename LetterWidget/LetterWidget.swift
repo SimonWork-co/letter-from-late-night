@@ -38,6 +38,7 @@ struct Provider: TimelineProvider {
     }
     // 데이터를 가져와서 표출해주는 함수
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+        
         let entry: SimpleEntry
         
         switch context.family {
@@ -71,13 +72,12 @@ struct Provider: TimelineProvider {
         
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        let set5am = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 5), matchingPolicy: .nextTime)! // Schedule the task to start at 5:00 AM
+        let set5am = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 4, minute: 30), matchingPolicy: .nextTime)! // Schedule the task to start at 4:30 AM
         
         for hourOffset in 0 ..< 30 {
             // 1, 2, ... 30 분 뒤 enrty값으로 업데이트
             let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset, to: set5am)!
             let entry = SimpleEntry(date: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSenderName)
-            entries = []
             entries.append(entry)
         }
         // 타임라인을 새로 다시 불러옴
@@ -191,7 +191,7 @@ struct LetterWidget: Widget {
             // 위젯을 새로고침할 타임라인을 결정하고 생성하는 객체입니다. 위젯 업데이트를 위한 시간을 지정해주면 알아서 그 시간에 맞춰서 업데이트를 시켜준다고 합니다.
         ) { entry in LetterWidgetEntryView(entry: entry)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.init(uiColor: uicolor!)) // 위젯의 배경색상 가져오기
+                .background(Color.init(uiColor: (uicolor ?? UIColor(hex: "F7D88C"))!)) // 위젯의 배경색상 가져오기
             // 이 클로저에는 widget을 렌더링하는 SwiftUI View 코드가 포함되어 있습니다. 그리고 TimelineEntry 매개변수를 전달하는데 예제에서는 SimpleEntry 를 전달하게 됩니다. 그리고 넘어온 데이터를 이용해서 View를 구성하면 됩니다.
         } // 위젯갤러리에 노출
         .configurationDisplayName("밤편지")

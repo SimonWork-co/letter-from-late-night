@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             task.setTaskCompleted(success: true)
             self.handleProcessingTask(task: task as! BGProcessingTask)
         }
-        sleep(1)
+        sleep(2)
         
         return true
     }
@@ -112,7 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         request.requiresNetworkConnectivity = true
         request.earliestBeginDate = Date(timeIntervalSinceNow: 10)
         //request.earliestBeginDate = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 8), matchingPolicy: .nextTime) // Schedule the task to start at 8:00 AM
-        
         do {
             try BGTaskScheduler.shared.submit(request)
         } catch {
@@ -146,7 +145,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
         }
-        
         DispatchQueue.global(qos: .background).async {
             // 가벼운 백그라운드 작업 작성
             print("메시지 로드 진입")
