@@ -28,7 +28,7 @@ class WaitingViewController: UIViewController {
         helloLabel?.asColor(targetStringList: [inputPairFriendName], color: .purple)
         
         timer.invalidate()
-        let timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(inputFriendCodeCheck), userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(inputFriendCodeCheck), userInfo: nil, repeats: false)
         // inputFriendCode를 friendCode로 가지고 있는 유저의 문서를 실시간 조회 -> 실시간으로 조회하는 중에 유저가 pairFriendCode에다가 나의 friendCode를 넣으면 mainVC로 세그
     }
     
@@ -41,21 +41,17 @@ class WaitingViewController: UIViewController {
         self.activityIndicator.stopAnimating()
     }
     
-    @objc func fire() {
-        print("fire!!")
-    }
-    
     @objc func inputFriendCodeCheck() {
         //inputFriendCode가 상대방의 friendCode와 일치하는지 실시간으로 조회
         //(상대방이 나의 친구코드를 connectTyping VC에서 입력하게 되면 dbDocumentsCall()를 실행
+        print("inputFriendCodeCheck 진입")
         let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
         let documentId = inputDocumentID
         
-        // 기존 listener가 있으면 삭제
-        listener?.remove()
-        
         listener = db.collection("UserData").document(documentId) // 상대방의 uid 가 document의 이름임
             .addSnapshotListener { (documentSnapshot, error) in
+                
+                self.listener?.remove()
                 
                 guard let document = documentSnapshot else {
                     print("Error fetching document: \(error!)")
@@ -86,14 +82,17 @@ class WaitingViewController: UIViewController {
                             print("Document successfully updated")
                             UserDefaults.shared.set(documentId, forKey: "documentID")
                             self.timer.invalidate()
+                            print("self.timer.invalidate")
                             // StartViewController 화면으로 보내기
                             self.listener?.remove()
+                            print("self.listener?.remove")
                             self.performSegue(withIdentifier: "waitingToStart", sender: nil)
+                            print("self.performSegue")
                         }
                     }
                     print("pairFriendCode 연동 완료")
                 }
             }
-        return
+        
     }
 }

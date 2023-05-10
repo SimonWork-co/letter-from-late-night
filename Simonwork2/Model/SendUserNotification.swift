@@ -14,16 +14,16 @@ extension UIViewController {
         let currentDate = Date()
         let latestLetterSentDate = UserDefaults.shared.object(forKey: "todayLetterUpdateTime") as? Date
         
+        let userTimeZone = TimeZone.current
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC") // UTC 시간대로 설정
+        dateFormatter.timeZone = userTimeZone
         
         let todayDate = dateFormatter.string(from: currentDate)
         let lastLetterSent = dateFormatter.string(from: latestLetterSentDate ?? Date())
         print("todayDate: \(todayDate)")
         print("lastLetterSent: \(lastLetterSent)")
 
-        
         if let todayDate = dateFormatter.date(from: todayDate), let lastLetterSentDate = dateFormatter.date(from: lastLetterSent) {
             // String을 Date로 성공적으로 변환한 경우
             print("변환된 날짜: \(todayDate)")
@@ -67,9 +67,10 @@ class SendUserNotification : UIViewController {
         let currentDate = Date()
         let latesetLetterSentDate = UserDefaults.shared.object(forKey: "todayLetterUpdateTime") as? Date
         
+        let userTimeZone = TimeZone.current
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC") // UTC 시간대로 설정
+        dateFormatter.timeZone = userTimeZone
         
         let todayDate = dateFormatter.string(from: currentDate)
         let lastLetterSent = dateFormatter.string(from: latesetLetterSentDate ?? Date())
@@ -84,7 +85,6 @@ class SendUserNotification : UIViewController {
         } else if case 1...3 = daysDifference { // 마지막 편지 발송이 1~3일인 경우 노티 발송
             // notification 발송
             let notiContent1 = UNMutableNotificationContent() // 푸시알림 컨텐츠 넣는 클래스
-
             notiContent1.title = "자정이 되기까지 10분 전이에요"
             notiContent1.body = "편지를 보낼 수 있는 시간이 얼마 안 남았어요!"
             

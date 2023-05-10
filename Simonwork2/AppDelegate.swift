@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-
+        
         // 앱 푸시 상태를 확인하는 함수
         NotificationCenter.default.addObserver(
             self,
@@ -33,32 +33,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
-        
         FirebaseApp.configure()
         
         UNUserNotificationCenter.current().delegate = self
-        //registerBackgroundTasks()
-        //1. 등록
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.simonwork.Simonwork2.refresh_badge", using: nil) { task in
+        
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.simonwork.Simonwork2.refresh_badge", using: DispatchQueue.global()) { task in
             print("백그라운드 등록 진입")
             task.setTaskCompleted(success: true)
             self.handleAppRefresh(task: task as! BGAppRefreshTask)
         }
         
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.simonwork.Simonwork2.refresh_process", using: nil) { task in
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.simonwork.Simonwork2.refresh_process", using: DispatchQueue.global()) { task in
             print("백그라운드 등록 진입")
             task.setTaskCompleted(success: true)
             self.handleProcessingTask(task: task as! BGProcessingTask)
         }
-        sleep(2)
+        
+        sleep(1)
         
         return true
     }
-    
-    //    func applicationDidEnterBackground(_ application: UIApplication) {
-    //        scheduleAppRefresh()
-    //        scheduleProcessingTaskIfNeeded()
-    //    }
     
     @objc private func checkNotificationSetting() {
         UNUserNotificationCenter.current()
@@ -87,38 +81,89 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     print("푸시 Unknow Status")
                     NotificationCenter.default.removeObserver(self)
                 }
-                
             }
     }
     
     //2. 스케줄링
     func scheduleAppRefresh() {
         print("백그라운드 스케줄링 진입")
-        let request = BGAppRefreshTaskRequest(identifier: "com.simonwork.Simonwork2.refresh_badge")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 5)
+        BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: "com.simonwork.Simonwork2.refresh_badge")
+        let userTimeZone = TimeZone.current
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents(in: userTimeZone, from: now)
+        let currentDate = calendar.date(from: components)!
+        let currentHour = components.hour!
         
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            print("\(Date()): Could not schedule app refresh: \(error)")
+        var nextExecutionTime = calendar.date(bySettingHour: 1, minute: 0, second: 0, of: currentDate)! // 태스크 시작 시간
+        var endTime = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: currentDate)! // 태스크 마지막 시간
+
+        if currentHour < 1 {
+        } else {
+            nextExecutionTime = calendar.date(byAdding: .hour, value: 24, to: nextExecutionTime)!
+            endTime = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: nextExecutionTime)!
+        }
+        
+        if now >= endTime { // 현재 시간이 태스크 마지막 시간을 지났으므로 종료
+            return
+        } else {
+            let requestInterval: TimeInterval = 30 * 60 // 30분 간격 예약
+            while nextExecutionTime < endTime { // nextExecutionTime은 30분씩 점점 커지게 됨
+                let request = BGProcessingTaskRequest(identifier: "com.simonwork.Simonwork2.refresh_badge")
+                request.earliestBeginDate = nextExecutionTime
+                
+                do {
+                    try BGTaskScheduler.shared.submit(request)
+                    print("scheduleAppRefresh // Scheduled task for \(request)")
+                } catch {
+                    print("Could not schedule processing task: \(error)")
+                }
+                nextExecutionTime = nextExecutionTime.addingTimeInterval(requestInterval)
+            }
         }
     }
     
-    //2. 스케줄링
     func scheduleProcessingTaskIfNeeded() {
-        print("백그라운드 스케줄링 진입")
-        let request = BGProcessingTaskRequest(identifier: "com.simonwork.Simonwork2.refresh_process")
-        request.requiresExternalPower = false
-        request.requiresNetworkConnectivity = true
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 10)
-        //request.earliestBeginDate = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 8), matchingPolicy: .nextTime) // Schedule the task to start at 8:00 AM
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            print("\(Date()): Could not schedule processing task: \(error)")
+        print("scheduleProcessingTaskIfNeeded 진입")
+        BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: "com.simonwork.Simonwork2.refresh_process")
+        
+        let userTimeZone = TimeZone.current
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents(in: userTimeZone, from: now)
+        let currentDate = calendar.date(from: components)!
+        let currentHour = components.hour!
+        
+        var nextExecutionTime = calendar.date(bySettingHour: 1, minute: 0, second: 0, of: currentDate)! // 태스크 시작 시간
+        var endTime = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: currentDate)! // 태스크 마지막 시간
+
+        if currentHour < 1 {
+        } else {
+            nextExecutionTime = calendar.date(byAdding: .hour, value: 24, to: nextExecutionTime)!
+            endTime = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: nextExecutionTime)!
         }
+        
+        if now >= endTime { // 현재 시간이 태스크 마지막 시간을 지났으므로 종료
+            return
+        } else {
+            let requestInterval: TimeInterval = 60 * 60 // 60분 간격 예약
+            while nextExecutionTime < endTime { // nextExecutionTime은 60분씩 점점 커지게 됨
+                let request = BGProcessingTaskRequest(identifier: "com.simonwork.Simonwork2.refresh_process")
+                request.requiresExternalPower = false
+                request.requiresNetworkConnectivity = false
+                request.earliestBeginDate = nextExecutionTime
+                
+                do {
+                    try BGTaskScheduler.shared.submit(request)
+                    print("scheduleProcessingTaskIfNeeded // Scheduled task for \(request)")
+                } catch {
+                    print("Could not schedule processing task: \(error)")
+                }
+                nextExecutionTime = nextExecutionTime.addingTimeInterval(requestInterval)
+            }
+        }
+
     }
-    // 3.실행&완료
     func handleAppRefresh(task: BGAppRefreshTask) {
         // 스케줄링 함수. 다음 동작 수행, 반복시 필요
         print("실행 완료 진입")
@@ -128,36 +173,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             task.setTaskCompleted(success: false)
         }
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             // 가벼운 백그라운드 작업 작성
             print("메시지 로드 진입")
-            self.handleScheduledLoadMessages()
-            
+            self.updateWidget()
             WidgetCenter.shared.reloadAllTimelines()
             
             task.setTaskCompleted(success: true)
-            print("setTaskCompleted에 진입")
         }
     }
+
     // 3.실행&완료
     func handleProcessingTask(task: BGProcessingTask) {
         print("실행 완료 진입")
+        scheduleProcessingTaskIfNeeded()
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
         }
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             // 가벼운 백그라운드 작업 작성
             print("메시지 로드 진입")
-            self.handleScheduledLoadMessages()
+            self.updateWidget()
             task.setTaskCompleted(success: true)
-            print("setTaskCompleted에 진입")
         }
     }
-    
-    @objc func handleScheduledLoadMessages() {
-        DispatchQueue.main.async {
-            let archiveVC = ArchiveViewController()
-            archiveVC.archiveUpdate()
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        BGTaskScheduler.shared.getPendingTaskRequests { (requests) in
+            for request in requests {
+                print("Pending task: \(request.identifier)")
+            }
         }
     }
     

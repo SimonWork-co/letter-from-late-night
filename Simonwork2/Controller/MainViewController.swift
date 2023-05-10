@@ -114,7 +114,7 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         let todayLetterUpdateTime = UserDefaults.shared.object(forKey: "todayLetterUpdateTime") as? Date
         
         let todayLetterSend = timeCheck() // 마지막 편지를 보낸 날짜와 오늘 날짜를 비교하여 dateDifference를 출력
-        
+
         if todayLetterUpdateTime != nil { // 편지를 보낸 적은 있음
             if todayLetterSend == 0 {
                 // 편지를 마지막으로 보낸 일자가 오늘인 경우, writingVC로 이동 불가능
@@ -122,7 +122,7 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
                 print("todayLetterUpdateTime2 (편지를 마지막으로 보낸 일자가 오늘인 경우, writingVC로 이동 불가능): \(todayLetterUpdateTime)")
                 print("todayLetterSend: \(todayLetterSend)")
                 alert(title: "오늘 이미 편지를 작성하셨어요!", message: "자정 이후에 다시 편지를 쓸 수 있어요", actionTitle: "확인")
-                
+
             } else { // 편지를 마지막으로 보낸 일자가 오늘이 아닌 더 이전인 경우, writingVC로 이동 가능
                 print("todayLetterUpdateTime3 (편지를 마지막으로 보낸 일자가 오늘이 아닌 더 이전인 경우, writingVC로 이동 가능): \(todayLetterUpdateTime)")
                 print("todayLetterSend: \(todayLetterSend)")

@@ -29,7 +29,7 @@ class ConnectTypingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        navigationController?.setNavigationBarHidden(false, animated: true)
         let myFriendCode = UserDefaults.shared.string(forKey: "friendCode")!
         myFriendCodeLabel?.text = myFriendCode
         
@@ -41,7 +41,10 @@ class ConnectTypingViewController: UIViewController {
         if let inputPairFriendCode = pairFriendCodeTextField.text {
             // 내가 입력한 pairFriendCode가 DB상에 존재하는지 확인
             if inputPairFriendCode == myFriendCode { // 본인의 친구코드를 그대로 입력한 경우 오류 메시지 출력
-                let sheet = UIAlertController(title: "다른 친구코드를 입력해주세요!", message: "나의 친구코드가 아닌 상대방의 친구코드를 입력해주세요", preferredStyle: .alert)
+                let sheet = UIAlertController(
+                    title: "다른 친구코드를 입력해주세요!",
+                    message: "나의 친구코드가 아닌 상대방의 친구코드를 입력해주세요",
+                    preferredStyle: .alert)
                 sheet.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
                     print("yes 클릭")
                 }))
@@ -50,6 +53,63 @@ class ConnectTypingViewController: UIViewController {
                 }
                 self.present(sheet, animated: true)
                 
+            } else if inputPairFriendCode == "######" { // 더미 데이터 생성 및 자동 연결 필요
+                
+                let userName = "Dummy"
+                let currentDate = Date()
+                let friendName = UserDefaults.shared.string(forKey: "userName")!
+                let documentID = UserDefaults.shared.string(forKey: "documentID")!
+                let todayLetterTitle = "no todayLetterTitle"
+                let todayLetterContent = "no todayLetterContent"
+                let todayLetterUpdateTime = Date() - (24 * 60 * 60)
+                inputDocumentID = "############################"
+                inputPairFriendName = userName
+                
+                // 1. 더미 데이터 생성 및 친구 등록 완료
+                db.collection("UserData").document(inputDocumentID).setData([
+                    "userName": userName,
+                    "userEmail": "Dummy Email",
+                    "uid": inputDocumentID,
+                    "friendName" : friendName,
+                    "friendCode": inputPairFriendCode,
+                    "pairFriendCode": myFriendCode,
+                    "signupTime": currentDate,
+                    "letterCount": 0,
+                    "documentID" : documentID,
+                    "connectedTime" : currentDate,
+                    "todayLetterTitle" : todayLetterTitle,
+                    "todayLetterContent" : todayLetterContent,
+                    "todayLetterUpdateTime" : todayLetterUpdateTime
+                ]) { err in
+                    if let err = err {
+                        print("Error writing document: \(err)")
+                    } else {
+                        print("Document successfully written!")
+                        
+                        let uid : String = UserDefaults.shared.object(forKey: "ALetterFromLateNightUid") as! String // 나의 uid / document 이름
+                        let dcRef = self.db.collection("UserData").document("\(uid)")
+                        
+                        // db상 나의 데이터
+                        dcRef.updateData([
+                            "pairFriendCode" : inputPairFriendCode,
+                            "friendName" : userName
+                        ])  { (err) in // 나의 UserData에서 pairFriendCode를 inputPairFriendCode로 업데이트
+                            if let err = err {
+                                print("Error updating document: \(err)")
+                            } else {
+                                print("Document successfully updated")
+                                //나의 pairFriendCode 및 pairFriendCode 업데이트
+                                UserDefaults.shared.set(inputPairFriendCode, forKey: "pairFriendCode")
+                                UserDefaults.shared.set(userName, forKey: "friendName")
+                                
+                                DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
+                                    self.pairFriendCodeTextField.text = ""
+                                }
+                                self.segueToWaitingVC()
+                            }
+                        }
+                    }
+                }
             } else { // 입력된 pairFriendCode를 검색
                 db.collection("UserData").whereField("friendCode", isEqualTo: inputPairFriendCode).getDocuments() { (querySnapshot, error) in
                     

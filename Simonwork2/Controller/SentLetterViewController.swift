@@ -159,7 +159,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     func numberOfSections(in tableView: UITableView) -> Int {
         let placeholderLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
         placeholderLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-        placeholderLabel.text = "No data to display"
+        placeholderLabel.text = "아직 보낸 편지가 없어요"
         placeholderLabel.textAlignment = .center
         placeholderLabel.textColor = .gray
         
