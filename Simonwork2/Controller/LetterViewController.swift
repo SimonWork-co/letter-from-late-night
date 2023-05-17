@@ -18,7 +18,7 @@ extension UITextView {
     }
 }
 
-class LetterViewController: UIViewController, GADBannerViewDelegate {
+class LetterViewController: UIViewController {
     
 
     @IBOutlet weak var titleLabel: UILabel!

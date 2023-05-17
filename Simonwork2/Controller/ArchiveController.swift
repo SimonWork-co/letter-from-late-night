@@ -10,7 +10,7 @@ import Firebase
 import WidgetKit
 import GoogleMobileAds
 
-class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
+class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let db = Firestore.firestore()
     var messages: [LetterData] = []

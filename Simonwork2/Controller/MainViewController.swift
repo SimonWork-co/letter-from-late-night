@@ -24,7 +24,7 @@ extension UILabel { // 글자 색상 바꾸는 함수
     }
 }
 
-class MainViewController: UIViewController, GADBannerViewDelegate {
+class MainViewController: UIViewController {
     
     let db = Firestore.firestore()
     let sendUserNotification = SendUserNotification()
@@ -44,7 +44,7 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
         let today = Date()
         f.dateStyle = .long
         //f.timeStyle = .short
-
+        
         dayCountingLabel?.textColor = UIColor(hex: "FDF2DC")
         settingButton?.setTitle("", for: .normal)
         todayDateLabel?.text = f.string(from: today)
@@ -80,6 +80,7 @@ class MainViewController: UIViewController, GADBannerViewDelegate {
                         if let userConnectedTime = data["connectedTime"] as? Timestamp, let messagePairFriendCode = data["pairFriendCode"] as? String {
                             
                             let friendName = data["friendName"] as? String
+                            UserDefaults.shared.set(friendName, forKey: "friendName")
                             let calendar = Calendar.current
                             let today = Date()
                             let dateFormatter = DateFormatter()

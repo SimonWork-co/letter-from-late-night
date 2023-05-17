@@ -7,7 +7,7 @@
 
 import GoogleMobileAds
 
-extension UIViewController {
+extension UIViewController: GADBannerViewDelegate {
     func setupBannerViewToBottom(height: CGFloat = 60, adUnitID: String) {
         let adSize = GADAdSizeFromCGSize(CGSize(width: view.frame.width, height: height))
         let bannerView = GADBannerView(adSize: adSize)

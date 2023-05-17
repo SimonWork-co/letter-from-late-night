@@ -19,8 +19,8 @@ extension UserDefaults {
 }
 
 extension Provider {
-    
-    func updateWidget(completion: @escaping () -> Void) {
+    //func updateWidget() {
+    func updateWidget(completion: @escaping ([String : Any]) -> Void) {
         let db = Firestore.firestore()
         let userFriendCode : String = UserDefaults.shared.object(forKey: "friendCode") as! String
         let userPairFriendCode : String = UserDefaults.shared.object(forKey: "pairFriendCode") as! String
@@ -37,7 +37,6 @@ extension Provider {
             .order(by: "updateTime", descending: true)
             .limit(to: 1)
             .getDocuments { (querySnapshot, error) in
-                
                 if let e = error {
                     print("There was an issue retrieving data from Firestore. \(e)")
                 } else {
@@ -62,7 +61,7 @@ extension Provider {
                                 
                                 WidgetCenter.shared.reloadAllTimelines()
                                 
-                                completion()
+                                completion(data)
                                 
                             }
                         }
@@ -71,16 +70,16 @@ extension Provider {
             }
     }
 }
-
 let dateFormatterFile = DateFormatterFile()
 
-let setTitle = UserDefaults.shared.string(forKey: "latestTitle")!
-let setContent = UserDefaults.shared.string(forKey: "latestContent")!
-let setUpdateDate = UserDefaults.shared.object(forKey: "latestUpdateDate") as! Date
-let setLetterColor = UserDefaults.shared.string(forKey: "latestLetterColor")!
-let setEmoji = UserDefaults.shared.string(forKey: "latestEmoji")!
-let uicolor = UIColor(hex: setLetterColor)
-let setSenderName = UserDefaults.shared.string(forKey: "latestSenderName")!
+var setTitle = UserDefaults.shared.string(forKey: "latestTitle") ?? "첫 편지가 아직 도착하지 않았네요"
+var setContent = UserDefaults.shared.string(forKey: "latestContent") ?? "조금만 더 기다려볼까요?"
+var setUpdateDate = UserDefaults.shared.object(forKey: "latestUpdateDate") as? Date ?? Date()
+var setLetterColor = UserDefaults.shared.string(forKey: "latestLetterColor") ?? "F7D88C"
+var setEmoji = UserDefaults.shared.string(forKey: "latestEmoji") ?? "no emoji"
+var uicolor = UIColor(hex: setLetterColor)
+var setSenderName = UserDefaults.shared.string(forKey: "latestSenderName") ?? "상대방"
+var setFriendName = UserDefaults.shared.string(forKey: "friendName") ?? "상대방"
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
@@ -102,6 +101,7 @@ struct Provider: TimelineProvider {
         }
         completion(entry)
     }
+    
     // 타임라인 설정 관련 함수(홈에 있는 위젯을 언제 업데이트 시킬 것인지 구현)
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         
@@ -109,24 +109,29 @@ struct Provider: TimelineProvider {
         
         let currentDate = Date()
         let calendar = Calendar.current
-        let set1am = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 1, minute: 0), matchingPolicy: .nextTime)!
+        //let set1am = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 1, minute: 0), matchingPolicy: .nextTime)!
         
-        let updateNowEntry = SimpleEntry(date: currentDate, updateDate: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSenderName)
-        entries.append(updateNowEntry)
-        
-        for hourOffset in 0 ..< 16 { // 8시간
-            let entryDate = Calendar.current.date(byAdding: .minute, value: hourOffset * 30, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, updateDate: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSenderName)
-            entries.append(entry)
+        if setEmoji == "no emoji" {
+            let placeHolder = SimpleEntry(date: Date(), updateDate: Date(), title: setTitle, content: setContent, emoji: "😃", sender: setFriendName)
+            let timeline0 = Timeline(entries: [placeHolder], policy: .atEnd)
+            completion(timeline0)
+            WidgetCenter.shared.reloadAllTimelines()
+        } else {
+            let updateNowEntry = SimpleEntry(date: currentDate, updateDate: setUpdateDate, title: setTitle, content: setContent, emoji: setEmoji, sender: setSenderName)
+            entries.append(updateNowEntry)
+            
+            let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
+            let components = DateComponents(hour: 1)
+            let date0 = calendar.date(byAdding: .hour, value: 1, to: Date())!
+            let tomorrow1AM = calendar.nextDate(after: tomorrow, matching: components, matchingPolicy: .nextTime)!
+            
+            let timeline = Timeline(entries: entries, policy: .after(date0))
+            // let timeline = Timeline(entries: entries, policy: .after(tomorrow1AM)) // 새벽 한 시에 타임라인이 재실행됨
+            completion(timeline)
+            WidgetCenter.shared.reloadAllTimelines()
         }
-
-        let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
-        let components = DateComponents(hour: 1)
-        let tomorrow1AM = calendar.nextDate(after: tomorrow, matching: components, matchingPolicy: .nextTime)!
-        
-        let timeline = Timeline(entries: entries, policy: .after(tomorrow1AM)) // 새벽 한 시에 타임라인이 재실행됨
-        completion(timeline)
     }
+    
 }
 
 struct SimpleEntry: TimelineEntry {
@@ -249,8 +254,9 @@ struct LetterWidget: Widget {
                     WidgetCenter.shared.reloadAllTimelines()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.init(uiColor: (uicolor ?? UIColor(hex: "F7D88C"))!)) // 위젯의 배경색상 가져오기
-            // 이 클로저에는 widget을 렌더링하는 SwiftUI View 코드가 포함되어 있습니다. 그리고 TimelineEntry 매개변수를 전달하는데 예제에서는 SimpleEntry 를 전달하게 됩니다. 그리고 넘어온 데이터를 이용해서 View를 구성하면 됩니다.
+                .background(Color.init(uiColor: (uicolor)!))
+            //.background(Color.init(uiColor: (UIColor(hex: "F7D88C"))!))
+            //.background(Color.init(uiColor: (uicolor ?? UIColor(hex: "F7D88C"))!)) // 위젯의 배경색상 가져오기
         }
         .configurationDisplayName("밤편지")
         .description("원하는 사이즈의 위젯을 선택해주세요")

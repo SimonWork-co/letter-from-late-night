@@ -20,6 +20,6 @@ struct Constants {
         static let archiveVC = "ca-app-pub-7181550207731095/8629523151"
         static let settingVC = "ca-app-pub-7181550207731095/9710632548"
         static let letterVC = "ca-app-pub-7181550207731095/1090778635"
+        
         }
-
 }
