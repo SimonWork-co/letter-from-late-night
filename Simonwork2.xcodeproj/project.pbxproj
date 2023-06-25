@@ -96,6 +96,8 @@
 		7BB7015219181F856273D26D /* Pods-LetterWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetterWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-LetterWidgetExtension/Pods-LetterWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		7C3EACD8E6DEB474DF608859 /* Pods_Simonwork2_LetterWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simonwork2_LetterWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D272A8129D5756A00DDD636 /* UserDefaultsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsData.swift; sourceTree = "<group>"; };
+		8D284DFE2A0BD81100DECB65 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		8D284DFF2A0BD81100DECB65 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		8D3FF30E29DBABAF00508FB8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D402DA829C0406A0010D80C /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8D4375E829B9A7AD0028427F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				8D9EFF2929B85067008D2050 /* Model */,
 				8D9EFF2C29B85087008D2050 /* View */,
 				8D9EFF2B29B85080008D2050 /* Controller */,
+				8DA1A1DB29BB0A2900A37C0E /* LetterDataSource.swift */,
 				8D9EFF1529B85049008D2050 /* AppDelegate.swift */,
 				8D9EFF1729B85049008D2050 /* SceneDelegate.swift */,
 				8D9EFF1E29B8504B008D2050 /* Assets.xcassets */,
@@ -241,7 +244,6 @@
 		8D9EFF2929B85067008D2050 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8DA1A1DB29BB0A2900A37C0E /* LetterDataSource.swift */,
 				8DAA05CE29BB20A0008D8167 /* CustomizedCell.swift */,
 				8D675F0329C7410A0078042A /* UserData.swift */,
 				8D6182F929C85D4A00A85BFB /* LetterData.swift */,
@@ -259,8 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				8D402DA829C0406A0010D80C /* NavigationController.swift */,
-				8D4375E829B9A7AD0028427F /* SignupViewController.swift */,
 				8DBD9A3B29D9561D005AF94A /* GuideViewController.swift */,
+				8D4375E829B9A7AD0028427F /* SignupViewController.swift */,
 				8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */,
 				8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */,
 				8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */,
@@ -378,11 +380,11 @@
 			};
 			buildConfigurationList = 8D9EFF0D29B85049008D2050 /* Build configuration list for PBXProject "Simonwork2" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				ko,
 			);
 			mainGroup = 8D9EFF0929B85049008D2050;
 			packageReferences = (
@@ -557,6 +559,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8D9EFF2129B8504B008D2050 /* Base */,
+				8D284DFF2A0BD81100DECB65 /* ko */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -565,6 +568,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8DCA774429DECCAA00F4DD52 /* Base */,
+				8D284DFE2A0BD81100DECB65 /* ko */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -576,6 +580,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -637,6 +642,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -704,7 +710,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "밤편지";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -716,11 +722,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Simonwork2 profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "밤편지: 마음을 주고 받는 편지 한 통 1.0 (main)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -746,7 +752,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "밤편지";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -758,11 +764,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Simonwork2 profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "밤편지: 마음을 주고 받는 편지 한 통 1.0 (main)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

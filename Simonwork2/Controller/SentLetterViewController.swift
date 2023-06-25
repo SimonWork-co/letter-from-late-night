@@ -10,7 +10,7 @@ import Firebase
 import WidgetKit
 import GoogleMobileAds
 
-class SentLetterViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
+class SentLetterViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let db = Firestore.firestore()
     var messages: [LetterData] = []
@@ -67,7 +67,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.topItem?.title = "보낸 편지함"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.largeTitleDisplayMode = .automatic
     }
     
@@ -159,7 +159,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     func numberOfSections(in tableView: UITableView) -> Int {
         let placeholderLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
         placeholderLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-        placeholderLabel.text = "No data to display"
+        placeholderLabel.text = "아직 보낸 편지가 없어요"
         placeholderLabel.textAlignment = .center
         placeholderLabel.textColor = .gray
         

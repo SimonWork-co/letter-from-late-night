@@ -24,6 +24,7 @@ var withIdentifier : String = ""
 
 var inputUserName = ""
 var inputUserEmail = ""
+var AuthAction = ""
 
 extension SignupViewController {
     
@@ -38,6 +39,7 @@ extension SignupViewController {
         request.nonce = sha256(nonce)
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
@@ -147,6 +149,7 @@ extension SignupViewController {
 extension SignupViewController: ASAuthorizationControllerDelegate {
     // controller로 인증 정보 값을 받게 되면은, idToken 값을 받음
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        print("authorizationController 출력")
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else { return }
         // nonce : 암호화된 임의의 난수, 단 한번만 사용 가능
         // 동일한 요청을 짧은 시간에 여러번 보내는 릴레이 공격 방지
@@ -169,6 +172,8 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             rawNonce: nonce
         )
         
+        print("credential: \(credential)")
+        
         if let fullName = appleIDCredential.fullName, let familyName = fullName.familyName, let givenName = fullName.givenName, let email = appleIDCredential.email {
             //inputUserName = (fullName.familyName)!+" "+(fullName.givenName)!
             inputUserName = fullName.givenName!
@@ -177,10 +182,11 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             inputUserName = "사용자"
             inputUserEmail = "No Email"
         }
-        
+
+        print("AuthAction: \(AuthAction)")
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error = error {
-                print ("Error Apple sign in: %@", error)
+                print("Error Apple sign in: %@", error)
                 return
             } else {
                 let uid = Auth.auth().currentUser!.uid
@@ -224,7 +230,6 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
     
     func loadUserData(userName: String, userEmail: String) { //여기서 로그인 조회 필요. DB에서 유저 정보를 조회하고, 거기에 데이터가 있으면 이를 불러와서 로그인함.
@@ -262,11 +267,10 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                         let todayLetterUpdateTime = today_LetterUpdateTime.dateValue()
                         print("data: \(data)")
                         
-                        db.collection("UserData").whereField("friendCode", isEqualTo: UserPairFriendCode).getDocuments { (querySnapshot, error) in
+                        db.collection("UserData").whereField("friendCode", isEqualTo: UserPairFriendCode).getDocuments() { (querySnapshot, error) in
                             // 상대방의 정보 조회해서 documentID 추출 및 나의 친구코드와 일치하는지 확인
                             if let error = error {
                                 print("error: \(error)")
-                                // 친구의 정보가 없거나 불러오는데 오류가 발생함.
                             } else {
                                 if let documents = querySnapshot?.documents {
                                     if documents != [] {
@@ -391,6 +395,15 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     }
     
     @IBAction func googleSignupButtonPressed(_ sender: Any) {
+        googleSignIn()
+    }
+    
+    @IBAction func appleSignupButtonPressed(_ sender: UIButton) {
+        AuthAction = "signIn"
+        startSignInWithAppleFlow()
+    }
+    
+    func googleSignIn() {
         
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
@@ -398,7 +411,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { (user, error) in
             // 구글로 로그인 승인 요청
             if let error = error {
-                print("ERROR", error.localizedDescription)
+                print("googleSignIn ERROR", error.localizedDescription)
                 return
             }
             
@@ -409,7 +422,6 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
             //GIDSignIn을 통해 받은 idToken, accessToken으로 Firebase에 로그인
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken) // Access token을 부여받음
             
-            
             Auth.auth().signIn(with: credential) { result, error in
                 if let e = error {
                     print(e.localizedDescription)
@@ -419,11 +431,8 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                 }
                 return
             }
-            print("구글 로그인")
+        print("구글 로그인")
         }
     }
     
-    @IBAction func appleSignupButtonPressed(_ sender: UIButton) {
-        startSignInWithAppleFlow()
-    }
 }

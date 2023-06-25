@@ -16,7 +16,7 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let userName : String = UserDefaults.shared.object(forKey: "userName") as! String
-        helloLabel?.text = "안녕하세요! \(userName)님"
+        helloLabel?.text = "환영합니다! \(userName)님"
         helloLabel?.asColor(targetStringList: [userName], color: .purple)
     }
     

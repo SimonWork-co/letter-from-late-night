@@ -10,7 +10,7 @@ import Firebase
 import WidgetKit
 import GoogleMobileAds
 
-class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, GADBannerViewDelegate {
+class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let db = Firestore.firestore()
     var messages: [LetterData] = []
@@ -66,12 +66,12 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         let currentDateComponents = calendar.dateComponents([.year, .month, .day], from: currentDate)
         let todayMidnight = calendar.date(from: currentDateComponents)!
         
-        // 새벽 4시반을 나타내는 dateComponents
+        // 새벽 1시를 나타내는 dateComponents
         var dateComponents = DateComponents()
-        dateComponents.hour = 4
-        dateComponents.minute = 30
+        dateComponents.hour = 1
+        dateComponents.minute = 0
         
-        let cutoffTime = calendar.date(bySettingHour: 4, minute: 30, second: 0, of: todayMidnight)!
+        let cutoffTime = calendar.date(bySettingHour: 1, minute: 0, second: 0, of: todayMidnight)!
         
         if currentDate >= cutoffTime {
             // 오늘 자정 이전에 작성된 편지를 가져옴
@@ -82,9 +82,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
             let timeStamp = Timestamp(date: date)
             
             loadMessages(time: timeStamp) // 오늘 자정시간 이전에 작성된 편지를 불러옴
-            if #available(iOS 14.0, *) {
-                WidgetCenter.shared.reloadAllTimelines()
-            }
+
         } else {
             // 어제 자정 이전에 작성된 편지를 가져옴
             let theDayBeforeYesterDay = // 어제의 자정시간 추출. 현재 4/14일 이라면 4/13일 00시를 추출
@@ -93,10 +91,6 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
             let date = Date(timeIntervalSince1970: theDayBeforeYesterDay)
             let timeStamp = Timestamp(date: date)
             loadMessages(time: timeStamp) // 어제 자정시간 이전에 작성된 편지를 불러옴
-            
-            if #available(iOS 14.0, *) {
-                WidgetCenter.shared.reloadAllTimelines()
-            }
         }
     }
     
@@ -161,6 +155,8 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
                                 UserDefaults.shared.set(setEmoji, forKey: "latestEmoji")
                                 UserDefaults.shared.set(setSenderName, forKey: "latestSenderName")
                                 
+                                WidgetCenter.shared.reloadAllTimelines()
+                                
                                 self.dispatchQueue()
                             }
                         }
@@ -188,7 +184,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     func numberOfSections(in tableView: UITableView) -> Int {
         let placeholderLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
         placeholderLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 17)
-        placeholderLabel.text = "No data to display"
+        placeholderLabel.text = "아직 받은 편지가 없어요"
         placeholderLabel.textAlignment = .center
         placeholderLabel.textColor = .gray
         
