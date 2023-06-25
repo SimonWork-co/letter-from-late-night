@@ -10,6 +10,11 @@ import Firebase
 
 struct Constants {
     
+    struct K {
+        static let appDownloadLink = "https://apps.apple.com/kr/app/id6448700074"
+        static let appID = "6448700074"
+    }
+    
     struct GoogleAds {
         
         static let appID = "ca-app-pub-7181550207731095~3499888931"

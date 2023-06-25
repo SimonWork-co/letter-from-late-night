@@ -228,16 +228,21 @@ class ConnectTypingViewController: UIViewController {
     
     @IBAction func copyButtonPressed(_ sender: UIButton) {
         let pasteBoard = UIPasteboard.general
+        
         pasteBoard.string = myFriendCodeLabel.text
-        print("pasteBoard.string: \(pasteBoard.string)")
         
         alert(title: "친구코드가 복사되었습니다", message: "상대방에게 친구코드를 알려주세요", actionTitle: "확인")
     }
     
+    @IBAction func appDownloadLinkCopyButtonPressed(_ sender: UIButton) {
+        let pasteBoard = UIPasteboard.general
+        pasteBoard.string = Constants.K.appDownloadLink
+        
+        alert(title: "다운로드 링크가 복사되었습니다", message: "상대방에게 링크를 전달해주세요", actionTitle: "확인")
+    }
 }
 
 extension ConnectTypingViewController: UITextFieldDelegate {
-    
     func countCharacters(_ text: String) -> Int {
         let charCount = text.utf16.count // String의 utf16 속성을 이용하여 글자 수를 세어줌
         return charCount

@@ -195,7 +195,7 @@ class WritingViewController: UIViewController {
                         UserDefaults.shared.setValue(title, forKey: "todayLetterTitle")
                         UserDefaults.shared.setValue(content, forKey: "todayLetterContent")
                         UserDefaults.shared.setValue(updateTime, forKey: "todayLetterUpdateTime")
-                        
+                    
                         DispatchQueue.main.async { // '보내기' 이후 title, content 내용 초기화
                             self.titleTextField.text = ""
                             self.contentTextView.text = ""
@@ -283,7 +283,7 @@ extension WritingViewController: EmojiPickerDelegate {
     }
 }
 
-extension WritingViewController: UITextViewDelegate{
+extension WritingViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 17)

@@ -67,7 +67,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.topItem?.title = "보낸 편지함"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.largeTitleDisplayMode = .automatic
     }
     

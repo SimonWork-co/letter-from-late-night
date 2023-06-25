@@ -612,7 +612,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="38" translatesAutoresizingMaskIntoConstraints="NO" id="WdE-vz-Vur">
-                                <rect key="frame" x="40" y="126.00000000000003" width="348" height="381.66666666666674"/>
+                                <rect key="frame" x="40" y="125.99999999999997" width="348" height="465.33333333333326"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="y2N-P0-uLu">
                                         <rect key="frame" x="0.0" y="0.0" width="348" height="125.33333333333333"/>
@@ -662,8 +662,8 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="IT7-eO-7NB">
-                                        <rect key="frame" x="0.0" y="308" width="348" height="73.666666666666686"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="IT7-eO-7NB">
+                                        <rect key="frame" x="0.0" y="308" width="348" height="157.33333333333337"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내 친구코드" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQ8-qg-LkJ">
                                                 <rect key="frame" x="0.0" y="0.0" width="348" height="20.666666666666668"/>
@@ -672,7 +672,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="uoc-Od-9c8">
-                                                <rect key="frame" x="0.0" y="25.666666666666686" width="348" height="48"/>
+                                                <rect key="frame" x="0.0" y="30.666666666666686" width="348" height="48"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내 친구코드" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldV-jg-tME">
                                                         <rect key="frame" x="0.0" y="0.0" width="305" height="48"/>
@@ -691,6 +691,24 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App 다운로드 링크" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2I-W8-BaL">
+                                                <rect key="frame" x="0.0" y="88.666666666666629" width="348" height="20.666666666666671"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1M9-G0-mE1">
+                                                <rect key="frame" x="0.0" y="119.33333333333337" width="348" height="38"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="App 다운로드 링크 복사">
+                                                    <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="20"/>
+                                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="baseBackgroundColor" name="AccentColor"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="appDownloadLinkCopyButtonPressed:" destination="7ap-cL-Iqo" eventType="touchUpInside" id="bbq-1i-1Iv"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -1233,7 +1251,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="69n-lE-wKh"/>
-        <segue reference="UFD-Pc-wmj"/>
+        <segue reference="So1-GF-tpn"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple Logo" width="24" height="24"/>
