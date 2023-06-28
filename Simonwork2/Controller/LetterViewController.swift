@@ -71,7 +71,7 @@ class LetterViewController: UIViewController {
         
         self.contentTextView.alignTextVerticallyInContainer()
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.letterVC)
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
     }
     
     override func viewWillAppear(_ animated: Bool) {

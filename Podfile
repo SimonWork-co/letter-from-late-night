@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '13.0'
+platform :ios, '16.2'
 
 target 'Simonwork2' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -15,12 +15,17 @@ target 'Simonwork2' do
   pod 'FirebaseUI/Google'
   pod 'GoogleSignIn'
   pod 'Google-Mobile-Ads-SDK'
+  pod 
+  
   post_install do |installer|
-    installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |config|
-        config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'No'
+    installer.generated_projects.each do |project|
+      project.targets.each do |target|
+          target.build_configurations.each do |config|
+              #config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+              config.build_settings['APPLICATION_EXTENSION_API_ONLY'] = 'No'
+           end
       end
-    end
+  end
   end
   pod 'EmojiPicker', :git => 'https://github.com/htmlprogrammist/EmojiPicker'
   
