@@ -44,7 +44,7 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         archiveUpdate()
         
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.archiveVC)
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
     }
     
     override func viewWillAppear(_ animated: Bool) {

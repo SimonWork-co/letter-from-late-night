@@ -326,40 +326,33 @@
 			<key>orderHint</key>
 			<integer>45</integer>
 		</dict>
-		<key>Libuv-gRPC.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>52</integer>
-		</dict>
 		<key>Pods-Simonwork2-LetterWidgetExtension.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>55</integer>
-		</dict>
-		<key>Pods-Simonwork2.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>54</integer>
 		</dict>
+		<key>Pods-Simonwork2.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>53</integer>
+		</dict>
 		<key>PromisesObjC.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>56</integer>
+			<integer>55</integer>
 		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>57</integer>
+			<integer>56</integer>
 		</dict>
 		<key>abseil.xcscheme</key>
 		<dict>
@@ -401,7 +394,7 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>53</integer>
+			<integer>52</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>

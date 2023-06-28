@@ -197,7 +197,7 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
         let providerId = user?.providerData.first?.providerID
         print("providerId: \(providerId)")
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.settingVC)
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
         viewChange()
         
     }

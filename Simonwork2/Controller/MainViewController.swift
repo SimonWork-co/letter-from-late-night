@@ -10,6 +10,8 @@ import Firebase
 import GoogleSignIn
 import UserNotifications
 import GoogleMobileAds
+import AdSupport
+import AppTrackingTransparency
 
 extension UILabel { // 글자 색상 바꾸는 함수
     func asColor(targetStringList: [String?], color: UIColor) {
@@ -51,8 +53,10 @@ class MainViewController: UIViewController {
         //}
         changeLabelColor()
         
+        requestPermission()
+        
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.mainVC)
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
         
     }
     
@@ -138,6 +142,33 @@ class MainViewController: UIViewController {
         let navigationController = UINavigationController(rootViewController: nextVC)
         self.show(nextVC, sender: nil)
     }
+    
+    func requestPermission() {
+         if #available(iOS 14, *) {
+             ATTrackingManager.requestTrackingAuthorization { status in
+                 switch status {
+                 case .authorized:
+                     // Tracking authorization dialog was shown
+                     // and we are authorized
+                     print("Authorized")
+
+                     // Now that we are authorized we can get the IDFA
+                     print(ASIdentifierManager.shared().advertisingIdentifier)
+                 case .denied:
+                     // Tracking authorization dialog was
+                     // shown and permission is denied
+                     print("Denied")
+                 case .notDetermined:
+                     // Tracking authorization dialog has not been shown
+                     print("Not Determined")
+                 case .restricted:
+                     print("Restricted")
+                 @unknown default:
+                     print("Unknown")
+                 }
+             }
+         }
+     }
     
 }
 

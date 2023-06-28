@@ -105,7 +105,7 @@ class WritingViewController: UIViewController {
         setupColorButton(colorButton)
         
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.writingVC)
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
     }
     
     override func viewWillAppear(_ animated: Bool) {
