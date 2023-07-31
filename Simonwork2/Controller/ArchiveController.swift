@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import WidgetKit
 import GoogleMobileAds
+import FBAudienceNetwork
 
 class ArchiveViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -28,14 +29,24 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     var updateTimer = Timer()
     var timer : Timer?
     
+    var adView: FBAdView!
+    lazy var containerView: UIView = {
+        
+        let height = 250
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: Int(view.frame.width), height: height))
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.clipsToBounds = false
+        
+        return containerView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor(hex: "FDF2DC")
-        self.navigationController?.navigationBar.standardAppearance.backgroundColor = UIColor(hex: "FDF2DC")
-        self.navigationController?.navigationBar.topItem?.titleView?.backgroundColor = UIColor(hex: "FDF2DC")
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
+        view.addSubview(containerView)
+        adView = FBAdView(placementID: Constants.FacebookAds.ArchiveVC, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        adView.delegate = self
+        adView.loadAd()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -44,15 +55,36 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
         archiveUpdate()
         
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+        //setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.topItem?.title = "받은 편지함"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .automatic
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+        ])
+        navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor(hex: "FDF2DC")
+        navigationController?.navigationBar.standardAppearance.backgroundColor = UIColor(hex: "FDF2DC")
+        navigationController?.navigationBar.topItem?.titleView?.backgroundColor = UIColor(hex: "FDF2DC")
+        
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
+        
+        navigationController?.navigationBar.topItem?.title = "받은 편지함"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .automatic
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        guard tableView.numberOfSections > 0 else {
+                return // 섹션이 없으면 스크롤을 실행하지 않음
+            }
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        tableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
     
     private func registerXib() { // 커스텀한 테이블 뷰 셀을 등록하는 함수
@@ -234,5 +266,36 @@ class ArchiveViewController : UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // cell 클릭 시, cell 내용을 보여주는 view controller로 이동
         performSegue(withIdentifier: "archiveToMessageContent", sender: indexPath.section)
+    }
+}
+
+extension ArchiveViewController : FBAdViewDelegate {
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        
+        // 광고 뷰를 앱의 뷰 계층에 추가
+        let screenHeight = view.bounds.height
+        let adViewHeight = adView.frame.size.height
+
+        print("adViewDidLoad 성공")
+        requestPermission()
+        
+        showAd()
+
+    }
+
+    // 배너 광고 불러오기 실패 시 호출되는 메서드
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        print("ArchiveVC 광고 불러오기 실패: \(error)")
+        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
+        
+    }
+
+    private func showAd() {
+      guard let adView = adView, adView.isAdValid else {
+        return
+      }
+        containerView.addSubview(adView)
     }
 }

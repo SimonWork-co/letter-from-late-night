@@ -30,4 +30,13 @@ struct Constants {
         static let normalBanner = "ca-app-pub-7181550207731095/9700180176"
         
         }
+    
+    struct FacebookAds {
+        static let ArchiveVC = "269048929125511_287666207263783"
+        static let LetterVC = "269048929125511_287665870597150"
+        static let SentLetterVC = "269048929125511_287666167263787"
+        static let SettingVC = "269048929125511_287665917263812"
+        static let WritingVC = "269048929125511_287665830597154"
+        static let mainVC = "269048929125511_269049462458791"
+    }
 }

@@ -12,6 +12,7 @@ import UserNotifications
 import GoogleMobileAds
 import AdSupport
 import AppTrackingTransparency
+import FBAudienceNetwork
 
 extension UILabel { // 글자 색상 바꾸는 함수
     func asColor(targetStringList: [String?], color: UIColor) {
@@ -39,32 +40,72 @@ class MainViewController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var settingButton: UIButton!
     
+    var adView: FBAdView!
+    lazy var containerView: UIView = {
+        
+        let height = 250
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: Int(view.frame.width), height: height))
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.clipsToBounds = false
+        
+        return containerView
+    }()
+    
+    let loadingIndicator = UIActivityIndicatorView(style: .medium)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let f = DateFormatter()
-        let today = Date()
-        f.dateStyle = .long
-        //f.timeStyle = .short
+        view.addSubview(containerView)
+        adView = FBAdView(placementID: Constants.FacebookAds.mainVC, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        adView.delegate = self
+        adView.loadAd()
         
         dayCountingLabel?.textColor = UIColor(hex: "FDF2DC")
         settingButton?.setTitle("", for: .normal)
-        todayDateLabel?.text = f.string(from: today)
+        
         //}
         changeLabelColor()
         
-        requestPermission()
+        loadingIndicator.clipsToBounds = false
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         
+        view.addSubview(loadingIndicator)
+        view.bringSubviewToFront(loadingIndicator)
+        
+        
+        NSLayoutConstraint.activate([
+            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: dayCountingLabel.centerYAnchor)
+        ])
+        
+        loadingIndicator.startAnimating()
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+        //setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.topItem?.title = ""
+        
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+        ])
+        
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.largeTitleDisplayMode = .never
+        
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: Locale.current.identifier)
+        dateFormatter.timeZone = TimeZone(identifier: TimeZone.current.identifier)!
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
+        todayDateLabel?.text = dateFormatter.string(from: Date())
+        
         archiveVC.archiveUpdate()
         sentLetterVC.loadMessages()
     }
@@ -99,9 +140,15 @@ class MainViewController: UIViewController {
                             
                             daysCount = Calendar.current.dateComponents([.day], from: startDate!, to: today).day! + 1
                             if let dayCountingLabel = self.dayCountingLabel {
-                                dayCountingLabel.text = "\(friendName!)님과\n편지를 주고받은 지 \(daysCount)일째"
-                                dayCountingLabel.textColor = .black
-                                dayCountingLabel.asColor(targetStringList: [friendName, String(daysCount)], color: .purple)
+                                
+                                DispatchQueue.main.async {
+                                    self.loadingIndicator.stopAnimating()
+                                    self.loadingIndicator.removeFromSuperview()
+                                    dayCountingLabel.text = "\(friendName!)님과 편지를\n주고받은 지 \(daysCount)일째"
+                                    dayCountingLabel.textColor = .black
+                                    dayCountingLabel.asColor(targetStringList: [friendName, String(daysCount)], color: .purple)
+                                }
+                                
                             }
                         }
                     }
@@ -137,11 +184,49 @@ class MainViewController: UIViewController {
             moveToWritingVC()
         }
     }
+    
     func moveToWritingVC() {
         let nextVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "WritingViewController") as! WritingViewController
         let navigationController = UINavigationController(rootViewController: nextVC)
         self.show(nextVC, sender: nil)
     }
+    
+}
+
+extension MainViewController : FBAdViewDelegate {
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        
+        // 광고 뷰를 앱의 뷰 계층에 추가
+        let screenHeight = view.bounds.height
+        let adViewHeight = adView.frame.size.height
+        
+        requestPermission()
+        
+        print("adViewDidLoad 성공")
+        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+        
+        showAd()
+
+    }
+
+    // 배너 광고 불러오기 실패 시 호출되는 메서드
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        print("ArchiveVC 광고 불러오기 실패: \(error)")
+        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
+        
+    }
+
+    private func showAd() {
+      guard let adView = adView, adView.isAdValid else {
+        return
+      }
+        containerView.addSubview(adView)
+    }
+}
+
+extension UIViewController {
     
     func requestPermission() {
          if #available(iOS 14, *) {
@@ -161,6 +246,9 @@ class MainViewController: UIViewController {
                  case .notDetermined:
                      // Tracking authorization dialog has not been shown
                      print("Not Determined")
+                     DispatchQueue.main.async {
+                         self.requestPermission()
+                     }
                  case .restricted:
                      print("Restricted")
                  @unknown default:
@@ -169,7 +257,4 @@ class MainViewController: UIViewController {
              }
          }
      }
-    
 }
-
-

@@ -17,15 +17,21 @@ import BackgroundTasks
 import CryptoKit
 import WidgetKit
 import GoogleMobileAds
+import FBAudienceNetwork
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     // 1. didFinishLaunchingWithOptions: 앱이 종료되어 있는 경우 알림이 왔을 때
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         // Override point for customization after application launch
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        FBAudienceNetworkAds.initialize(with: nil, completionHandler: nil)
+
+        // Pass user's consent after acquiring it. For sample app purposes, this is set to YES.
+        //FBAdSettings.addTestDevice(FBAdSettings.testDeviceHash())
+        FBAdSettings.setAdvertiserTrackingEnabled(true)
         
         // 앱 푸시 상태를 확인하는 함수
         NotificationCenter.default.addObserver(
