@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 import EmojiPicker
 import GoogleMobileAds
+import FBAudienceNetwork
 
 extension UITextView {
     func alignTextVerticallyInContainer() {
@@ -34,6 +35,17 @@ class LetterViewController: UIViewController {
     var receivedUpdateDate: Date?
     var receivedLetterColor : String?
     var receivedEmoji : String?
+    
+    var adView: FBAdView!
+    lazy var containerView: UIView = {
+        
+        let height = 250
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: Int(view.frame.width), height: height))
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.clipsToBounds = false
+        
+        return containerView
+    }()
     
     // Create right UIBarButtonItem.
     lazy var rightButton: UIBarButtonItem = {
@@ -66,28 +78,91 @@ class LetterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLabel?.text = ""
-        contentTextView?.text = ""
+        
+        view.addSubview(containerView)
+        adView = FBAdView(placementID: Constants.FacebookAds.LetterVC, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        adView.delegate = self
+        adView.loadAd()
+        
+        configure()
+        titleLabel.text = ""
+        contentTextView.text = ""
         
         self.contentTextView.alignTextVerticallyInContainer()
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+        //setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+    }
+    
+    private func configure() {
+        NSLayoutConstraint.activate([
+            emojiLabel.bottomAnchor.constraint(equalTo: contentTextView.topAnchor, constant: 0)
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        titleLabel?.font = UIFont(name: "NanumMyeongjoBold", size: 20)
-        contentTextView?.font = UIFont(name: "NanumMyeongjo", size: 17)
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+        ])
         
-        titleLabel?.text = receivedTitleText
-        contentTextView?.text = receivedContentText
+        titleLabel.font = UIFont(name: "NanumMyeongjoBold", size: 20)
+        contentTextView.font = UIFont(name: "NanumMyeongjo", size: 17)
         
-        dateLabel?.text = formatter.string(from: receivedUpdateDate ?? Date())
-        letterBg?.backgroundColor = UIColor(hex: receivedLetterColor!)
+        titleLabel.numberOfLines = 3
+        
+        titleLabel.text = receivedTitleText
+        contentTextView.text = receivedContentText
+        
+        dateLabel.text = formatter.string(from: receivedUpdateDate ?? Date())
+        letterBg.backgroundColor = UIColor(hex: receivedLetterColor!)
         
         //setupEmoji()
-        emojiLabel?.text = receivedEmoji!
+        emojiLabel.text = receivedEmoji!
 
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeAdView()
+    }
+}
+
+extension LetterViewController : FBAdViewDelegate {
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        
+        // 광고 뷰를 앱의 뷰 계층에 추가
+        let screenHeight = view.bounds.height
+        let adViewHeight = adView.frame.size.height
+
+        print("adViewDidLoad 성공")
+        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+        
+        requestPermission()
+        
+        showAd()
+
+    }
+
+    // 배너 광고 불러오기 실패 시 호출되는 메서드
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        print("ArchiveVC 광고 불러오기 실패: \(error)")
+        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
+        
+    }
+    
+    func removeAdView() {
+        self.adView = nil // 광고 객체 해제
+        print("removeAdView 진입")
+    }
+
+    private func showAd() {
+      guard let adView = adView, adView.isAdValid else {
+        return
+      }
+        containerView.addSubview(adView)
     }
 }

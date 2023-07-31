@@ -15,7 +15,11 @@ target 'Simonwork2' do
   pod 'FirebaseUI/Google'
   pod 'GoogleSignIn'
   pod 'Google-Mobile-Ads-SDK'
-  pod 
+  pod 'FBAudienceNetwork'
+  pod 'GoogleMobileAdsMediationFacebook'
+  #pod 'FBSDKCoreKit'
+  #pod 'FBSDKLoginKit'
+  #pod 'FBSDKShareKit'
   
   post_install do |installer|
     installer.generated_projects.each do |project|

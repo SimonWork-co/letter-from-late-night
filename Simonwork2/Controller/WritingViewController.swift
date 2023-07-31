@@ -9,6 +9,7 @@ import UIKit
 import Foundation
 import EmojiPicker
 import GoogleMobileAds
+import FBAudienceNetwork
 
 extension UIColor { // 색상의 hexcode 추출하는 extension
     func hexColorExtract(BackgroundColor: UIView) -> String {
@@ -81,8 +82,24 @@ class WritingViewController: UIViewController {
         return button
     }()
     
+    var adView: FBAdView!
+    lazy var containerView: UIView = {
+        
+        let height = 250
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: Int(view.frame.width), height: height))
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.clipsToBounds = false
+        
+        return containerView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(containerView)
+        adView = FBAdView(placementID: Constants.FacebookAds.WritingVC, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        adView.delegate = self
+        adView.loadAd()
         
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.black]
         navigationBar.title = "밤편지 작성"
@@ -91,7 +108,10 @@ class WritingViewController: UIViewController {
         titleTextField.borderStyle = .none
         titleTextField.delegate = self
         
-        let contentPlaceholder: String = "작성하신 편지는 밤 사이 보낼게요."
+        titleTextField.font = UIFont(name: "NanumMyeongjoBold", size: 20)
+        contentTextView.font = UIFont(name: "NanumMyeongjo", size: 17)
+        
+        let contentPlaceholder: String = "작성하신 편지는 밤 사이 보낼게요"
         textViewTextNumLabel.text = "0 / 120"
         if contentTextView.text.isEmpty {
             contentTextView.text = contentPlaceholder
@@ -105,11 +125,30 @@ class WritingViewController: UIViewController {
         setupColorButton(colorButton)
         
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+        //setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        DispatchQueue.main.async {
+            
+            self.containerView.layer.cornerRadius = 10
+            
+            NSLayoutConstraint.activate([
+                self.containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                self.containerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+                
+                self.textViewTextNumLabel.bottomAnchor.constraint(equalTo: self.contentTextView.bottomAnchor, constant: 100),
+                self.textViewTextNumLabel.trailingAnchor.constraint(equalTo: self.contentTextView.trailingAnchor, constant: 0)
+            ])
+        }
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeAdView()
     }
     
     @objc func sendButtonPressed(_ sender: UIBarButtonItem) {
@@ -142,7 +181,7 @@ class WritingViewController: UIViewController {
                 titleCount = 0
             } else if title == "" {
                 titleCount = 0
-            } else if content == "작성하신 편지는 밤 사이 보낼게요." {
+            } else if content == "작성하신 편지는 밤 사이 보낼게요" {
                 contentCount = 0
             } else if content == "" {
                 contentCount = 0
@@ -286,8 +325,8 @@ extension WritingViewController: EmojiPickerDelegate {
 extension WritingViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        textView.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 17)
-        if textView.text == "작성하신 편지는 밤 사이 보낼게요." {
+        textView.font = UIFont(name: "NanumMyeongjo", size: 17)
+        if textView.text == "작성하신 편지는 밤 사이 보낼게요" {
             textView.text = nil
         }
         textView.alpha = 1
@@ -295,7 +334,7 @@ extension WritingViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "작성하신 편지는 밤 사이 보낼게요."
+            textView.text = "작성하신 편지는 밤 사이 보낼게요"
             textView.alpha = 0.5
             
             textViewTextNumLabel.text = "0 / 120"
@@ -342,5 +381,41 @@ extension WritingViewController: UITextFieldDelegate {
         } else {
             return false // 25자 이상인 경우 텍스트 업데이트 및 입력 막기
         }
+    }
+}
+
+extension WritingViewController : FBAdViewDelegate {
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        
+        // 광고 뷰를 앱의 뷰 계층에 추가
+        let screenHeight = view.bounds.height
+        let adViewHeight = adView.frame.size.height
+
+        print("adViewDidLoad 성공")
+        requestPermission()
+        
+        showAd()
+
+    }
+
+    // 배너 광고 불러오기 실패 시 호출되는 메서드
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        print("ArchiveVC 광고 불러오기 실패: \(error)")
+        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
+        
+    }
+        
+    func removeAdView() {
+        self.adView = nil // 광고 객체 해제
+        print("removeAdView 진입")
+    }
+
+    private func showAd() {
+      guard let adView = adView, adView.isAdValid else {
+        return
+      }
+        containerView.addSubview(adView)
     }
 }

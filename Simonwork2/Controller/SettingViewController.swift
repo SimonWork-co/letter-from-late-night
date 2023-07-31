@@ -16,6 +16,7 @@ import FirebaseEmailAuthUI
 import FirebaseGoogleAuthUI
 import AuthenticationServices
 import CryptoKit
+import FBAudienceNetwork
 
 fileprivate var currentNonce: String?
 
@@ -189,17 +190,48 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
     @IBOutlet weak var myFriendCode: UILabel!
     @IBOutlet weak var quitButton: UIButton!
     
+    var adView: FBAdView!
+    lazy var containerView: UIView = {
+        
+        let height = 250
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: Int(view.frame.width), height: height))
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.clipsToBounds = false
+        
+        return containerView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(containerView)
+        adView = FBAdView(placementID: Constants.FacebookAds.SettingVC, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+        adView.delegate = self
+        adView.loadAd()
+        
         let user = Auth.auth().currentUser
         var credential: AuthCredential
         
         let providerId = user?.providerData.first?.providerID
         print("providerId: \(providerId)")
         // 배너 광고 설정
-        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+        //setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
         viewChange()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+        ])
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeAdView()
     }
     
     func viewChange() {
@@ -546,3 +578,38 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
     
 }
 
+extension SettingViewController : FBAdViewDelegate {
+    
+    func adViewDidLoad(_ adView: FBAdView) {
+        
+        // 광고 뷰를 앱의 뷰 계층에 추가
+        let screenHeight = view.bounds.height
+        let adViewHeight = adView.frame.size.height
+
+        print("adViewDidLoad 성공")
+        requestPermission()
+        
+        showAd()
+
+    }
+
+    // 배너 광고 불러오기 실패 시 호출되는 메서드
+    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+        print("ArchiveVC 광고 불러오기 실패: \(error)")
+        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
+        
+    }
+    
+    func removeAdView() {
+        self.adView = nil // 광고 객체 해제
+        print("removeAdView 진입")
+    }
+
+    private func showAd() {
+      guard let adView = adView, adView.isAdValid else {
+        return
+      }
+        containerView.addSubview(adView)
+    }
+}
