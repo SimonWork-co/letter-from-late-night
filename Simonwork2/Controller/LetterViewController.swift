@@ -90,7 +90,7 @@ class LetterViewController: UIViewController {
         
         self.contentTextView.alignTextVerticallyInContainer()
         // 배너 광고 설정
-        //setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
     }
     
     private func configure() {
@@ -125,44 +125,44 @@ class LetterViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        removeAdView()
+        //removeAdView()
     }
 }
 
 extension LetterViewController : FBAdViewDelegate {
     
-    func adViewDidLoad(_ adView: FBAdView) {
-        
-        // 광고 뷰를 앱의 뷰 계층에 추가
-        let screenHeight = view.bounds.height
-        let adViewHeight = adView.frame.size.height
-
-        print("adViewDidLoad 성공")
-        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
-        
-        requestPermission()
-        
-        showAd()
-
-    }
-
-    // 배너 광고 불러오기 실패 시 호출되는 메서드
-    func adView(_ adView: FBAdView, didFailWithError error: Error) {
-        print("ArchiveVC 광고 불러오기 실패: \(error)")
-        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
-        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
-        
-    }
-    
-    func removeAdView() {
-        self.adView = nil // 광고 객체 해제
-        print("removeAdView 진입")
-    }
-
-    private func showAd() {
-      guard let adView = adView, adView.isAdValid else {
-        return
-      }
-        containerView.addSubview(adView)
-    }
+//    func adViewDidLoad(_ adView: FBAdView) {
+//
+//        // 광고 뷰를 앱의 뷰 계층에 추가
+//        let screenHeight = view.bounds.height
+//        let adViewHeight = adView.frame.size.height
+//
+//        print("adViewDidLoad 성공")
+//        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+//
+//        requestPermission()
+//
+//        //showAd()
+//
+//    }
+//
+//    // 배너 광고 불러오기 실패 시 호출되는 메서드
+//    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+//        print("ArchiveVC 광고 불러오기 실패: \(error)")
+//        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+//        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
+//
+//    }
+//
+//    func removeAdView() {
+//        self.adView = nil // 광고 객체 해제
+//        print("removeAdView 진입")
+//    }
+//
+//    private func showAd() {
+//      guard let adView = adView, adView.isAdValid else {
+//        return
+//      }
+//        containerView.addSubview(adView)
+//    }
 }

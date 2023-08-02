@@ -177,7 +177,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
                 self.letterTableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
                 print("dispatchQueue 완료!")
             } else {
-                print("self.letterTableView에 nil 출력")
+                //print("self.letterTableView에 nil 출력")
             }
         }
     }
