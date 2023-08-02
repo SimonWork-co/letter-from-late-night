@@ -5928,7 +5928,7 @@ Copyright 2022 Google
 
 ## GoogleMobileAdsMediationFacebook
 
-Copyright 2016 Google Inc.
+Copyright 2016 Google LLC
 
 ## GoogleSignIn
 
@@ -6138,7 +6138,7 @@ Copyright 2016 Google Inc.
 
 ## GoogleUserMessagingPlatform
 
-Copyright 2022 Google
+Copyright 2023 Google
 
 ## GoogleUtilities
 

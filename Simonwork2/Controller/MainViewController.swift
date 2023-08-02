@@ -56,6 +56,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestPermission()
+        
         view.addSubview(containerView)
         adView = FBAdView(placementID: Constants.FacebookAds.mainVC, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
         adView.delegate = self
@@ -81,7 +83,7 @@ class MainViewController: UIViewController {
         
         loadingIndicator.startAnimating()
         // 배너 광고 설정
-        //setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
 
         
     }
@@ -195,35 +197,42 @@ class MainViewController: UIViewController {
 
 extension MainViewController : FBAdViewDelegate {
     
-    func adViewDidLoad(_ adView: FBAdView) {
-        
-        // 광고 뷰를 앱의 뷰 계층에 추가
-        let screenHeight = view.bounds.height
-        let adViewHeight = adView.frame.size.height
-        
-        requestPermission()
-        
-        print("adViewDidLoad 성공")
-        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
-        
-        showAd()
-
-    }
-
-    // 배너 광고 불러오기 실패 시 호출되는 메서드
-    func adView(_ adView: FBAdView, didFailWithError error: Error) {
-        print("ArchiveVC 광고 불러오기 실패: \(error)")
-        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
-        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
-        
-    }
-
-    private func showAd() {
-      guard let adView = adView, adView.isAdValid else {
-        return
-      }
-        containerView.addSubview(adView)
-    }
+//    func adViewDidLoad(_ adView: FBAdView) {
+//
+//        // 광고 뷰를 앱의 뷰 계층에 추가
+//        let screenHeight = view.bounds.height
+//        let adViewHeight = adView.frame.size.height
+//
+//        //FBAdSettings.clearTestDevices()
+//        print("adViewDidLoad 성공")
+//        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+//        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
+//        print("")
+//        print("adView.isAdValid: \(adView.isAdValid)")
+//        print("")
+//        showAd()
+//
+//    }
+//
+//    // 배너 광고 불러오기 실패 시 호출되는 메서드
+//    func adView(_ adView: FBAdView, didFailWithError error: Error) {
+//        print("ArchiveVC 광고 불러오기 실패: \(error)")
+//        print("FBAdSettings.isTestMode: \(FBAdSettings.isTestMode() )")
+//        print("FBAdSettings.testDeviceHash \(FBAdSettings.testDeviceHash())")
+//
+//    }
+//
+//    func adViewDidClick(_ adView: FBAdView) {
+//        print("adViewDidClick")
+//    }
+//
+//    private func showAd() {
+//      guard let adView = adView, adView.isAdValid else {
+//        return
+//      }
+//        containerView.addSubview(adView)
+//        containerView.bringSubviewToFront(adView)
+//    }
 }
 
 extension UIViewController {
@@ -239,10 +248,13 @@ extension UIViewController {
 
                      // Now that we are authorized we can get the IDFA
                      print(ASIdentifierManager.shared().advertisingIdentifier)
+                     FBAdSettings.setAdvertiserTrackingEnabled(true)
                  case .denied:
                      // Tracking authorization dialog was
                      // shown and permission is denied
                      print("Denied")
+                     print(ASIdentifierManager.shared().advertisingIdentifier)
+                     FBAdSettings.setAdvertiserTrackingEnabled(false)
                  case .notDetermined:
                      // Tracking authorization dialog has not been shown
                      print("Not Determined")
