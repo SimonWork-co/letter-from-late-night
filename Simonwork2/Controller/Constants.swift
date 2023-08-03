@@ -28,6 +28,7 @@ struct Constants {
         static let test = "ca-app-pub-3940256099942544/2934735716"
         
         static let normalBanner = "ca-app-pub-7181550207731095/9700180176"
+        static let admobBanner = "ca-app-pub-7181550207731095/4417330226"
         
         }
     

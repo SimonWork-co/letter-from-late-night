@@ -56,7 +56,7 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         loadMessages()
         
         // 배너 광고 설정
-        //setupBannerViewToBottom(adUnitID: Constants.GoogleAds.normalBanner)
+        setupBannerViewToBottom(adUnitID: Constants.GoogleAds.admobBanner)
         
         // Add refresh control to table view
         if #available(iOS 10.0, *) {
