@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5az-gf-yZX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5az-gf-yZX">
     <device id="retina6_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -243,6 +243,10 @@
                                     <action selector="appleSignupButtonPressed:" destination="9Dd-a9-fJP" eventType="touchUpInside" id="yoY-EM-QEf"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="WGV-dR-wWJ">
+                                <rect key="frame" x="204" y="453" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ThU-nh-JY3"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -260,6 +264,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="g7B-aS-80z"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="WGV-dR-wWJ" id="93q-jo-20g"/>
                         <outlet property="appleSignupButton" destination="Pvt-bP-Ege" id="Yz9-az-Foy"/>
                         <outlet property="googleSignupButton" destination="Uxj-Fw-88t" id="lYR-oi-mOp"/>
                         <outlet property="imageView" destination="N2a-9w-LdB" id="RNI-MQ-t41"/>
@@ -317,7 +322,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nRb-Kx-Nua">
-                                <rect key="frame" x="333" y="181" width="87" height="34.666666666666657"/>
+                                <rect key="frame" x="334.33333333333331" y="181" width="85.666666666666686" height="34.666666666666657"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <menu key="menu" id="Pwx-x0-yqr">
@@ -1250,7 +1255,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="69n-lE-wKh"/>
+        <segue reference="jPY-o2-FOr"/>
         <segue reference="UFD-Pc-wmj"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -1263,15 +1268,15 @@
         <image name="google logo" width="18" height="18"/>
         <image name="homekit" catalog="system" width="128" height="104"/>
         <image name="launchScreen" width="657" height="561"/>
-        <image name="mail.stack" catalog="system" width="128" height="122"/>
+        <image name="mail.stack" catalog="system" width="126" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.99199998378753662" green="0.94900000095367432" blue="0.86299997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

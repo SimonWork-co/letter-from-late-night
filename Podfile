@@ -15,7 +15,7 @@ target 'Simonwork2' do
   pod 'FirebaseUI/Google'
   pod 'GoogleSignIn'
   pod 'Google-Mobile-Ads-SDK'
-  pod 'FBAudienceNetwork'
+  # pod 'FBAudienceNetwork'
   pod 'GoogleMobileAdsMediationFacebook'
   # pod 'FBSDKCoreKit', '~> 8.0.0'
   # pod 'FBSDKLoginKit', '~> 8.0.0'

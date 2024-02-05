@@ -39,7 +39,7 @@ extension SignupViewController {
         request.nonce = sha256(nonce)
         
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-
+        
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
@@ -156,12 +156,15 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
         // 정보 탈취 없이 안전하게 인증 정보 전달을 위한 안전장치 // 안전하게 인증 정보를 전달하기 위해 nonce 사용
         guard let nonce = currentNonce else {
             fatalError("Invalid state: A login callback was received, but no login request was sent.")
+            isLoading = false
             return }
         guard let appleIDToken = appleIDCredential.identityToken else {
             print("Unable to fetch identity token")
+            isLoading = false
             return }
         guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
             print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+            isLoading = false
             return }
         
         //MARK: - 유저 개인 정보 (최초 회원가입 시에만 유저 정보를 얻을 수 있으며, 2회 로그인 시부터는 디코딩을 통해 이메일만 추출 가능. 이름은 불가)
@@ -182,11 +185,12 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             inputUserName = "사용자"
             inputUserEmail = "No Email"
         }
-
+        
         print("AuthAction: \(AuthAction)")
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error = error {
                 print("Error Apple sign in: %@", error)
+                self.isLoading = false
                 return
             } else {
                 let uid = Auth.auth().currentUser!.uid
@@ -213,6 +217,31 @@ extension SignupViewController : ASAuthorizationControllerPresentationContextPro
 
 class SignupViewController: UIViewController, FUIAuthDelegate {
     
+    // 로딩 중인지 여부를 나타내는 변수
+    var isLoading: Bool = false {
+        didSet {
+            // 로딩 상태에 따라 UI 업데이트
+            updateUIForLoadingState()
+        }
+    }
+    
+    // 로딩 중 상태에 따라 UI를 업데이트하는 함수
+    func updateUIForLoadingState() {
+        if isLoading {
+            // 로딩 중이면 UIActivityIndicatorView를 시작하고 버튼을 비활성화
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            googleSignupButton.isEnabled = false
+            appleSignupButton.isEnabled = false
+        } else {
+            // 로딩이 완료되면 UIActivityIndicatorView를 멈추고 버튼을 활성화
+            activityIndicator.isHidden = true
+            activityIndicator.stopAnimating()
+            googleSignupButton.isEnabled = true
+            appleSignupButton.isEnabled = true
+        }
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -221,6 +250,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     @IBOutlet weak var googleSignupButton: UIButton!
     @IBOutlet weak var appleSignupButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -232,19 +262,28 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         super.viewDidAppear(animated)
     }
     
+    
+    
     func loadUserData(userName: String, userEmail: String) { //여기서 로그인 조회 필요. DB에서 유저 정보를 조회하고, 거기에 데이터가 있으면 이를 불러와서 로그인함.
-        // 유저의 document를 DB에서 호출하여 친구코드와 상대방의 친구코드를 가져옴
+        // userEmail을 이용해 document를 DB에서 호출하여 친구코드와 상대방의 친구코드를 가져옴
         // 여기에 추가로 상대방의 친구코드를 이용해 상대방의 DocumentID를 가져와야함
         let db = Firestore.firestore()
         let currentUserUid = Auth.auth().currentUser?.uid ?? "no uid"
+        print("currentUserUid: ", currentUserUid)
+        print("userEmail: ", userEmail)
         
-        db.collection("UserData").document(currentUserUid).getDocument { (documentSnapshot, error) in
-            if let error = error { // 나의 유저정보 로드
+        db.collection("UserData").whereField("userEmail", isEqualTo: userEmail).getDocuments { (querySnapshot, error) in
+            if let error = error {
                 print("Error: \(error)")
             } else {
-                if let document = documentSnapshot, document.exists {
-
-                    if let data = document.data() {
+                // querySnapshot을 사용하여 문서 확인
+                for document in querySnapshot!.documents {
+                    print("document: ", document)
+                    if document.exists {
+                        // 문서가 존재할 때 데이터 처리
+                        print("문서가 존재할 때 데이터 처리");
+                        let data = document.data()
+                        print("data: \(data)")
                         
                         let UserName = data["userName"] as! String
                         UserDefaults.shared.set(UserName, forKey: "userName")
@@ -265,7 +304,6 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                         
                         let today_LetterUpdateTime = data["todayLetterUpdateTime"] as! Timestamp
                         let todayLetterUpdateTime = today_LetterUpdateTime.dateValue()
-                        print("data: \(data)")
                         
                         db.collection("UserData").whereField("friendCode", isEqualTo: UserPairFriendCode).getDocuments() { (querySnapshot, error) in
                             // 상대방의 정보 조회해서 documentID 추출 및 나의 친구코드와 일치하는지 확인
@@ -298,7 +336,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                                                 todayLetterContent: todayLetterContent,
                                                 todayLetterUpdateTime: todayLetterUpdateTime
                                             )
-                                                                                        
+                                            
                                             if UserPairFriendCode == "no pairFriendCode" {
                                                 // 회원가입 과정 중 pairFriendCode를 입력하지 않고 이탈 (connectTypingVC로 이동 필요)
                                                 withIdentifier = "signupToConnectTyping"
@@ -342,13 +380,18 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                             }
                         }
                         
+                    } else {
+                        // 문서가 존재하지 않을 때의 처리
+                        // 유저의 uid로 된 문서가 서버에 없으므로 가이드 페이지로 이동. 서버에는 더미 데이터를 넣어 테이블을 생성한다.
+                        print("문서가 존재하지 않습니다.")
+                        print("유저의 uid로 된 문서가 서버에 없으므로 가이드 페이지로 이동. 서버에는 더미 데이터를 넣어 테이블을 생성한다.")
+                        self.sendUserData(UserName: userName, UserEmail: userEmail)
                     }
-                } else {
-                    // 유저의 uid로 된 문서가 서버에 없으므로 가이드 페이지로 이동. 서버에는 더미 데이터를 넣어 테이블을 생성한다.
-                    print("유저의 uid로 된 문서가 서버에 없으므로 가이드 페이지로 이동. 서버에는 더미 데이터를 넣어 테이블을 생성한다.")
-                    self.sendUserData(UserName: userName, UserEmail: userEmail)
                 }
             }
+            
+            
+            
         }
     }
     
@@ -359,6 +402,8 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         
         appleSignupButton?.layer.cornerRadius = 10
         appleSignupButton?.layer.borderWidth = 0.75
+        
+        isLoading = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -382,27 +427,6 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         } else {}
     }
     
-    func isAppleLoggedIn() -> Bool { // 애플 로그인 여부 파악용 함수
-        return UserDefaults.shared.bool(forKey: "isAppleLoggedIn")
-    }
-    
-    func setAppleLoggedIn() { // 애플 로그인 버튼 클릭시 활성화
-        UserDefaults.shared.set(true, forKey: "isAppleLoggedIn")
-    }
-    
-    func removeAppleLoggedIn() {
-        UserDefaults.shared.removeObject(forKey: "isAppleLoggedIn")
-    }
-    
-    @IBAction func googleSignupButtonPressed(_ sender: Any) {
-        googleSignIn()
-    }
-    
-    @IBAction func appleSignupButtonPressed(_ sender: UIButton) {
-        AuthAction = "signIn"
-        startSignInWithAppleFlow()
-    }
-    
     func googleSignIn() {
         
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -411,6 +435,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         GIDSignIn.sharedInstance.signIn(with: config, presenting: self) { (user, error) in
             // 구글로 로그인 승인 요청
             if let error = error {
+                self.isLoading = false
                 print("googleSignIn ERROR", error.localizedDescription)
                 return
             }
@@ -418,6 +443,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
             guard let authentication = user?.authentication, let idToken = authentication.idToken else { return }
             inputUserName = (user?.profile?.givenName)!
             inputUserEmail = (user?.profile?.email)!
+            print("inputUserEmail: ", inputUserEmail)
             
             //GIDSignIn을 통해 받은 idToken, accessToken으로 Firebase에 로그인
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken) // Access token을 부여받음
@@ -431,8 +457,32 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
                 }
                 return
             }
-        print("구글 로그인")
+            print("구글 로그인")
         }
     }
+    
+    func isAppleLoggedIn() -> Bool { // 애플 로그인 여부 파악용 함수
+        return UserDefaults.shared.bool(forKey: "isAppleLoggedIn")
+    }
+    
+    func setAppleLoggedIn() { // 애플 로그인 버튼 클릭시 활성화
+        UserDefaults.shared.set(true, forKey: "isAppleLoggedIn")
+    }
+    
+    func removeAppleLoggedIn() {
+        UserDefaults.shared.removeObject(forKey: "isAppleLoggedIn")
+    }
+    
+    @IBAction func googleSignupButtonPressed(_ sender: Any) {
+        isLoading = true
+        googleSignIn()
+    }
+    
+    @IBAction func appleSignupButtonPressed(_ sender: UIButton) {
+        isLoading = true
+        AuthAction = "signIn"
+        startSignInWithAppleFlow()
+    }
+    
     
 }
