@@ -20,31 +20,50 @@ import GoogleMobileAds
 import FBAudienceNetwork
 import AdSupport
 
+import UserNotifications
+
+import FirebaseCore
+import FirebaseMessaging
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     // 1. didFinishLaunchingWithOptions: 앱이 종료되어 있는 경우 알림이 왔을 때
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch
+        FirebaseApp.configure()
+        
+        Messaging.messaging().delegate = self
+        
         GADMobileAds.sharedInstance().start { status in
             // Optional: Log each adapter's initialization latency.
             let adapterStatuses = status.adapterStatusesByClassName
             for adapter in adapterStatuses {
-              let adapterStatus = adapter.value
-              NSLog("Adapter Name: %@, Description: %@, Latency: %f", adapter.key,
-              adapterStatus.description, adapterStatus.latency)
+                let adapterStatus = adapter.value
+                NSLog("Adapter Name: %@, Description: %@, Latency: %f", adapter.key,
+                      adapterStatus.description, adapterStatus.latency)
             }
-
+            
             // Start loading ads here...
-          }
+        }
         FBAdSettings.clearTestDevices()
         
         FBAudienceNetworkAds.initialize(with: nil, completionHandler: nil)
         FBAdSettings.setAdvertiserTrackingEnabled(true)
-
+        
         // Pass user's consent after acquiring it. For sample app purposes, this is set to YES.
         //FBAdSettings.addTestDevice(FBAdSettings.testDeviceHash())
-
+        
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: { _, _ in }
+        )
+        
+        application.registerForRemoteNotifications()
+        
         // 앱 푸시 상태를 확인하는 함수
         NotificationCenter.default.addObserver(
             self,
@@ -52,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
-        FirebaseApp.configure()
+        
         
         UNUserNotificationCenter.current().delegate = self
         
@@ -116,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         var nextExecutionTime = calendar.date(bySettingHour: 1, minute: 0, second: 0, of: currentDate)! // 태스크 시작 시간
         var endTime = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: currentDate)! // 태스크 마지막 시간
-
+        
         if currentHour < 1 {
         } else {
             nextExecutionTime = calendar.date(byAdding: .hour, value: 24, to: nextExecutionTime)!
@@ -155,7 +174,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         var nextExecutionTime = calendar.date(bySettingHour: 1, minute: 0, second: 0, of: currentDate)! // 태스크 시작 시간
         var endTime = calendar.date(bySettingHour: 23, minute: 0, second: 0, of: currentDate)! // 태스크 마지막 시간
-
+        
         if currentHour < 1 {
         } else {
             nextExecutionTime = calendar.date(byAdding: .hour, value: 24, to: nextExecutionTime)!
@@ -181,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 nextExecutionTime = nextExecutionTime.addingTimeInterval(requestInterval)
             }
         }
-
+        
     }
     func handleAppRefresh(task: BGAppRefreshTask) {
         // 스케줄링 함수. 다음 동작 수행, 반복시 필요
@@ -201,7 +220,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             task.setTaskCompleted(success: true)
         }
     }
-
+    
     // 3.실행&완료
     func handleProcessingTask(task: BGProcessingTask) {
         print("실행 완료 진입")
@@ -216,7 +235,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             task.setTaskCompleted(success: true)
         }
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         BGTaskScheduler.shared.getPendingTaskRequests { (requests) in
             for request in requests {
@@ -321,3 +340,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
 }
 
+
+extension AppDelegate {
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+    
+}
+
+extension AppDelegate: MessagingDelegate {
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("Firebase registration token: \(String(describing: fcmToken))")
+        
+        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+        NotificationCenter.default.post(
+            name: Notification.Name("FCMToken"),
+            object: nil,
+            userInfo: dataDict
+        )
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+        
+    }
+    
+}

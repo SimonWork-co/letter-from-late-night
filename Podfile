@@ -40,5 +40,6 @@ target 'Simonwork2' do
     pod 'FirebaseUI'
     pod 'FirebaseUI/Auth'
     pod 'Firebase/Core'
+    pod 'FirebaseMessaging'
     end
 end

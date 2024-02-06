@@ -137,6 +137,7 @@ extension SignupViewController {
             ]) { error in
                 if let e = error {
                     print("There was an issue saving data to firestore, \(e)")
+                    self.isLoading = false
                 } else {
                     print("Successfully saved data.")
                     self.performSegue(withIdentifier: withIdentifier, sender: nil)
@@ -175,15 +176,20 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
             rawNonce: nonce
         )
         
-        print("credential: \(credential)")
+        print("apple credential: \(credential)")
+        print("appleIDCredential.email: \(appleIDCredential.email)")
         
         if let fullName = appleIDCredential.fullName, let familyName = fullName.familyName, let givenName = fullName.givenName, let email = appleIDCredential.email {
             //inputUserName = (fullName.familyName)!+" "+(fullName.givenName)!
             inputUserName = fullName.givenName!
             inputUserEmail = email
+            print("apple inputUserName: \(inputUserName)")
+            print("apple inputUserEmail: \(inputUserEmail)")
         } else {
             inputUserName = "사용자"
             inputUserEmail = "No Email"
+            print("apple inputUserName: \(inputUserName)")
+            print("apple inputUserEmail: \(inputUserEmail)")
         }
         
         print("AuthAction: \(AuthAction)")
@@ -194,6 +200,7 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                 return
             } else {
                 let uid = Auth.auth().currentUser!.uid
+                print("apple uid: \(uid)")
                 self.setAppleLoggedIn()
                 self.loadUserData(userName: inputUserName, userEmail: inputUserEmail)
             }
@@ -204,6 +211,7 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
     // Apple ID 연동 실패 시
     func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
         // Handle error.
+        isLoading = false
     }
 }
 
@@ -265,133 +273,134 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
     
     
     func loadUserData(userName: String, userEmail: String) { //여기서 로그인 조회 필요. DB에서 유저 정보를 조회하고, 거기에 데이터가 있으면 이를 불러와서 로그인함.
-        // userEmail을 이용해 document를 DB에서 호출하여 친구코드와 상대방의 친구코드를 가져옴
+        // 유저의 document를 DB에서 호출하여 친구코드와 상대방의 친구코드를 가져옴
         // 여기에 추가로 상대방의 친구코드를 이용해 상대방의 DocumentID를 가져와야함
         let db = Firestore.firestore()
         let currentUserUid = Auth.auth().currentUser?.uid ?? "no uid"
-        print("currentUserUid: ", currentUserUid)
-        print("userEmail: ", userEmail)
+        print("currentUserUid: \(currentUserUid)")
         
-        db.collection("UserData").whereField("userEmail", isEqualTo: userEmail).getDocuments { (querySnapshot, error) in
-            if let error = error {
+        db.collection("UserData")
+            .whereFilter(Filter.andFilter([
+                //Filter.whereField("userEmail", isEqualTo: userEmail),
+                Filter.whereField("uid", isEqualTo: currentUserUid),
+            ]))
+            .getDocuments
+        { (documentSnapshot, error) in
+            if let error = error { // 나의 유저정보 로드
                 print("Error: \(error)")
             } else {
-                // querySnapshot을 사용하여 문서 확인
-                for document in querySnapshot!.documents {
-                    print("document: ", document)
-                    if document.exists {
-                        // 문서가 존재할 때 데이터 처리
-                        print("문서가 존재할 때 데이터 처리");
-                        let data = document.data()
-                        print("data: \(data)")
-                        
-                        let UserName = data["userName"] as! String
-                        UserDefaults.shared.set(UserName, forKey: "userName")
-                        
-                        let UserEmail = data["userEmail"] as! String
-                        let UserFriendCode = data["friendCode"] as! String
-                        let friendName = data["friendName"] as! String
-                        let UserPairFriendCode = data["pairFriendCode"] as! String
-                        let signup_Time = data["signupTime"] as! Timestamp
-                        let signupTime = signup_Time.dateValue()
-                        // uid는 currentUserUid로 대체
-                        let documentID = data["documentID"] as! String
-                        let connected_Time = data["connectedTime"] as! Timestamp
-                        let connectedTime = connected_Time.dateValue()
-                        
-                        let todayLetterTitle = data["todayLetterTitle"] as! String
-                        let todayLetterContent = data["todayLetterContent"] as! String
-                        
-                        let today_LetterUpdateTime = data["todayLetterUpdateTime"] as! Timestamp
-                        let todayLetterUpdateTime = today_LetterUpdateTime.dateValue()
-                        
-                        db.collection("UserData").whereField("friendCode", isEqualTo: UserPairFriendCode).getDocuments() { (querySnapshot, error) in
-                            // 상대방의 정보 조회해서 documentID 추출 및 나의 친구코드와 일치하는지 확인
-                            if let error = error {
-                                print("error: \(error)")
-                            } else {
-                                if let documents = querySnapshot?.documents {
-                                    if documents != [] {
-                                        for document in documents {
-                                            // 상대방의 documentID 추출
-                                            let userPairFriendDocumentID = document.documentID
-                                            
-                                            let data = document.data()
-                                            // 상대방의 pairFriendCode가 나의 friendCode와 일치하는지 확인
-                                            let opponentFriendCode = data["friendCode"] as! String
-                                            let opponentPairFriendCode = data["pairFriendCode"] as! String
-                                            
-                                            // 로드된 모든 정보를 userDefaults에 저장
-                                            UserDefaultsData(
-                                                UserName: UserName,
-                                                UserEmail: UserEmail,
-                                                friendCode: UserFriendCode,
-                                                friendName: friendName,
-                                                uid: currentUserUid,
-                                                pairFriendCode: opponentFriendCode,
-                                                signupTime: signupTime,
-                                                documentID: userPairFriendDocumentID,
-                                                connectedTime: connectedTime,
-                                                todayLetterTitle: todayLetterTitle,
-                                                todayLetterContent: todayLetterContent,
-                                                todayLetterUpdateTime: todayLetterUpdateTime
-                                            )
-                                            
-                                            if UserPairFriendCode == "no pairFriendCode" {
-                                                // 회원가입 과정 중 pairFriendCode를 입력하지 않고 이탈 (connectTypingVC로 이동 필요)
-                                                withIdentifier = "signupToConnectTyping"
-                                                self.performSegue(withIdentifier: withIdentifier, sender: nil)
-                                                break
-                                            } else if UserPairFriendCode == opponentFriendCode && opponentPairFriendCode == UserFriendCode {
-                                                // 나의 PairFriendCode가 상대방의 friendCode이면서, 상대방의 pairFriendCode가 나의 친구코드이므로 이는 나와 연결된 사람임을 뜻함.
-                                                // 즉, 자동 로그인 대상. moveToMain
-                                                self.moveToMain()
-                                                break
-                                            } else if UserPairFriendCode == opponentFriendCode && opponentPairFriendCode != UserFriendCode {
-                                                // 나는 상대를 친구로 설정했으나, 상대는 나와 연결되어 있지 않음.
-                                                // 다른 친구코드를 입력하게끔 안내 필요 (connectTypingVC로 이동)
-                                                withIdentifier = "signupToConnectTyping"
-                                                self.performSegue(withIdentifier: withIdentifier, sender: nil)
-                                                break
-                                            }
-                                        }
-                                    } else {// 친구의 정보가 없어서 빈 []를 불러옴
-                                        // 상대방의 친구코드를 입력해야 하므로 signupToConnectTyping로 세그
-                                        // 현재 아래에 적힌 documentID는 가데이터이므로 connectingVC에서 문서 조회 시 문서가 조회되지 않음.
-                                        // 상대방의 친구코드가 아직 존재하지 않으므로 connectingVC에서 상대방의 문서를 조회한후 문서ID를 나의 userData의 documentID로 업데이트해야함
+                print("documentSnapshot!.documents count: \(documentSnapshot!.documents.count)")
+                for document in documentSnapshot!.documents {
+                    let data = document.data()
+                    print("data: \(data)")
+                }
+                if let document = documentSnapshot?.documents.first {
+                    
+                    let data = document.data()
+                    
+                    let UserName = data["userName"] as! String
+                    UserDefaults.shared.set(UserName, forKey: "userName")
+                    
+                    let UserEmail = data["userEmail"] as! String
+                    let UserFriendCode = data["friendCode"] as! String
+                    let friendName = data["friendName"] as! String
+                    let UserPairFriendCode = data["pairFriendCode"] as! String
+                    let signup_Time = data["signupTime"] as! Timestamp
+                    let signupTime = signup_Time.dateValue()
+                    // uid는 currentUserUid로 대체
+                    let documentID = data["documentID"] as! String
+                    let connected_Time = data["connectedTime"] as! Timestamp
+                    let connectedTime = connected_Time.dateValue()
+                    
+                    let todayLetterTitle = data["todayLetterTitle"] as! String
+                    let todayLetterContent = data["todayLetterContent"] as! String
+                    
+                    let today_LetterUpdateTime = data["todayLetterUpdateTime"] as! Timestamp
+                    let todayLetterUpdateTime = today_LetterUpdateTime.dateValue()
+                    print("data: \(data)")
+                    
+                    db.collection("UserData").whereField("friendCode", isEqualTo: UserPairFriendCode).getDocuments() { (querySnapshot, error) in
+                        // 상대방의 정보 조회해서 documentID 추출 및 나의 친구코드와 일치하는지 확인
+                        if let error = error {
+                            print("error: \(error)")
+                        } else {
+                            if let documents = querySnapshot?.documents {
+                                if documents != [] {
+                                    for document in documents {
+                                        // 상대방의 documentID 추출
+                                        let userPairFriendDocumentID = document.documentID
+                                        
+                                        let data = document.data()
+                                        // 상대방의 pairFriendCode가 나의 friendCode와 일치하는지 확인
+                                        let opponentFriendCode = data["friendCode"] as! String
+                                        let opponentPairFriendCode = data["pairFriendCode"] as! String
+                                        
+                                        // 로드된 모든 정보를 userDefaults에 저장
                                         UserDefaultsData(
                                             UserName: UserName,
                                             UserEmail: UserEmail,
                                             friendCode: UserFriendCode,
                                             friendName: friendName,
                                             uid: currentUserUid,
-                                            pairFriendCode: UserPairFriendCode,
+                                            pairFriendCode: opponentFriendCode,
                                             signupTime: signupTime,
-                                            documentID: documentID,
+                                            documentID: userPairFriendDocumentID,
                                             connectedTime: connectedTime,
                                             todayLetterTitle: todayLetterTitle,
                                             todayLetterContent: todayLetterContent,
                                             todayLetterUpdateTime: todayLetterUpdateTime
                                         )
-                                        withIdentifier = "signupToConnectTyping"
-                                        self.performSegue(withIdentifier: withIdentifier, sender: nil)
+                                        
+                                        if UserPairFriendCode == "no pairFriendCode" {
+                                            // 회원가입 과정 중 pairFriendCode를 입력하지 않고 이탈 (connectTypingVC로 이동 필요)
+                                            withIdentifier = "signupToConnectTyping"
+                                            self.performSegue(withIdentifier: withIdentifier, sender: nil)
+                                            break
+                                        } else if UserPairFriendCode == opponentFriendCode && opponentPairFriendCode == UserFriendCode {
+                                            // 나의 PairFriendCode가 상대방의 friendCode이면서, 상대방의 pairFriendCode가 나의 친구코드이므로 이는 나와 연결된 사람임을 뜻함.
+                                            // 즉, 자동 로그인 대상. moveToMain
+                                            self.moveToMain()
+                                            break
+                                        } else if UserPairFriendCode == opponentFriendCode && opponentPairFriendCode != UserFriendCode {
+                                            // 나는 상대를 친구로 설정했으나, 상대는 나와 연결되어 있지 않음.
+                                            // 다른 친구코드를 입력하게끔 안내 필요 (connectTypingVC로 이동)
+                                            withIdentifier = "signupToConnectTyping"
+                                            self.performSegue(withIdentifier: withIdentifier, sender: nil)
+                                            break
+                                        }
                                     }
+                                } else {// 친구의 정보가 없어서 빈 []를 불러옴
+                                    // 상대방의 친구코드를 입력해야 하므로 signupToConnectTyping로 세그
+                                    // 현재 아래에 적힌 documentID는 가데이터이므로 connectingVC에서 문서 조회 시 문서가 조회되지 않음.
+                                    // 상대방의 친구코드가 아직 존재하지 않으므로 connectingVC에서 상대방의 문서를 조회한후 문서ID를 나의 userData의 documentID로 업데이트해야함
+                                    UserDefaultsData(
+                                        UserName: UserName,
+                                        UserEmail: UserEmail,
+                                        friendCode: UserFriendCode,
+                                        friendName: friendName,
+                                        uid: currentUserUid,
+                                        pairFriendCode: UserPairFriendCode,
+                                        signupTime: signupTime,
+                                        documentID: documentID,
+                                        connectedTime: connectedTime,
+                                        todayLetterTitle: todayLetterTitle,
+                                        todayLetterContent: todayLetterContent,
+                                        todayLetterUpdateTime: todayLetterUpdateTime
+                                    )
+                                    withIdentifier = "signupToConnectTyping"
+                                    self.performSegue(withIdentifier: withIdentifier, sender: nil)
                                 }
                             }
                         }
-                        
-                    } else {
-                        // 문서가 존재하지 않을 때의 처리
-                        // 유저의 uid로 된 문서가 서버에 없으므로 가이드 페이지로 이동. 서버에는 더미 데이터를 넣어 테이블을 생성한다.
-                        print("문서가 존재하지 않습니다.")
-                        print("유저의 uid로 된 문서가 서버에 없으므로 가이드 페이지로 이동. 서버에는 더미 데이터를 넣어 테이블을 생성한다.")
-                        self.sendUserData(UserName: userName, UserEmail: userEmail)
                     }
+                    
+                    
+                } else {
+                    // 유저의 uid로 된 문서가 서버에 없으므로 가이드 페이지로 이동. 서버에는 더미 데이터를 넣어 테이블을 생성한다.
+                    print("유저의 uid로 된 문서가 서버에 없으므로 가이드 페이지로 이동. 서버에는 더미 데이터를 넣어 테이블을 생성한다.")
+                    self.sendUserData(UserName: userName, UserEmail: userEmail)
                 }
             }
-            
-            
-            
         }
     }
     
@@ -402,6 +411,9 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
         
         appleSignupButton?.layer.cornerRadius = 10
         appleSignupButton?.layer.borderWidth = 0.75
+        
+        activityIndicator.centerXAnchor.isEqual(view.centerXAnchor)
+        activityIndicator.centerYAnchor.isEqual(view.centerYAnchor)
         
         isLoading = false
     }
@@ -451,6 +463,7 @@ class SignupViewController: UIViewController, FUIAuthDelegate {
             Auth.auth().signIn(with: credential) { result, error in
                 if let e = error {
                     print(e.localizedDescription)
+                    self.isLoading = false
                 } else {
                     let uid = Auth.auth().currentUser!.uid
                     self.loadUserData(userName: inputUserName, userEmail: inputUserEmail)

@@ -257,7 +257,7 @@ extension UIViewController {
                      FBAdSettings.setAdvertiserTrackingEnabled(false)
                  case .notDetermined:
                      // Tracking authorization dialog has not been shown
-                     print("Not Determined")
+                     //print("Not Determined")
                      DispatchQueue.main.async {
                          self.requestPermission()
                      }
