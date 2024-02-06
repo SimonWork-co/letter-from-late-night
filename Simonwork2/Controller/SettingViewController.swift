@@ -215,6 +215,9 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
         
         let providerId = user?.providerData.first?.providerID
         print("providerId: \(providerId)")
+        
+        nicknameChangeTextField.autocorrectionType = .no
+        nicknameChangeTextField.spellCheckingType = .no
         // 배너 광고 설정
         setupBannerViewToBottom(adUnitID: Constants.GoogleAds.admobBanner)
         viewChange()

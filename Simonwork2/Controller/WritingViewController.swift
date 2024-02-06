@@ -106,6 +106,8 @@ class WritingViewController: UIViewController {
         navigationBar.rightBarButtonItem = self.rightButton
         
         titleTextField.borderStyle = .none
+        titleTextField.autocorrectionType = .no
+        titleTextField.spellCheckingType = .no
         titleTextField.delegate = self
         
         titleTextField.font = UIFont(name: "NanumMyeongjoBold", size: 20)
@@ -119,6 +121,8 @@ class WritingViewController: UIViewController {
         }
         letterBg.backgroundColor = #colorLiteral(red: 0.9714143724, green: 0.8500511808, blue: 0.5509617485, alpha: 1)
         contentTextView.delegate = self
+        contentTextView.autocorrectionType = .no
+        contentTextView.spellCheckingType = .no
         setupView()
         
         colorButton.layer.cornerRadius = 10
@@ -158,7 +162,10 @@ class WritingViewController: UIViewController {
         }))
         sheet0.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
             print("확인 클릭")
-            self.sendLetterToDB(content: self.textViewText)
+            
+            DispatchQueue.main.async {
+                self.sendLetterToDB(content: self.textViewText)
+            }
         }))
         self.present(sheet0, animated: true) {
         }
