@@ -124,7 +124,7 @@ class MainViewController: UIViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let userConnectedTime = data["connectedTime"] as? Timestamp, let messagePairFriendCode = data["pairFriendCode"] as? String {
+                        if let userConnectedTime = data["connectedTime"] as? Timestamp {
                             
                             let friendName = data["friendName"] as? String
                             UserDefaults.shared.set(friendName, forKey: "friendName")
@@ -257,7 +257,7 @@ extension UIViewController {
                      FBAdSettings.setAdvertiserTrackingEnabled(false)
                  case .notDetermined:
                      // Tracking authorization dialog has not been shown
-                     print("Not Determined")
+                     //print("Not Determined")
                      DispatchQueue.main.async {
                          self.requestPermission()
                      }

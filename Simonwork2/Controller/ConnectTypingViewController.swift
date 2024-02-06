@@ -29,6 +29,8 @@ class ConnectTypingViewController: UIViewController {
         super.viewDidLoad()
         
         pairFriendCodeTextField.delegate = self
+        pairFriendCodeTextField.autocorrectionType = .no
+        pairFriendCodeTextField.spellCheckingType = .no
     }
     
     override func viewWillAppear(_ animated: Bool) {

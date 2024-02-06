@@ -185,6 +185,7 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
     @IBOutlet weak var disconnectButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var helpButton: UIButton!
+    @IBOutlet weak var legalButton: UIButton!
     
     @IBOutlet weak var myFriendCodeLabel: UILabel!
     @IBOutlet weak var myFriendCode: UILabel!
@@ -214,6 +215,9 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
         
         let providerId = user?.providerData.first?.providerID
         print("providerId: \(providerId)")
+        
+        nicknameChangeTextField.autocorrectionType = .no
+        nicknameChangeTextField.spellCheckingType = .no
         // 배너 광고 설정
         setupBannerViewToBottom(adUnitID: Constants.GoogleAds.admobBanner)
         viewChange()
@@ -450,7 +454,14 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
     
     @IBAction func helpButtonPressed(_ sender: UIButton) {
         // 웹페이지 이동
-        if let url = URL(string: "https://sites.google.com/view/aletterfromlatenightpolicy/%ED%99%88") {
+        if let url = URL(string: "https://sites.google.com/view/aletterfromlatenight-policy/%ED%99%88") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    @IBAction func legalButtonPressed(_ sender: UIButton) {
+        // 웹페이지 이동
+        if let url = URL(string: "https://sites.google.com/view/aletterfromlatenight-privacy/%ED%99%88") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }

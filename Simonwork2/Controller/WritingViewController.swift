@@ -106,6 +106,8 @@ class WritingViewController: UIViewController {
         navigationBar.rightBarButtonItem = self.rightButton
         
         titleTextField.borderStyle = .none
+        titleTextField.autocorrectionType = .no
+        titleTextField.spellCheckingType = .no
         titleTextField.delegate = self
         
         titleTextField.font = UIFont(name: "NanumMyeongjoBold", size: 20)
@@ -119,6 +121,8 @@ class WritingViewController: UIViewController {
         }
         letterBg.backgroundColor = #colorLiteral(red: 0.9714143724, green: 0.8500511808, blue: 0.5509617485, alpha: 1)
         contentTextView.delegate = self
+        contentTextView.autocorrectionType = .no
+        contentTextView.spellCheckingType = .no
         setupView()
         
         colorButton.layer.cornerRadius = 10
@@ -158,7 +162,10 @@ class WritingViewController: UIViewController {
         }))
         sheet0.addAction(UIAlertAction(title: "확인", style: .cancel, handler: { _ in
             print("확인 클릭")
-            self.sendLetterToDB(content: self.textViewText)
+            
+            DispatchQueue.main.async {
+                self.sendLetterToDB(content: self.textViewText)
+            }
         }))
         self.present(sheet0, animated: true) {
         }
@@ -268,7 +275,13 @@ class WritingViewController: UIViewController {
          "Puppleberry": #colorLiteral(red: 0.862745098, green: 0.7529411765, blue: 1, alpha: 1),
          "Mango": #colorLiteral(red: 0.9509314895, green: 0.9013540745, blue: 0, alpha: 1),
          "Forest": #colorLiteral(red: 0, green: 0.5727785826, blue: 0.324849844, alpha: 1),
-         "Cerulean": #colorLiteral(red: 0.2408812046, green: 0.6738553047, blue: 1, alpha: 1)]
+         "Cerulean": #colorLiteral(red: 0.2408812046, green: 0.6738553047, blue: 1, alpha: 1),
+         "Strawberry": #colorLiteral(red: 1, green: 0.5019607843, blue: 0.5019607843, alpha: 1),
+         "Orange": #colorLiteral(red: 0.9960784314, green: 0.4784313725, blue: 0.2117647059, alpha: 1),
+         "Brick": #colorLiteral(red: 0.7450980392, green: 0.1921568627, blue: 0.2666666667, alpha: 1),
+         "Winter": #colorLiteral(red: 0.6274509804, green: 0.9137254902, blue: 1, alpha: 1), //A0E9FF
+         "Olive": #colorLiteral(red: 0.6549019608, green: 0.8274509804, blue: 0.5921568627, alpha: 1), // A7D397
+        ]
         
         let popUpButtonClosure = { [self] (action: UIAction) in
             var userSelectedColor = self.colorButton.currentTitle!
@@ -280,7 +293,12 @@ class WritingViewController: UIViewController {
             UIAction(title: "Puppleberry", handler: popUpButtonClosure),
             UIAction(title: "Mango", handler: popUpButtonClosure),
             UIAction(title: "Forest", handler: popUpButtonClosure),
-            UIAction(title: "Cerulean", handler: popUpButtonClosure)
+            UIAction(title: "Cerulean", handler: popUpButtonClosure),
+            UIAction(title: "Strawberry", handler: popUpButtonClosure),
+            UIAction(title: "Orange", handler: popUpButtonClosure),
+            UIAction(title: "Brick", handler: popUpButtonClosure),
+            UIAction(title: "Winter", handler: popUpButtonClosure),
+            UIAction(title: "Olive", handler: popUpButtonClosure),
         ])
         colorButton.showsMenuAsPrimaryAction = true
     }

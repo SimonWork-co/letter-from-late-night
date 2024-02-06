@@ -50,11 +50,11 @@
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "G6m-9D-EdV"; */
 "G6m-9D-EdV.normalTitle" = "Button";
 
-/* Class = "UIButton"; configuration.title = "도움말 및 법적 고지"; ObjectID = "GO0-Ge-dh4"; */
-"GO0-Ge-dh4.configuration.title" = "도움말 및 법적 고지";
+/* Class = "UIButton"; configuration.title = "이용약관"; ObjectID = "GO0-Ge-dh4"; */
+"GO0-Ge-dh4.configuration.title" = "이용약관";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "GO0-Ge-dh4"; */
-"GO0-Ge-dh4.normalTitle" = "Button";
+/* Class = "UIButton"; normalTitle = "개인정보처리방침"; ObjectID = "GO0-Ge-dh4"; */
+"GO0-Ge-dh4.normalTitle" = "개인정보처리방침";
 
 /* Class = "UILabel"; text = "내 친구코드"; ObjectID = "JQ8-qg-LkJ"; */
 "JQ8-qg-LkJ.text" = "내 친구코드";

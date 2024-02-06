@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5az-gf-yZX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5az-gf-yZX">
     <device id="retina6_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -243,6 +243,10 @@
                                     <action selector="appleSignupButtonPressed:" destination="9Dd-a9-fJP" eventType="touchUpInside" id="yoY-EM-QEf"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="WGV-dR-wWJ">
+                                <rect key="frame" x="204" y="453" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ThU-nh-JY3"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -260,6 +264,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="g7B-aS-80z"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="WGV-dR-wWJ" id="93q-jo-20g"/>
                         <outlet property="appleSignupButton" destination="Pvt-bP-Ege" id="Yz9-az-Foy"/>
                         <outlet property="googleSignupButton" destination="Uxj-Fw-88t" id="lYR-oi-mOp"/>
                         <outlet property="imageView" destination="N2a-9w-LdB" id="RNI-MQ-t41"/>
@@ -317,7 +322,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nRb-Kx-Nua">
-                                <rect key="frame" x="333" y="181" width="87" height="34.666666666666657"/>
+                                <rect key="frame" x="334.33333333333331" y="181" width="85.666666666666686" height="34.666666666666657"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <menu key="menu" id="Pwx-x0-yqr">
@@ -451,7 +456,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="bDI-ra-Hmm">
-                                <rect key="frame" x="16" y="290.66666666666669" width="396" height="163.33333333333331"/>
+                                <rect key="frame" x="16" y="290.66666666666669" width="396" height="199"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메뉴" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CY-au-Gp8">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="20.666666666666668"/>
@@ -498,19 +503,31 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GO0-Ge-dh4">
                                         <rect key="frame" x="0.0" y="128.66666666666663" width="396" height="34.666666666666657"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="도움말 및 법적 고지">
+                                        <buttonConfiguration key="configuration" style="filled" title="이용약관">
                                             <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="helpButtonPressed:" destination="roE-Qr-Kvw" eventType="touchUpInside" id="4or-KE-rEj"/>
+                                            <action selector="helpButtonPressed:" destination="roE-Qr-Kvw" eventType="touchUpInside" id="f7U-3N-Ct0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d5Y-E8-4Qk">
+                                        <rect key="frame" x="0.0" y="164.33333333333331" width="396" height="34.666666666666657"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="개인정보처리방침">
+                                            <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="legalButtonPressed:" destination="roE-Qr-Kvw" eventType="touchUpInside" id="CJY-uB-tPK"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FA-9r-1b3">
-                                <rect key="frame" x="16" y="577.66666666666663" width="396" height="34.666666666666629"/>
+                                <rect key="frame" x="16" y="613.33333333333337" width="396" height="34.666666666666629"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="회원 탈퇴">
                                     <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
@@ -522,7 +539,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="pTP-Vx-L9C">
-                                <rect key="frame" x="16" y="479.00000000000006" width="396" height="73.666666666666686"/>
+                                <rect key="frame" x="16" y="514.66666666666663" width="396" height="73.666666666666629"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="내 친구코드" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBZ-nL-L4w">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="20.666666666666668"/>
@@ -531,7 +548,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="내 친구코드" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xGW-Uj-Mnx">
-                                        <rect key="frame" x="0.0" y="25.666666666666686" width="396" height="48"/>
+                                        <rect key="frame" x="0.0" y="25.666666666666742" width="396" height="48"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="40"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -562,6 +579,7 @@
                         <outlet property="emailChangeButton" destination="YAi-2u-4N0" id="vyr-4n-VfG"/>
                         <outlet property="emailChangeLabel" destination="LMn-Vr-pXE" id="UDt-gj-e47"/>
                         <outlet property="helpButton" destination="GO0-Ge-dh4" id="3LT-wH-5Fh"/>
+                        <outlet property="legalButton" destination="d5Y-E8-4Qk" id="Lml-Ew-5Lp"/>
                         <outlet property="logoutButton" destination="fAb-Dg-qmA" id="g9t-HM-Tod"/>
                         <outlet property="manualButton" destination="XZ1-Ar-Lvp" id="OZz-oQ-g0a"/>
                         <outlet property="menuLabel" destination="8CY-au-Gp8" id="XMe-v9-yOD"/>
@@ -1250,7 +1268,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="69n-lE-wKh"/>
+        <segue reference="jPY-o2-FOr"/>
         <segue reference="UFD-Pc-wmj"/>
     </inferredMetricsTieBreakers>
     <resources>
@@ -1263,7 +1281,7 @@
         <image name="google logo" width="18" height="18"/>
         <image name="homekit" catalog="system" width="128" height="104"/>
         <image name="launchScreen" width="657" height="561"/>
-        <image name="mail.stack" catalog="system" width="128" height="122"/>
+        <image name="mail.stack" catalog="system" width="126" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.99199998378753662" green="0.94900000095367432" blue="0.86299997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

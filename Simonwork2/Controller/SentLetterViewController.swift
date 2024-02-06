@@ -98,11 +98,16 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        guard letterTableView.numberOfSections > 0 else {
-                return // 섹션이 없으면 스크롤을 실행하지 않음
-            }
-        let indexPath = IndexPath(row: 0, section: 0)
-        letterTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+        print("viewWillDisappear letterTableView.numberOfSections: ", letterTableView.numberOfSections)
+        
+        if letterTableView.numberOfSections > 0 {
+            
+            letterTableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
+        } else {
+            // 섹션이 없으면 스크롤을 실행하지 않음
+        }
+      
+        
     }
     
     private func registerXib() { // 커스텀한 테이블 뷰 셀을 등록하는 함수
@@ -222,6 +227,111 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         return cell
         
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // 오른쪽에 만들기
+        
+        
+        
+        print("messages.count: ", messages)
+        print("indexPath.section: ", indexPath.section)
+        
+        let title = messages[indexPath.section].title
+        let content = messages[indexPath.section].content
+        let sender = messages[indexPath.section].sender
+        let receiver = messages[indexPath.section].receiver
+        print("title: ", title)
+        print("content: ", content)
+        
+        let delete = UIContextualAction(style: .normal, title: "Delete" ) { (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+            success(true)
+            
+            let alertController = UIAlertController(title: "정말로 보낸 편지를 삭제하시겠습니까?", message: "상대방도 더이상 편지를 볼 수 없으며,\n삭제 시 복구가 불가능합니다", preferredStyle: .alert)
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in
+                // 취소 액션 처리
+                print("canecl")
+            }
+            alertController.addAction(cancelAction)
+            
+            let okAction = UIAlertAction(title: "확인", style: .destructive) { _ in
+                
+                // Firestore에서 문서를 삭제
+                do {
+                    try self.db.collection("LetterData")
+                        .whereFilter(Filter.andFilter([
+                            Filter.whereField("title", isEqualTo: title),
+                            Filter.whereField("content", isEqualTo: content),
+                            Filter.whereField("sender", isEqualTo: sender),
+                            Filter.whereField("receiver", isEqualTo: receiver),
+                        ])).getDocuments { querySnapshot, error in
+
+                            if let error = error {
+                                print("Error getting documents: \(error)")
+                                success(false)
+                                return
+
+                            } else {
+
+                                for document in querySnapshot!.documents {
+                                    let documentID = document.documentID
+                                    self.db.collection("LetterData").document(documentID).delete { error in
+                                        
+                                        if let error = error {
+                                            print("Error getting documents: \(error)")
+                                            success(false)
+                                            
+                                        } else {
+                                            success(true)
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            print("remove 직전: ", self.letterTableView.numberOfSections)
+
+                            self.messages.remove(at: indexPath.section)
+                            tableView.deleteSections([indexPath.section], with: .fade)
+                            
+                            print("remove 직후: ", self.letterTableView.numberOfSections)
+                            
+                            let finalAlertController = UIAlertController(title: "삭제 완료", message: "편지가 삭제되었습니다", preferredStyle: .alert)
+                            
+                            let confirmAction = UIAlertAction(title: "확인", style: .cancel) { _ in
+                                // 취소 액션 처리
+                                print("confirm")
+                            }
+                            finalAlertController.addAction(confirmAction)
+                            self.present(finalAlertController, animated: true, completion: nil)
+                        }
+                    
+                } catch {
+                    
+                    print("Error removing document: \(error)")
+                   
+                }
+            }
+            
+            alertController.addAction(okAction)
+            
+            // Alert 창 표시
+            self.present(alertController, animated: true, completion: nil)
+        }
+        //delete.backgroundColor = .systemPink
+        return UISwipeActionsConfiguration(actions:[delete])
+       
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forSectionAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+//            messages.remove(at: indexPath.section)
+//            tableView.deleteSections([indexPath.section], with: .fade)
+            
+        }
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "sentLetterToMessageContent" {
