@@ -228,6 +228,7 @@ struct LetterWidgetEntryView : View { // 위젯의 내용물을 보여주는 Swi
                 }
             }
             .padding()
+            
             .onTapGesture {
                 // 위젯 클릭 시 호출되는 함수
                 WidgetCenter.shared.reloadAllTimelines()
@@ -259,6 +260,7 @@ struct LetterWidget: Widget {
             //.background(Color.init(uiColor: (uicolor ?? UIColor(hex: "F7D88C"))!)) // 위젯의 배경색상 가져오기
         }
         .configurationDisplayName("밤편지")
+        .contentMarginsDisabled()
         .description("원하는 사이즈의 위젯을 선택해주세요")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
     }
