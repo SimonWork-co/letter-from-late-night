@@ -28,6 +28,38 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var letterTableView: UITableView!
     
+    lazy var iconButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        // 아이콘 설정 (왼쪽 화살표 아이콘)
+        let image = UIImage(systemName: "chevron.up")
+        button.setImage(image, for: .normal)
+        
+        // 버튼 스타일 설정
+        button.tintColor = .black
+        button.backgroundColor = .white
+                
+        // 버튼의 레이어를 사용하여 원형 모양 만들기
+        button.layer.cornerRadius = 25 // 버튼 크기의 절반으로 설정
+        button.layer.masksToBounds = true
+        
+        button.addTarget(self, action: #selector(iconButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    @objc func iconButtonTapped() {
+            print("Icon button tapped!")
+        guard letterTableView.numberOfSections > 0 else {
+                return // 섹션이 없으면 스크롤을 실행하지 않음
+            }
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        letterTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+    }
+    
+    
     var adView: FBAdView!
     lazy var containerView: UIView = {
         
@@ -44,8 +76,10 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         
         view.addSubview(containerView)
         adView = FBAdView(placementID: Constants.FacebookAds.SentLetterVC, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
-        adView.delegate = self
-        adView.loadAd()
+        view.addSubview(iconButton)
+//        adView = FBAdView(placementID: Constants.FacebookAds.ArchiveVC, adSize: kFBAdSizeHeight50Banner, rootViewController: self)
+//        adView.delegate = self
+//        adView.loadAd()
     
         view.snapshotView(afterScreenUpdates: true)
         
@@ -80,7 +114,13 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
         
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50)
+            containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            
+            // iconButton의 제약 조건 수정
+            iconButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            iconButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
+            iconButton.widthAnchor.constraint(equalToConstant: 50),
+            iconButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor(hex: "FDF2DC")
@@ -98,14 +138,14 @@ class SentLetterViewController : UIViewController, UITableViewDelegate, UITableV
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        print("viewWillDisappear letterTableView.numberOfSections: ", letterTableView.numberOfSections)
-        
-        if letterTableView.numberOfSections > 0 {
-            
-            letterTableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
-        } else {
-            // 섹션이 없으면 스크롤을 실행하지 않음
-        }
+//        print("viewWillDisappear letterTableView.numberOfSections: ", letterTableView.numberOfSections)
+//        
+//        if letterTableView.numberOfSections > 0 {
+//            
+//            letterTableView.scrollToRow(at: IndexPath(row: NSNotFound, section: 0), at: .top, animated: false)
+//        } else {
+//            // 섹션이 없으면 스크롤을 실행하지 않음
+//        }
       
         
     }
