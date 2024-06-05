@@ -16,8 +16,6 @@
 		8D402DA929C0406A0010D80C /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D402DA829C0406A0010D80C /* NavigationController.swift */; };
 		8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375E829B9A7AD0028427F /* SignupViewController.swift */; };
 		8D4375EB29B9A9010028427F /* ArchiveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4375EA29B9A9010028427F /* ArchiveController.swift */; };
-		8D46BE292B70B80400C5B98E /* Signup_extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D46BE282B70B80400C5B98E /* Signup_extensions.swift */; };
-		8D46BE2B2B70CB9200C5B98E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D46BE2A2B70CB9200C5B98E /* GoogleService-Info.plist */; };
 		8D4CA9E729EFCA1C00DF2EF6 /* ADControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4CA9E629EFCA1C00DF2EF6 /* ADControl.swift */; };
 		8D6182FA29C85D4A00A85BFB /* LetterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182F929C85D4A00A85BFB /* LetterData.swift */; };
 		8D6182FE29C88FCA00A85BFB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6182FD29C88FCA00A85BFB /* Constants.swift */; };
@@ -30,6 +28,7 @@
 		8D6BD68729D9A0F000D218C4 /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6BD68629D9A0F000D218C4 /* SecondView.swift */; };
 		8D6BD68929D9A31700D218C4 /* ThirdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D6BD68829D9A31700D218C4 /* ThirdView.xib */; };
 		8D6BD68B29D9A33900D218C4 /* ThirdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6BD68A29D9A33900D218C4 /* ThirdView.swift */; };
+		8D9772D52C100798005AD75F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D9772D42C100798005AD75F /* GoogleService-Info.plist */; };
 		8D985CED29CC2D3600C04AA8 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */; };
 		8D985CEF29CC2E2D00C04AA8 /* ConnectTypingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */; };
 		8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */; };
@@ -104,8 +103,6 @@
 		8D402DA829C0406A0010D80C /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8D4375E829B9A7AD0028427F /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		8D4375EA29B9A9010028427F /* ArchiveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveController.swift; sourceTree = "<group>"; };
-		8D46BE282B70B80400C5B98E /* Signup_extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signup_extensions.swift; sourceTree = "<group>"; };
-		8D46BE2A2B70CB9200C5B98E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D4CA9E629EFCA1C00DF2EF6 /* ADControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADControl.swift; sourceTree = "<group>"; };
 		8D6182F929C85D4A00A85BFB /* LetterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterData.swift; sourceTree = "<group>"; };
 		8D6182FD29C88FCA00A85BFB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Controller/Constants.swift; sourceTree = "<group>"; };
@@ -118,6 +115,7 @@
 		8D6BD68629D9A0F000D218C4 /* SecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
 		8D6BD68829D9A31700D218C4 /* ThirdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThirdView.xib; sourceTree = "<group>"; };
 		8D6BD68A29D9A33900D218C4 /* ThirdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdView.swift; sourceTree = "<group>"; };
+		8D9772D42C100798005AD75F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTypingViewController.swift; sourceTree = "<group>"; };
 		8D985CF029CC2E4E00C04AA8 /* WaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingViewController.swift; sourceTree = "<group>"; };
@@ -213,14 +211,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8D46BE252B70B7AF00C5B98E /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				8D46BE282B70B80400C5B98E /* Signup_extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		8D9EFF0929B85049008D2050 = {
 			isa = PBXGroup;
 			children = (
@@ -245,7 +235,6 @@
 		8D9EFF1429B85049008D2050 /* Simonwork2 */ = {
 			isa = PBXGroup;
 			children = (
-				8D46BE252B70B7AF00C5B98E /* Extensions */,
 				DE863BC629C6E39200208AE8 /* Fonts */,
 				8DFDE4AD29C0E423005A9574 /* Simonwork2.entitlements */,
 				8D9EFF2929B85067008D2050 /* Model */,
@@ -258,7 +247,7 @@
 				8D6182FD29C88FCA00A85BFB /* Constants.swift */,
 				8D9EFF2029B8504B008D2050 /* LaunchScreen.storyboard */,
 				8D9EFF2329B8504B008D2050 /* Info.plist */,
-				8D46BE2A2B70CB9200C5B98E /* GoogleService-Info.plist */,
+				8D9772D42C100798005AD75F /* GoogleService-Info.plist */,
 				8DB1AE242A78E1FE00674BDD /* FBAudienceNetwork.xcframework */,
 			);
 			path = Simonwork2;
@@ -430,6 +419,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D9772D52C100798005AD75F /* GoogleService-Info.plist in Resources */,
 				8D9EFF2229B8504B008D2050 /* LaunchScreen.storyboard in Resources */,
 				8DCA774529DECCAA00F4DD52 /* Main.storyboard in Resources */,
 				DE863BCB29C6E40C00208AE8 /* NanumMyeongjoExtraBold.ttf in Resources */,
@@ -438,7 +428,6 @@
 				8D6BD68129D99C3300D218C4 /* FirstView.xib in Resources */,
 				DE863BCC29C6E40C00208AE8 /* NanumMyeongjo.ttf in Resources */,
 				8D6BD68329D9A06300D218C4 /* SecondView.xib in Resources */,
-				8D46BE2B2B70CB9200C5B98E /* GoogleService-Info.plist in Resources */,
 				8DAA05D129BB20A0008D8167 /* CustomizedCell.xib in Resources */,
 				8D6BD68929D9A31700D218C4 /* ThirdView.xib in Resources */,
 			);
@@ -547,7 +536,6 @@
 				8D6620CD29CDEEC10070CA37 /* SentLetterViewController.swift in Sources */,
 				8D4375E929B9A7AD0028427F /* SignupViewController.swift in Sources */,
 				8D9EFF1629B85049008D2050 /* AppDelegate.swift in Sources */,
-				8D46BE292B70B80400C5B98E /* Signup_extensions.swift in Sources */,
 				8D985CF129CC2E4E00C04AA8 /* WaitingViewController.swift in Sources */,
 				8DBD9A3C29D9561D005AF94A /* GuideViewController.swift in Sources */,
 				8DCA774729DEEB4300F4DD52 /* SecondNavigationController.swift in Sources */,
@@ -729,9 +717,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Simonwork2/Simonwork2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S63WU84P32;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "밤편지";
@@ -748,10 +738,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "밤편지: 마음을 주고 받는 편지 한 통 1.0 (main)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -770,9 +761,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Simonwork2/Simonwork2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S63WU84P32;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "밤편지";
@@ -789,10 +782,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "밤편지: 마음을 주고 받는 편지 한 통 1.0 (main)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
