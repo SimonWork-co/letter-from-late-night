@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5az-gf-yZX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5az-gf-yZX">
     <device id="retina6_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -456,7 +456,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="bDI-ra-Hmm">
-                                <rect key="frame" x="16" y="290.66666666666669" width="396" height="199"/>
+                                <rect key="frame" x="16" y="290.66666666666669" width="396" height="234.66666666666669"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="메뉴" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CY-au-Gp8">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="20.666666666666668"/>
@@ -524,10 +524,22 @@
                                             <action selector="legalButtonPressed:" destination="roE-Qr-Kvw" eventType="touchUpInside" id="CJY-uB-tPK"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tzL-Cb-PMG" userLabel="Oss Button">
+                                        <rect key="frame" x="0.0" y="200" width="396" height="34.666666666666657"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="오픈소스 라이센스">
+                                            <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="ossButtonPressed:" destination="roE-Qr-Kvw" eventType="touchUpInside" id="bpa-B9-juG"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FA-9r-1b3">
-                                <rect key="frame" x="16" y="613.33333333333337" width="396" height="34.666666666666629"/>
+                                <rect key="frame" x="16" y="649" width="396" height="34.666666666666629"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="회원 탈퇴">
                                     <fontDescription key="titleFontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
@@ -539,7 +551,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="pTP-Vx-L9C">
-                                <rect key="frame" x="16" y="514.66666666666663" width="396" height="73.666666666666629"/>
+                                <rect key="frame" x="16" y="550.33333333333337" width="396" height="73.666666666666629"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="내 친구코드" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBZ-nL-L4w">
                                         <rect key="frame" x="0.0" y="0.0" width="396" height="20.666666666666668"/>
@@ -548,7 +560,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="내 친구코드" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xGW-Uj-Mnx">
-                                        <rect key="frame" x="0.0" y="25.666666666666742" width="396" height="48"/>
+                                        <rect key="frame" x="0.0" y="25.666666666666629" width="396" height="48"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="40"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -588,13 +600,31 @@
                         <outlet property="nicknameChangeButton" destination="rl1-mG-ZKH" id="MOu-1R-2C8"/>
                         <outlet property="nicknameChangeLabel" destination="D6Q-pX-FUg" id="wDu-Om-2mC"/>
                         <outlet property="nicknameChangeTextField" destination="qa5-QY-uhe" id="CP3-ef-gIc"/>
+                        <outlet property="ossButton" destination="tzL-Cb-PMG" id="mj0-CI-1Gb"/>
                         <outlet property="quitButton" destination="8FA-9r-1b3" id="eOD-nF-zdv"/>
                         <outlet property="userNameLabel" destination="Xy1-JL-xyk" id="2S6-uI-fGI"/>
+                        <segue destination="ze2-g2-BeF" kind="show" id="eO3-e9-69f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z9N-h7-Fe3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7635.9813084112147" y="-11.015118790496761"/>
+        </scene>
+        <!--Oss View Controller-->
+        <scene sceneID="0M1-Br-hbi">
+            <objects>
+                <viewController storyboardIdentifier="OssViewController" id="ze2-g2-BeF" customClass="OssViewController" customModule="Simonwork2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aZg-cl-5Jo">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="h7K-nz-nFd"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ARt-dn-PaM"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WOL-ct-Rg7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8481" y="-35"/>
         </scene>
         <!--Second Navigation Controller-->
         <scene sceneID="NAe-Ey-AAf">
@@ -1287,6 +1317,9 @@
         </namedColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

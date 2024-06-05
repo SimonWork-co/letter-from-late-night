@@ -28,6 +28,8 @@
 		8D6BD68729D9A0F000D218C4 /* SecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6BD68629D9A0F000D218C4 /* SecondView.swift */; };
 		8D6BD68929D9A31700D218C4 /* ThirdView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D6BD68829D9A31700D218C4 /* ThirdView.xib */; };
 		8D6BD68B29D9A33900D218C4 /* ThirdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6BD68A29D9A33900D218C4 /* ThirdView.swift */; };
+		8D8C26BC2C105CC600689BD6 /* Pods-Simonwork2-acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D8C26BB2C105CC600689BD6 /* Pods-Simonwork2-acknowledgements.plist */; };
+		8D8C26BE2C105D9200689BD6 /* OssViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8C26BD2C105D9200689BD6 /* OssViewController.swift */; };
 		8D9772D52C100798005AD75F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D9772D42C100798005AD75F /* GoogleService-Info.plist */; };
 		8D985CED29CC2D3600C04AA8 /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */; };
 		8D985CEF29CC2E2D00C04AA8 /* ConnectTypingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */; };
@@ -115,6 +117,8 @@
 		8D6BD68629D9A0F000D218C4 /* SecondView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondView.swift; sourceTree = "<group>"; };
 		8D6BD68829D9A31700D218C4 /* ThirdView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThirdView.xib; sourceTree = "<group>"; };
 		8D6BD68A29D9A33900D218C4 /* ThirdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdView.swift; sourceTree = "<group>"; };
+		8D8C26BB2C105CC600689BD6 /* Pods-Simonwork2-acknowledgements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pods-Simonwork2-acknowledgements.plist"; sourceTree = "<group>"; };
+		8D8C26BD2C105D9200689BD6 /* OssViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OssViewController.swift; sourceTree = "<group>"; };
 		8D9772D42C100798005AD75F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D985CEC29CC2D3600C04AA8 /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		8D985CEE29CC2E2D00C04AA8 /* ConnectTypingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectTypingViewController.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 		8D9EFF0929B85049008D2050 = {
 			isa = PBXGroup;
 			children = (
+				8D8C26BB2C105CC600689BD6 /* Pods-Simonwork2-acknowledgements.plist */,
 				DEA2F29629D872F00021AEC3 /* LetterWidgetExtension.entitlements */,
 				8D9EFF1429B85049008D2050 /* Simonwork2 */,
 				DEA2F28229D85F840021AEC3 /* LetterWidget */,
@@ -287,6 +292,7 @@
 				8D4375EA29B9A9010028427F /* ArchiveController.swift */,
 				8D6620CC29CDEEC10070CA37 /* SentLetterViewController.swift */,
 				8D64C32929B9AA7C00B347B5 /* LetterViewController.swift */,
+				8D8C26BD2C105D9200689BD6 /* OssViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -419,6 +425,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D8C26BC2C105CC600689BD6 /* Pods-Simonwork2-acknowledgements.plist in Resources */,
 				8D9772D52C100798005AD75F /* GoogleService-Info.plist in Resources */,
 				8D9EFF2229B8504B008D2050 /* LaunchScreen.storyboard in Resources */,
 				8DCA774529DECCAA00F4DD52 /* Main.storyboard in Resources */,
@@ -517,6 +524,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D985CEF29CC2E2D00C04AA8 /* ConnectTypingViewController.swift in Sources */,
+				8D8C26BE2C105D9200689BD6 /* OssViewController.swift in Sources */,
 				8DCA774229DEAEEA00F4DD52 /* TabBarController.swift in Sources */,
 				8D985CED29CC2D3600C04AA8 /* ConnectViewController.swift in Sources */,
 				8D9EFF1A29B85049008D2050 /* MainViewController.swift in Sources */,
@@ -717,11 +725,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Simonwork2/Simonwork2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S63WU84P32;
+				DEVELOPMENT_TEAM = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "밤편지";
@@ -738,11 +744,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.1;
+				MARKETING_VERSION = 1.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "밤편지: 마음을 주고 받는 편지 한 통 1.0 (main)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -761,11 +766,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Simonwork2/Simonwork2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S63WU84P32;
+				DEVELOPMENT_TEAM = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Simonwork2/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "밤편지";
@@ -782,11 +785,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.1;
+				MARKETING_VERSION = 1.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "밤편지: 마음을 주고 받는 편지 한 통 1.0 (main)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -805,11 +807,9 @@
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = LetterWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S63WU84P32;
+				DEVELOPMENT_TEAM = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LetterWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "밤편지";
@@ -823,7 +823,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2.LetterWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "밤편지: 마음을 주고 받는 편지 한 통 1.0 (widget)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -840,11 +839,9 @@
 				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = LetterWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S63WU84P32;
+				DEVELOPMENT_TEAM = S63WU84P32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LetterWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "밤편지";
@@ -858,7 +855,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.simonwork.Simonwork2.LetterWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "밤편지: 마음을 주고 받는 편지 한 통 1.0 (widget)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -17,6 +17,7 @@ import FirebaseGoogleAuthUI
 import AuthenticationServices
 import CryptoKit
 import FBAudienceNetwork
+import AcknowList
 
 fileprivate var currentNonce: String?
 
@@ -186,6 +187,7 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var helpButton: UIButton!
     @IBOutlet weak var legalButton: UIButton!
+    @IBOutlet weak var ossButton: UIButton!
     
     @IBOutlet weak var myFriendCodeLabel: UILabel!
     @IBOutlet weak var myFriendCode: UILabel!
@@ -464,6 +466,22 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
         if let url = URL(string: "https://sites.google.com/view/aletterfromlatenight-privacy/%ED%99%88") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+    @IBAction func ossButtonPressed(_ sender: UIButton) {
+        
+        let acknowList = AcknowListViewController(fileNamed: "Pods-Mug-Lite-acknowledgements")
+        acknowList.modalPresentationStyle = .automatic
+        acknowList.title = "오픈소스 라이센스"
+    
+    
+        let doneButton = acknowList.navigationItem.leftBarButtonItem
+        doneButton?.tintColor = UIColor.blue
+        
+                // 새 네비게이션 컨트롤러로 감싸서 모달로 표시
+                let navController = UINavigationController(rootViewController: acknowList)
+                self.present(navController, animated: true, completion: nil)
+
     }
     
     @IBAction func quitButtonPressed(_ sender: UIButton) {
