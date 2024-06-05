@@ -628,6 +628,7 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
+  - AcknowList (3.1.0)
   - AppAuth (1.6.2):
     - AppAuth/Core (= 1.6.2)
     - AppAuth/ExternalUserAgent (= 1.6.2)
@@ -934,6 +935,7 @@ PODS:
   - SDWebImage/Core (5.18.10)
 
 DEPENDENCIES:
+  - AcknowList
   - EmojiPicker (from `https://github.com/htmlprogrammist/EmojiPicker`)
   - Firebase/Core
   - FirebaseAnalytics
@@ -950,6 +952,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - AcknowList
     - AppAuth
     - BoringSSL-GRPC
     - FBAEMKit
@@ -1011,6 +1014,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
+  AcknowList: 6a066937eac273426b749e14172db23a9ca656df
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   EmojiPicker: 67fa5a3cf1b32885248388087cc5ebeebc7de647
@@ -1062,6 +1066,6 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
 
-PODFILE CHECKSUM: 4a0f182c2fde44c9069f9f84ffbf4c08c0d87165
+PODFILE CHECKSUM: 857a63432d71f483c2b0d8cba8d7189f59b06296
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

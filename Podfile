@@ -21,6 +21,7 @@ target 'Simonwork2' do
   # pod 'FBSDKLoginKit', '~> 8.0.0'
   # pod 'FBSDKShareKit', '~> 8.0.0'
   # pod 'FBSDKGamingServiceKit', '~> 8.0.0'
+  pod 'AcknowList'
   
   post_install do |installer|
     installer.generated_projects.each do |project|

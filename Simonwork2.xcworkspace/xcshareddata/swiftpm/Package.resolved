@@ -1,4 +1,5 @@
 {
+  "originHash" : "78cb16c2c1e5efde989c6744ed39bc12c9f08364377caf90d53f176e8ed4ccf6",
   "pins" : [
     {
       "identity" : "emojipicker",
@@ -10,5 +11,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
