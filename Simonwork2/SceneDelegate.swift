@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITextFieldDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -139,11 +139,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITextFieldDelegate {
             }
         }
         
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in
-            completion?(false)
-        }
-        
         alertController.addAction(confirmAction)
+        
         if wCancel {
             let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in
                 completion?(false)
@@ -158,37 +155,46 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITextFieldDelegate {
         // 입력된 텍스트가 4자리 정수인지 검사
         if input.count == 4 {
             
-            let previousPW = UserDefaults.shared.string(forKey: "screenLockPW")
-            
-            if previousPW == nil || previousPW == input {
+            if isChangingPWorLock { // 비밀번호 변경 또는 잠금 설정하는 경우
                 UserDefaults.shared.set(input, forKey: "screenLockPW")
                 
-                if isChangingPWorLock {
-                    alert(title: "비밀번호가 설정되었습니다", message: "비밀번호 분실 시,\n앱을 삭제하고 다시 재설치해야합니다.", actionTitle: "확인")
-                } 
-//                else {
-//                    alert(title: "편지함 잠금이 해제되었습니다", message: "잠금을 원한다면 다시 비밀번호를 설정해주세요", actionTitle: "확인")
-//                }
+                alert(title: "비밀번호가 설정되었습니다", message: "비밀번호 분실 시,\n앱을 삭제하고 다시 재설치해야합니다.", actionTitle: "확인") {
+                    completion?(true)
+                }
                 
-                completion?(true)
-            } else {
-                alert(title: "비밀번호가 일치하지 않습니다", message: "다시 비밀번호를 입력해주세요", actionTitle: "확인")
-                completion?(false)  // 실패로 클로저 호출
+            } else { // 잠금해제 하는 경우
+                
+                let previousPW = UserDefaults.shared.string(forKey: "screenLockPW")
+                
+                if previousPW == nil || previousPW == input {
+                    
+                    completion?(true)
+                    
+                } else {
+                    alert(title: "비밀번호가 일치하지 않습니다", message: "다시 비밀번호를 입력해주세요", actionTitle: "확인") {
+                        completion?(false)
+                    }
+                }
             }
+            
         } else {
-            alert(title: "유효한 비밀번호가 아닙니다", message: "4자리의 정수를 입력해주세요", actionTitle: "확인")
-            completion?(false)  // 실패로 클로저 호출
+            alert(title: "유효한 비밀번호가 아닙니다", message: "4자리의 정수를 입력해주세요", actionTitle: "확인") {
+                completion?(false)
+            }
         }
     }
     
     
     private func requestPasswordUnlock(attemptCount: Int = 0) {
         guard attemptCount < 5 else {
-            alert(title: "\(attemptCount)회 실패", message: "비밀번호가 5회 일치하지 않는 경우, 앱을 재시작해주세요", actionTitle: "확인")
+            alert(title: "비밀번호 입력 \(attemptCount)회 실패", message: "비밀번호가 5회 일치하지 않는 경우, 앱을 재시작해주세요", actionTitle: "확인") {
+                exit(0)
+            }
             return
         }
 
         lockPWAlert(message: "비밀번호를 입력해주세요", isChangingPWorLock: false, wCancel: false) { [weak self] success in
+ 
             if success {
                 self?.backgroundView?.removeFromSuperview()
                 self?.imageView?.removeFromSuperview()
@@ -201,18 +207,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITextFieldDelegate {
     
 }
 
-extension SceneDelegate {
-    func alert(title: String, message: String, actionTitle: String) {
+extension SceneDelegate: UITextFieldDelegate {
+    func alert(title: String, message: String, actionTitle: String, completion: (() -> Void)? = nil) {
         guard let topController = window?.topViewController() else {
-            print("Top ViewController가 존재하지 않습니다.")
             return
         }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: actionTitle, style: .default)
+        let action = UIAlertAction(title: actionTitle, style: .default) { _ in
+            completion?()
+        }
         alertController.addAction(action)
         topController.present(alertController, animated: true)
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            let currentText = (textField.text ?? "") as NSString
+            let newText = currentText.replacingCharacters(in: range, with: string)
+            return newText.count <= 4
+        }
+    
 }
 
 extension UIWindow {

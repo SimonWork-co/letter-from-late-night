@@ -218,7 +218,7 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
             let icon = isLocked ? UIImage(systemName: "lock.fill") : UIImage(systemName: "lock.open.fill")
             let reverseIcon = isLocked ? UIImage(systemName: "lock.open.fill") : UIImage(systemName: "lock.fill")
             
-            let action2Title = isLocked ? "편지함 잠금 해제" : "편지함 잠금"
+            let action2Title = isLocked ? "화면 잠금 해제" : "화면 잠금"
             
             let action1 = UIAction(title: "비밀번호 변경", handler: { _ in
                 sceneDelegate.lockPWAlert(message: "새로운 비밀번호를 입력해주세요", isChangingPWorLock: true, wCancel: true)
@@ -228,12 +228,12 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
             let action2 = UIAction(title: action2Title, image: reverseIcon,  handler: { _ in
                 // SceneDelegate의 메서드를 호출
                 
-                if action2Title == "편지함 잠금 해제" {
+                if action2Title == "화면 잠금 해제" {
                     
-                    let alertController = UIAlertController(title: "알림", message: "편지함을 잠금 해제할까요?", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "알림", message: "화면 잠금을 해제할까요?", preferredStyle: .alert)
                     let action = UIAlertAction(title: "확인", style: .default, handler: { _ in
                       
-                        sceneDelegate.lockPWAlert(message: nil, isChangingPWorLock: false, wCancel: true) { success in
+                        sceneDelegate.lockPWAlert(message: "기존 비밀번호 4자리를 입력해주세요", isChangingPWorLock: false, wCancel: true) { success in
                             if success {
                                 sceneDelegate.toggleLockStatus()
                                 
@@ -253,10 +253,10 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
                     
                 }
                 
-                if action2Title == "편지함 잠금" {
-                    let alertController = UIAlertController(title: "알림", message: "편지함을 잠금 설정할까요?", preferredStyle: .alert)
+                if action2Title == "화면 잠금" {
+                    let alertController = UIAlertController(title: "알림", message: "화면 잠금을 설정할까요?", preferredStyle: .alert)
                     let action = UIAlertAction(title: "확인", style: .default, handler: { _ in
-                        sceneDelegate.lockPWAlert(message: nil, isChangingPWorLock: true, wCancel: true) { success in
+                        sceneDelegate.lockPWAlert(message: "설정할 비밀번호 4자리를 입력해주세요", isChangingPWorLock: true, wCancel: true) { success in
                             if success {
                                 sceneDelegate.toggleLockStatus()
                             }
@@ -275,7 +275,7 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
                 
             })
             
-            let menu = UIMenu(title: "편지함 잠금 설정", children: [action1, action2])
+            let menu = UIMenu(title: "화면 잠금 설정", children: [action1, action2])
             let rightButton = UIBarButtonItem(image: icon, menu: menu)
             
             navigationItem.rightBarButtonItem = rightButton
@@ -285,63 +285,6 @@ class SettingViewController: UIViewController, FUIAuthDelegate {
     deinit {
         NotificationCenter.default.removeObserver(self, name: SceneDelegate.lockStatusChangedNotification, object: nil)
     }
-    
-//    @objc func lockPWAlert(message: String?, isChangingPWorLock: Bool, completion: ((Bool) -> Void)? = nil) {
-//        let alertController = UIAlertController(title: "비밀번호 4자리를 입력해주세요", message: message, preferredStyle: .alert)
-//        
-//        alertController.addTextField { textField in
-//            textField.placeholder = "4자리 숫자를 입력해주세요"
-//            textField.keyboardType = .numberPad
-//            textField.delegate = self
-//        }
-//        
-//        let confirmAction = UIAlertAction(title: "완료", style: .default) { [weak self] _ in
-//            guard let textField = alertController.textFields?.first else {
-//                completion?(false)  // 텍스트 필드가 없으면 실패로 처리
-//                return
-//            }
-//            let inputText = textField.text ?? ""
-//            self?.handleInput(inputText, isChangingPWorLock: isChangingPWorLock) { success in
-//                completion?(success)
-//            }
-//        }
-//        
-//        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in
-//            completion?(false)  // 취소 시 실패로 처리
-//        }
-//        
-//        alertController.addAction(confirmAction)
-//        alertController.addAction(cancelAction)
-//        
-//        present(alertController, animated: true, completion: nil)
-//    }
-//    
-//    private func handleInput(_ input: String, isChangingPWorLock: Bool, completion: ((Bool) -> Void)? = nil) {
-//        // 입력된 텍스트가 4자리 정수인지 검사
-//        if input.count == 4 {
-//            
-//            let previousPW = UserDefaults.shared.string(forKey: "screenLockPW")
-//            
-//            if previousPW == nil || previousPW == input {
-//                UserDefaults.shared.set(input, forKey: "screenLockPW")
-//                
-//                if isChangingPWorLock {
-//                    alert(title: "비밀번호가 설정되었습니다", message: "비밀번호 분실 시,\n앱을 삭제하고 다시 재설치해야합니다.", actionTitle: "확인")
-//                } else {
-//                    alert(title: "편지함 잠금이 해제되었습니다", message: "잠금을 원한다면 다시 비밀번호를 설정해주세요", actionTitle: "확인")
-//                }
-//                
-//                completion?(true)
-//            } else {
-//                alert(title: "비밀번호가 일치하지 않습니다", message: "다시 비밀번호를 입력해주세요", actionTitle: "확인")
-//                completion?(false)  // 실패로 클로저 호출
-//            }
-//        } else {
-//            alert(title: "유효한 비밀번호가 아닙니다", message: "4자리의 정수를 입력해주세요", actionTitle: "확인")
-//            completion?(false)  // 실패로 클로저 호출
-//        }
-//    }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
