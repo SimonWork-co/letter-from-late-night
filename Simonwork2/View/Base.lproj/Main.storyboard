@@ -1177,7 +1177,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1MI-TL-ZYD"/>
-                        <color key="backgroundColor" name="AccentColor"/>
+                        <color key="backgroundColor" red="0.99215686274509807" green="0.94901960784313721" blue="0.86274509803921573" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="puA-wA-GId" firstAttribute="top" secondItem="7fj-dH-IfH" secondAttribute="bottom" constant="40" id="NNK-LU-EVU"/>
                             <constraint firstItem="7fj-dH-IfH" firstAttribute="top" secondItem="1MI-TL-ZYD" secondAttribute="top" constant="116" id="PPR-Kf-OA0"/>
